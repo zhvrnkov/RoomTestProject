@@ -4,15 +4,7 @@ import androidx.room.*
 import com.example.room_test.entity_utils.GradeDao
 import com.example.room_test.entity_utils.RubricDao
 
-@Entity(
-    tableName = "rubrics",
-    indices = [Index("grade_ids", "grade_ids")],
-    foreignKeys = [ForeignKey(
-        entity = Grade::class,
-        parentColumns = ["id"],
-        childColumns = ["grade_ids"],
-        onDelete = ForeignKey.SET_NULL
-    )])
+@Entity(tableName = "rubrics")
 data class Rubric(
     @PrimaryKey val id: Long,
     val title: String
