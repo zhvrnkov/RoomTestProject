@@ -17,7 +17,7 @@ abstract class GradeDao : BaseDao<Grade, Grade> {
     override fun update(entity: Grade) = pUpdate(entity)
     override fun insert(entity: Grade) = pInsert(entity)
 
-    @Query("delete from rubrics where id in (:ids)")
+    @Query("delete from grades where id in (:ids)")
     abstract fun pDelete(ids: List<Long>)
 
     @Update
