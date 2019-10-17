@@ -76,11 +76,18 @@ data class RubricWithRelations(
         entityColumn = "rubric_id",
         entity = Grade::class
     )
-    var grades: List<Grade> = emptyList()
+    val grades: List<Grade>,
+
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "rubric_id",
+        entity = SkillSet::class
+    )
+    val skillSets: List<SkillSet>
 )
 
 
-@Database(entities = [Rubric::class, Grade::class], version = 1)
+@Database(entities = [Rubric::class, Grade::class, SkillSet::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun rubricDao(): RubricDao
     abstract fun gradeDao(): GradeDao
