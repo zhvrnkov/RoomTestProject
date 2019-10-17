@@ -13,7 +13,7 @@ data class Rubric(
 
 @Entity(
     tableName = "grades",
-    indices = [Index("rubric_id", "rubric_id")],
+    indices = [Index("rubric_id", "title", unique = true)],
     foreignKeys = [ForeignKey(
         entity = Rubric::class,
         parentColumns = ["id"],
