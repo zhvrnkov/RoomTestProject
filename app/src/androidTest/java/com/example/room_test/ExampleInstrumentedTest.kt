@@ -94,6 +94,8 @@ class ExampleInstrumentedTest {
 
         val preRubricDeleteGrades = gradeUtils.get(newGrades.map { it.id })
         rubricUtils.delete(listOf(newRubric.id))
+        val rubricsPostDeletion = rubricUtils.get(listOf(newRubric.id))
+        assertTrue(rubricsPostDeletion.isEmpty())
         val postRubricDeleteGrades = gradeUtils.get(newGrades.map { it.id })
 
         assertEquals(preRubricDeleteGrades.count() - newGrades.count(), postRubricDeleteGrades.count())
@@ -114,6 +116,8 @@ class ExampleInstrumentedTest {
         newGrades.forEach { grade -> assertNotNull(rubricBeforeGradeDeletion.grades.firstOrNull { it.id == grade.id }) }
 
         gradeUtils.delete(newGrades.map { it.id })
+        val gradesAfterDeletion = gradeUtils.get(newGrades.map { it.id })
+        assertTrue(gradesAfterDeletion.isEmpty())
 
         val rubricAfterGradeDeletion = rubricUtils.get(listOf(newRubric.id)).last()
         assertTrue(rubricAfterGradeDeletion.grades.isEmpty())
