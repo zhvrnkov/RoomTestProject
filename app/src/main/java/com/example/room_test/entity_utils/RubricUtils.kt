@@ -43,7 +43,9 @@ class RubricUtils<GradeDTO : GradeFields, RubricDTO : RubricFields<GradeDTO>>(
         }
 
         fun <GradeDTO : GradeFields, RubricDTO : RubricFields<GradeDTO>> staticMapEntity(
-            entity: RubricWithRelations, dtoClass: Class<RubricDTO>, gradeDtoClass: Class<GradeDTO>
+            entity: RubricWithRelations,
+            dtoClass: Class<RubricDTO>,
+            gradeDtoClass: Class<GradeDTO>
         ): RubricDTO {
             val fields = dtoClass.newInstance()
             fields.id = entity.rubric.id
@@ -54,11 +56,6 @@ class RubricUtils<GradeDTO : GradeFields, RubricDTO : RubricFields<GradeDTO>>(
         }
     }
 
-    override fun mapFields(fields: RubricDTO): Rubric {
-        return staticMapFields(fields)
-    }
-
-    override fun mapEntity(entity: RubricWithRelations): RubricDTO {
-        return staticMapEntity(entity, dtoClass, gradeDtoClass)
-    }
+    override fun mapFields(fields: RubricDTO): Rubric = staticMapFields(fields)
+    override fun mapEntity(entity: RubricWithRelations): RubricDTO = staticMapEntity(entity, dtoClass, gradeDtoClass)
 }
