@@ -4,6 +4,7 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.room_test.entity_utils.*
+import com.example.room_test.mock_dtos.*
 import org.junit.After
 
 import org.junit.Test
@@ -19,25 +20,12 @@ import java.util.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 
-data class RubricDTO(
-    override var id: Long = -1,
-    override var title: String = "Bad title",
-    override var grades: List<GradeDTO> = emptyList()
-) : RubricFields<GradeDTO>
-
-data class GradeDTO(
-    override var id: Long = -1,
-    override var title: String = "Bad title",
-    override var rubricId: Long = -1,
-    override var score: Int = 0
-) : GradeFields
-
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
     private lateinit var database: AppDatabase
 
-    private lateinit var rubricUtils: EntityUtils<RubricDTO>
-    private lateinit var gradeUtils: EntityUtils<GradeDTO>
+    private lateinit var rubricUtils: EntityUtils<MockRubricDTO>
+    private lateinit var gradeUtils: EntityUtils<MockGradeDTO>
 
     private val newId: Long
         get() = UUID.randomUUID().mostSignificantBits
@@ -51,17 +39,17 @@ class ExampleInstrumentedTest {
         val rubricDao = database.rubricDao()
         val gradeDao = database.gradeDao()
 
-        rubricUtils = RubricUtils(rubricDao, RubricDTO::class.java, GradeDTO::class.java)
-        gradeUtils = GradeUtils(gradeDao, GradeDTO::class.java)
+        rubricUtils = RubricUtils(rubricDao, MockRubricDTO::class.java, MockGradeDTO::class.java)
+        gradeUtils = GradeUtils(gradeDao, MockGradeDTO::class.java)
     }
 
     @Test
     fun insertingIsCorrect() {
-        val newRubric = RubricDTO(id = newId, title = "Just Rubric")
+        val newRubric = MockRubricDTO(id = newId, title = "Just Rubric")
         rubricUtils.insert(newRubric)
 
         val newGrades = arrayOf(
-            GradeDTO(title = "Lorem", id = newId, rubricId = newRubric.id, score = 25)
+            MockGradeDTO(title = "Lorem", id = newId, rubricId = newRubric.id, score = 25)
         )
         newGrades.forEach {
             gradeUtils.insert(it)
@@ -82,12 +70,12 @@ class ExampleInstrumentedTest {
 
     @Test
     fun deletionIsCorrect() {
-        val newRubric = RubricDTO(id = newId, title = "Just Rubric")
+        val newRubric = MockRubricDTO(id = newId, title = "Just Rubric")
         rubricUtils.insert(newRubric)
 
         val newGrades = arrayOf(
-            GradeDTO(id = newId, title = "First", score = 0, rubricId = newRubric.id),
-            GradeDTO(id = newId, title = "Second", score = 0, rubricId = newRubric.id)
+            MockGradeDTO(id = newId, title = "First", score = 0, rubricId = newRubric.id),
+            MockGradeDTO(id = newId, title = "Second", score = 0, rubricId = newRubric.id)
         )
         newGrades.forEach { gradeUtils.insert(it) }
 
@@ -102,12 +90,12 @@ class ExampleInstrumentedTest {
 
     @Test
     fun relatedEntityDeletionIsCorrect() {
-        val newRubric = RubricDTO(id = newId, title = "Just Rubric")
+        val newRubric = MockRubricDTO(id = newId, title = "Just Rubric")
         rubricUtils.insert(newRubric)
 
         val newGrades = arrayOf(
-            GradeDTO(id = newId, title = "First", score = 0, rubricId = newRubric.id),
-            GradeDTO(id = newId, title = "Second", score = 0, rubricId = newRubric.id)
+            MockGradeDTO(id = newId, title = "First", score = 0, rubricId = newRubric.id),
+            MockGradeDTO(id = newId, title = "Second", score = 0, rubricId = newRubric.id)
         )
         newGrades.forEach { gradeUtils.insert(it) }
 

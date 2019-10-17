@@ -14,10 +14,6 @@ interface EntityUtils<EntityFields> {
     fun insert(item: EntityFields)
 }
 
-interface Foo {
-    fun bar(): Int
-}
-
 internal interface EntityUtilsRealization<
         Entity, EntityWithRelations, EntityFields, Dao: BaseDao<Entity, EntityWithRelations>>
 {

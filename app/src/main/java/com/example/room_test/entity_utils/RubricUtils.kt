@@ -30,7 +30,7 @@ abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
     abstract fun pGet(ids: List<Long>): List<RubricWithRelations>
 }
 
-class RubricUtils<GradeDTO : GradeFields, RubricDTO : RubricFields<GradeDTO>>(
+open class RubricUtils<GradeDTO : GradeFields, RubricDTO : RubricFields<GradeDTO>>(
     override val dao: RubricDao,
     private val dtoClass: Class<RubricDTO>,
     private val gradeDtoClass: Class<GradeDTO>
