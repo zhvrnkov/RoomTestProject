@@ -46,7 +46,13 @@ data class SkillSet(
 
 @Entity(
     tableName = "microtasks",
-    indices = [Index("skill_set_id", "title", unique = true)]
+    indices = [Index("skill_set_id", "title", unique = true)],
+    foreignKeys = [ForeignKey(
+        entity = SkillSet::class,
+        parentColumns = ["id"],
+        childColumns = ["skill_set_id"],
+        onDelete = ForeignKey.CASCADE
+    )]
 )
 data class Microtask(
     @PrimaryKey val id: Long,

@@ -55,7 +55,6 @@ class ExampleInstrumentedTest {
         gradeUtils = GradeUtils(gradeDao, GradeDTO::class.java)
     }
 
-
     @Test
     fun insertingIsCorrect() {
         val newRubric = RubricDTO(id = newId, title = "Just Rubric")
@@ -113,7 +112,9 @@ class ExampleInstrumentedTest {
         newGrades.forEach { gradeUtils.insert(it) }
 
         val rubricBeforeGradeDeletion = rubricUtils.get(listOf(newRubric.id)).last()
-        newGrades.forEach { grade -> assertNotNull(rubricBeforeGradeDeletion.grades.firstOrNull { it.id == grade.id }) }
+        newGrades.forEach { grade ->
+            assertNotNull(rubricBeforeGradeDeletion.grades.firstOrNull { it.id == grade.id })
+        }
 
         gradeUtils.delete(newGrades.map { it.id })
         val gradesAfterDeletion = gradeUtils.get(newGrades.map { it.id })
