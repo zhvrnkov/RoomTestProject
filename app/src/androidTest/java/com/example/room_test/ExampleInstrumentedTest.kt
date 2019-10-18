@@ -22,7 +22,7 @@ import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    private lateinit var database: AppDatabase
+    /*private lateinit var database: AppDatabase
 
     private lateinit var rubricUtils: EntityUtils<MockRubricDTO>
     private lateinit var gradeUtils: EntityUtils<MockGradeDTO>
@@ -115,5 +115,5 @@ class ExampleInstrumentedTest {
     @After
     fun tearDown() {
         database.close()
-    }
+    }*/
 }
