@@ -4,12 +4,17 @@ import androidx.room.*
 import com.example.room_test.Rubric
 import com.example.room_test.RubricWithRelations
 import com.example.room_test.SkillSet
+import com.example.room_test.SkillSetWithRelations
 
-interface RubricFields<GradeDTO : GradeFields> {
+interface RubricFields<
+        GradeDTO : GradeFields,
+        MicrotaskDTO : MicrotaskFields,
+        SkillSetDTO : SkillSetFields<MicrotaskDTO>>
+{
     var id: Long
     var title: String
     var grades: List<GradeDTO>
-    var skillSets: List<SkillSet>
+    var skillSets: List<SkillSetDTO>
 }
 
 @Dao
@@ -32,33 +37,57 @@ abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
     abstract fun pGet(ids: List<Long>): List<RubricWithRelations>
 }
 
-open class RubricUtils<GradeDTO : GradeFields, RubricDTO : RubricFields<GradeDTO>>(
-    override val dao: RubricDao,
+open class RubricUtils<
+        GradeDTO : GradeFields,
+        MicrotaskDTO : MicrotaskFields,
+        SkillSetDTO : SkillSetFields<MicrotaskDTO>,
+        RubricDTO : RubricFields<GradeDTO, MicrotaskDTO, SkillSetDTO>>
+(
+    override val dao: BaseDao<Rubric, RubricWithRelations>,
     private val dtoClass: Class<RubricDTO>,
-    private val gradeDtoClass: Class<GradeDTO>
-) : BaseUtils<RubricDTO, Rubric, RubricWithRelations, RubricDao>()
+    private val gradeDtoClass: Class<GradeDTO>,
+    private val skillSetDtoClass: Class<SkillSetDTO>,
+    private val microtaskDtoClass: Class<MicrotaskDTO>
+) : BaseUtils<RubricDTO, Rubric, RubricWithRelations, BaseDao<Rubric, RubricWithRelations>>()
 {
     companion object {
-        fun <GradeDTO : GradeFields, RubricDTO : RubricFields<GradeDTO>>
-                staticMapFields(fields: RubricDTO): Rubric {
+        fun <GradeDTO : GradeFields,
+             MicrotaskDTO : MicrotaskFields,
+             SkillSetDTO : SkillSetFields<MicrotaskDTO>,
+             RubricDTO : RubricFields<GradeDTO, MicrotaskDTO, SkillSetDTO>
+        > staticMapFields(fields: RubricDTO): Rubric {
             return Rubric(fields.id, fields.title)
         }
 
-        fun <GradeDTO : GradeFields, RubricDTO : RubricFields<GradeDTO>> staticMapEntity(
+        fun <GradeDTO : GradeFields,
+             MicrotaskDTO : MicrotaskFields,
+             SkillSetDTO : SkillSetFields<MicrotaskDTO>,
+             RubricDTO : RubricFields<GradeDTO, MicrotaskDTO, SkillSetDTO>
+        > staticMapEntity(
             entity: RubricWithRelations,
+            skillSetsWithRelations: List<SkillSetWithRelations>,
             dtoClass: Class<RubricDTO>,
-            gradeDtoClass: Class<GradeDTO>
+            gradeDtoClass: Class<GradeDTO>,
+            skillSetDtoClass: Class<SkillSetDTO>,
+            microtaskDtoClass: Class<MicrotaskDTO>
         ): RubricDTO {
             val fields = dtoClass.newInstance()
             fields.id = entity.rubric.id
             fields.title = entity.rubric.title
             fields.grades = entity.grades.map { GradeUtils.staticMapEntity(it, gradeDtoClass) }
-            //fields.skillSets = entity.skillSets.map { SkillSetUtils.staticMapEntity(it, )}
+            fields.skillSets = skillSetsWithRelations.map {
+                SkillSetUtils.staticMapEntity(it, skillSetDtoClass, microtaskDtoClass)
+            }
 
             return fields
         }
     }
 
     override fun mapFields(fields: RubricDTO): Rubric = staticMapFields(fields)
-    override fun mapEntity(entity: RubricWithRelations): RubricDTO = staticMapEntity(entity, dtoClass, gradeDtoClass)
+    override fun mapEntity(entity: RubricWithRelations): RubricDTO = staticMapEntity(
+        entity, emptyList(), dtoClass, gradeDtoClass, skillSetDtoClass, microtaskDtoClass)
+}
+
+fun main() {
+
 }

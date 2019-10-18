@@ -14,7 +14,7 @@ interface EntityUtils<EntityFields> {
     fun insert(item: EntityFields)
 }
 
-internal interface EntityUtilsRealization<
+interface EntityUtilsRealization<
         Entity, EntityWithRelations, EntityFields, Dao: BaseDao<Entity, EntityWithRelations>>
 {
     val dao: Dao
