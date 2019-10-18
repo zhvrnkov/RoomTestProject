@@ -16,20 +16,18 @@ abstract class GenericMapMethodsTest
     abstract val utils: Utils
     abstract val newEntityWithRelations: EntityWithRelations
     abstract val newDTO: DTO
-    abstract fun compareEntity(entity: Entity, dto: DTO): Boolean
-    abstract fun compareEntityWithRelations(entity: EntityWithRelations, dto: DTO): Boolean
 
     @Test
     fun testMapEntity() {
         val entity = newEntityWithRelations
         val dto = utils.mapEntity(entity)
-        assertTrue(compareEntityWithRelations(entity, dto))
+        assertTrue(dto?.equals(entity) ?: false)
     }
 
     @Test
     fun testMapFields() {
         val dto = newDTO
         val entity = utils.mapFields(dto)
-        assertTrue(compareEntity(entity, dto))
+        assertTrue(dto?.equals(entity) ?: false)
     }
 }
