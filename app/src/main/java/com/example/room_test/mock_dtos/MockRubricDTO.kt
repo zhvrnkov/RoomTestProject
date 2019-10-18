@@ -9,8 +9,8 @@ data class MockRubricDTO(
     override var id: Long = -1,
     override var title: String = "Bad title",
     override var grades: List<MockGradeDTO> = emptyList(),
-    override var skillSets: List<SkillSet> = emptyList()
-) : RubricFields<MockGradeDTO> {
+    override var skillSets: List<MockSkillSetDTO> = emptyList()
+) : RubricFields<MockGradeDTO, MockMicrotaskDTO, MockSkillSetDTO> {
     companion object {
         fun new(): MockRubricDTO {
             return MockRubricDTO(Long.newId(), "Lorem")

@@ -32,15 +32,16 @@ abstract class SkillSetDao : BaseDao<SkillSet, SkillSetWithRelations> {
     abstract fun pGet(ids: List<Long>): List<SkillSetWithRelations>
 }
 
-class SkillSetUtils<MicrotaskDTO : MicrotaskFields, SkillSetDTO : SkillSetFields<MicrotaskDTO>>(
-    override val dao: SkillSetDao,
+open class SkillSetUtils<MicrotaskDTO : MicrotaskFields, SkillSetDTO : SkillSetFields<MicrotaskDTO>>(
+    override val dao: BaseDao<SkillSet, SkillSetWithRelations>,
     private val dtoClass: Class<SkillSetDTO>,
     private val microtaskDtoClass: Class<MicrotaskDTO>
-) : BaseUtils<SkillSetDTO, SkillSet, SkillSetWithRelations, SkillSetDao>()
+) : BaseUtils<SkillSetDTO, SkillSet, SkillSetWithRelations, BaseDao<SkillSet, SkillSetWithRelations>>()
 {
     companion object {
         fun <MicrotaskDTO : MicrotaskFields, SkillSetDTO : SkillSetFields<MicrotaskDTO>> staticMapFields(
-            fields: SkillSetDTO): SkillSet {
+            fields: SkillSetDTO
+        ): SkillSet {
             return SkillSet(fields.id, fields.title, fields.rubricId)
         }
 
@@ -50,10 +51,10 @@ class SkillSetUtils<MicrotaskDTO : MicrotaskFields, SkillSetDTO : SkillSetFields
             microtaskDtoClass: Class<MicrotaskDTO>
         ): SkillSetDTO {
             val fields = dtoClass.newInstance()
-            fields.id = entity.skillSet.id
+            /*fields.id = entity.skillSet.id
             fields.title = entity.skillSet.title
             fields.rubricId = entity.skillSet.rubricId
-            fields.microtasks = entity.microtasks.map { MicrotaskUtils.staticMapEntity(it, microtaskDtoClass) }
+            fields.microtasks = emptyList()*///entity.microtasks.map { MicrotaskUtils.staticMapEntity(it, microtaskDtoClass) }
 
             return fields
         }
