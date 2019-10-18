@@ -15,7 +15,6 @@ abstract class GenericMapMethodsTest
 <Entity, EntityWithRelations, DTO, Utils : Mapper<Entity, EntityWithRelations, DTO>> {
     abstract val utils: Utils
     abstract val newEntityWithRelations: EntityWithRelations
-    abstract val newEntity: Entity
     abstract val newDTO: DTO
     abstract fun compareEntity(entity: Entity, dto: DTO): Boolean
     abstract fun compareEntityWithRelations(entity: EntityWithRelations, dto: DTO): Boolean
