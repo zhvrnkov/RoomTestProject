@@ -3,11 +3,13 @@ package com.example.room_test.entity_utils
 import androidx.room.*
 import com.example.room_test.Rubric
 import com.example.room_test.RubricWithRelations
+import com.example.room_test.SkillSet
 
 interface RubricFields<GradeDTO : GradeFields> {
     var id: Long
     var title: String
     var grades: List<GradeDTO>
+    var skillSets: List<SkillSet>
 }
 
 @Dao
@@ -51,6 +53,7 @@ open class RubricUtils<GradeDTO : GradeFields, RubricDTO : RubricFields<GradeDTO
             fields.id = entity.rubric.id
             fields.title = entity.rubric.title
             fields.grades = entity.grades.map { GradeUtils.staticMapEntity(it, gradeDtoClass) }
+            //fields.skillSets = entity.skillSets.map { SkillSetUtils.staticMapEntity(it, )}
 
             return fields
         }

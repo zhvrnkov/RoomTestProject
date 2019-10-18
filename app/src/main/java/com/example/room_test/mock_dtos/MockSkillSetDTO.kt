@@ -31,7 +31,10 @@ data class MockSkillSetDTO(
                 ).all { it }
             }
             is SkillSetWithRelations -> {
-                this.equals(other.skillSet) && this.microtasks == other.microtasks
+                listOf(
+                    this.equals(other.skillSet),
+                    this.microtasks == other.microtasks
+                ).all { it }
             }
             else -> super.equals(other)
         }

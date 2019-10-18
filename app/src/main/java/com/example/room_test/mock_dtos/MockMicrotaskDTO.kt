@@ -33,4 +33,8 @@ data class MockMicrotaskDTO(
             else -> super.equals(other)
         }
     }
+
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
 }
