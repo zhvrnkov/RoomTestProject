@@ -7,7 +7,7 @@ import com.example.room_test.entity_utils.RubricFields
 
 data class MockRubricDTO(
     override var id: Long = -1,
-    override var title: String = "Bad title",
+    override var title: String = "",
     override var grades: List<MockGradeDTO> = emptyList(),
     override var skillSets: List<MockSkillSetDTO> = emptyList()
 ) : RubricFields<MockGradeDTO, MockMicrotaskDTO, MockSkillSetDTO> {

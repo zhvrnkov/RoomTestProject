@@ -47,7 +47,8 @@ open class RubricUtils<
     private val dtoClass: Class<RubricDTO>,
     private val gradeDtoClass: Class<GradeDTO>,
     private val skillSetDtoClass: Class<SkillSetDTO>,
-    private val microtaskDtoClass: Class<MicrotaskDTO>
+    private val microtaskDtoClass: Class<MicrotaskDTO>,
+    private val getSkillSetsWithRelations: ((List<Long>) -> List<SkillSetWithRelations>)
 ) : BaseUtils<RubricDTO, Rubric, RubricWithRelations, BaseDao<Rubric, RubricWithRelations>>()
 {
     companion object {
@@ -84,10 +85,10 @@ open class RubricUtils<
     }
 
     override fun mapFields(fields: RubricDTO): Rubric = staticMapFields(fields)
-    override fun mapEntity(entity: RubricWithRelations): RubricDTO = staticMapEntity(
-        entity, emptyList(), dtoClass, gradeDtoClass, skillSetDtoClass, microtaskDtoClass)
-}
-
-fun main() {
-
+    override fun mapEntity(entity: RubricWithRelations): RubricDTO {
+        val skillSets = getSkillSetsWithRelations(entity.skillSets.map { it.id })
+        return staticMapEntity(
+            entity, skillSets, dtoClass, gradeDtoClass, skillSetDtoClass, microtaskDtoClass
+        )
+    }
 }
