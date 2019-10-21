@@ -30,10 +30,10 @@ abstract class MicrotaskDao : BaseDao<Microtask, Microtask> {
     abstract fun pGet(ids: List<Long>): List<Microtask>
 }
 
-class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(
-    override val dao: MicrotaskDao,
+open class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(
+    override val dao: BaseDao<Microtask, Microtask>,
     private val dtoClass: Class<MicrotaskDTO>
-) : BaseUtils<MicrotaskDTO, Microtask, Microtask, MicrotaskDao>()
+) : BaseUtils<MicrotaskDTO, Microtask, Microtask, BaseDao<Microtask, Microtask>>()
 {
     companion object {
         fun <MicrotaskDTO : MicrotaskFields> staticMapFields(fields: MicrotaskDTO): Microtask {

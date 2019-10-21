@@ -21,26 +21,22 @@ data class MockSkillSetDTO(
         }
     }
 
-    override fun equals(other: Any?): Boolean {
-        return when (other) {
-            is SkillSet -> {
-                listOf(
-                    id == other.id,
-                    title == other.title,
-                    rubricId == other.rubricId
-                ).all { it }
-            }
-            is SkillSetWithRelations -> {
-                listOf(
-                    this.equals(other.skillSet),
-                    this.microtasks == other.microtasks
-                ).all { it }
-            }
-            else -> super.equals(other)
+    override fun equals(other: Any?): Boolean = when (other) {
+        is SkillSet -> {
+            listOf(
+                id == other.id,
+                title == other.title,
+                rubricId == other.rubricId
+            ).all { it }
         }
+        is SkillSetWithRelations -> {
+            listOf(
+                this.equals(other.skillSet),
+                this.microtasks == other.microtasks
+            ).all { it }
+        }
+        else -> super.equals(other)
     }
 
-    override fun hashCode(): Int {
-        return super.hashCode()
-    }
+    override fun hashCode() = super.hashCode()
 }

@@ -1,6 +1,7 @@
 package com.example.room_test.helpers
 
 import com.example.room_test.*
+import com.example.room_test.mock_dtos.MockInstructorDTO
 import com.example.room_test.mock_dtos.newId
 
 object MockEntityGenerator {
@@ -14,4 +15,30 @@ object MockEntityGenerator {
     fun microtaskMocks(skillSetId: Long): List<Microtask> = (0..10).map {
         Microtask(Long.newId(), "$it", "lorem #$it", skillSetId)
     }
+    fun instructor(): Instructor = Instructor(
+        id = -1,
+        address = "address",
+        address2 = "address2",
+        avatar = "avatar",
+        city = "city",
+        country = "country",
+        credentials = "credentials",
+        depiction = "depiction",
+        email = "email",
+        firstName = "firstName",
+        lang = "lang",
+        lastName = "lastName",
+        loginUsername = "loginUsername",
+        nauticedStatus = "nauticedStatus",
+        phone = "phone",
+        phoneStudent = "phoneStudent",
+        state = "state",
+        zip = "zip",
+        schoolId = -1,
+        assessmentIds = emptyList(),
+        studentIds = emptyList(),
+        gradeColors = emptyList(),
+        flags = emptyList(),
+        fbid = emptyMap()
+    )
 }
