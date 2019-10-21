@@ -75,4 +75,17 @@ class MockMicrotaskDao : MockDao<Microtask, Microtask>() {
     override val getEntityWithRelation: (entity: Microtask) -> Microtask
         get() = { entity -> entity }
 }
+
+class MockInstructorDao : MockDao<Instructor, Instructor>() {
+    override val deleteFilterPredicate: (ids: List<Long>, item: Instructor) -> Boolean
+        get() = { ids, item -> item.id in ids }
+
+    override val getEntityPredicate: (entity: Instructor, entityWithRelation: Instructor) -> Boolean
+        get() = { entity, entityWR -> entity.id == entityWR.id }
+
+    override val replaceEntityWithRelations: (entity: Instructor, old: Instructor) -> Instructor
+        get() = { entity, old -> entity }
+
+    override val getEntityWithRelation: (entity: Instructor) -> Instructor
+        get() = { entity -> entity }
 }
