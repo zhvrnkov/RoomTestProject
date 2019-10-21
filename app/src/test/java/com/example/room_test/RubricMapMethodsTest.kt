@@ -6,26 +6,31 @@ import com.example.room_test.helpers.*
 import com.example.room_test.mock_dtos.*
 import org.junit.Before
 
-class MockRubricUtils(dao: MockRubricDao) :
+class MockRubricUtils(dao: MockRubricDao, closure: (List<Long>) -> List<SkillSetWithRelations>) :
     RubricUtils<MockGradeDTO, MockMicrotaskDTO, MockSkillSetDTO, MockRubricDTO>(
         dao,
         MockRubricDTO::class.java,
         MockGradeDTO::class.java,
         MockSkillSetDTO::class.java,
         MockMicrotaskDTO::class.java,
-        { MockSkillSetDao().get(it) }
+        closure
     ), Mapper<Rubric, RubricWithRelations, MockRubricDTO>
 
 class RubricMapMethodsTest :
     GenericMapMethodsTest<Rubric, RubricWithRelations, MockRubricDTO, MockRubricUtils>()
 {
-    override val utils: MockRubricUtils = MockRubricUtils(dao = MockRubricDao())
+    private val skillSetDao = MockSkillSetDao()
+
+    override val utils: MockRubricUtils by lazy {
+        MockRubricUtils(dao = MockRubricDao(), closure = skillSetDao::get)
+    }
 
     override val newEntityWithRelations: RubricWithRelations
         get() {
             val rubric = MockEntityGenerator.rubricMock()
             val grades = MockEntityGenerator.gradeMocks(rubric.id)
             val skillSets = MockEntityGenerator.skillSetMocks(rubric.id)
+            skillSets.forEach(skillSetDao::insert)
             return RubricWithRelations(rubric, grades, skillSets)
         }
 

@@ -1,9 +1,6 @@
 package com.example.room_test.helpers
 
-import com.example.room_test.Rubric
-import com.example.room_test.RubricWithRelations
-import com.example.room_test.SkillSet
-import com.example.room_test.SkillSetWithRelations
+import com.example.room_test.*
 import com.example.room_test.entity_utils.*
 
 abstract class MockDao<Entity, EntityWithRelations> :
@@ -63,4 +60,19 @@ class MockSkillSetDao : MockDao<SkillSet, SkillSetWithRelations>() {
 
     override val getEntityWithRelation: (entity: SkillSet) -> SkillSetWithRelations
         get() = { entity -> SkillSetWithRelations(entity, emptyList()) }
+}
+
+class MockMicrotaskDao : MockDao<Microtask, Microtask>() {
+    override val deleteFilterPredicate: (ids: List<Long>, item: Microtask) -> Boolean
+        get() = { ids, item -> item.id in ids }
+
+    override val getEntityPredicate: (entity: Microtask, entityWithRelation: Microtask) -> Boolean
+        get() = { entity, entityWR -> entity.id == entityWR.id }
+
+    override val replaceEntityWithRelations: (entity: Microtask, old: Microtask) -> Microtask
+        get() = { entity, old -> entity }
+
+    override val getEntityWithRelation: (entity: Microtask) -> Microtask
+        get() = { entity -> entity }
+}
 }
