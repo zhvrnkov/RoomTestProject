@@ -51,10 +51,10 @@ open class SkillSetUtils<MicrotaskDTO : MicrotaskFields, SkillSetDTO : SkillSetF
             microtaskDtoClass: Class<MicrotaskDTO>
         ): SkillSetDTO {
             val fields = dtoClass.newInstance()
-            /*fields.id = entity.skillSet.id
+            fields.id = entity.skillSet.id
             fields.title = entity.skillSet.title
             fields.rubricId = entity.skillSet.rubricId
-            fields.microtasks = emptyList()*///entity.microtasks.map { MicrotaskUtils.staticMapEntity(it, microtaskDtoClass) }
+            fields.microtasks = entity.microtasks.map { MicrotaskUtils.staticMapEntity(it, microtaskDtoClass) }
 
             return fields
         }

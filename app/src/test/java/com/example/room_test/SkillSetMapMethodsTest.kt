@@ -25,6 +25,7 @@ class SkillSetMapMethodsTest :
             val microtasks = MockEntityGenerator.microtaskMocks(skillSet.id)
             return SkillSetWithRelations(skillSet, microtasks)
         }
+
     override val newDTO: MockSkillSetDTO
         get() {
             val skillSet = MockSkillSetDTO.new(rubricId)

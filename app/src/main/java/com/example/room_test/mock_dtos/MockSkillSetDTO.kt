@@ -5,10 +5,10 @@ import com.example.room_test.SkillSetWithRelations
 import com.example.room_test.entity_utils.SkillSetFields
 
 data class MockSkillSetDTO(
-    override var id: Long,
-    override var title: String,
-    override var rubricId: Long,
-    override var microtasks: List<MockMicrotaskDTO>
+    override var id: Long = -1,
+    override var title: String = "",
+    override var rubricId: Long = -1,
+    override var microtasks: List<MockMicrotaskDTO> = emptyList()
 ) : SkillSetFields<MockMicrotaskDTO> {
     companion object {
         fun new(rubricId: Long): MockSkillSetDTO {
