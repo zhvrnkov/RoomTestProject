@@ -13,7 +13,11 @@ class MockSkillSetUtils(dao: MockSkillSetDao) :
 ), Mapper<SkillSet, SkillSetWithRelations, MockSkillSetDTO>
 
 class SkillSetMapMethodsTest :
-        GenericMapMethodsTest<SkillSet, SkillSetWithRelations, MockSkillSetDTO, MockSkillSetUtils>()
+        GenericMapMethodsTest<
+                SkillSet,
+                SkillSetWithRelations,
+                MockSkillSetDTO,
+                MockSkillSetUtils>()
 {
     private val rubricId = Long.newId()
 
@@ -29,7 +33,11 @@ class SkillSetMapMethodsTest :
         get() {
             val skillSet = MockSkillSetDTO.new(rubricId)
             skillSet.microtasks = (0..10).map {
-                MockMicrotaskDTO(Long.newId(), "$it", "lorem #$it", skillSet.id)
+                MockMicrotaskDTO(
+                    Long.newId(),
+                    "$it",
+                    "lorem #$it",
+                    skillSet.id)
             }
             return skillSet
         }

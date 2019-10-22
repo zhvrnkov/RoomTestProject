@@ -15,6 +15,14 @@ data class MockAssessmentDTO(
     override var microtaskGrades: List<MockMicrotaskGradeDTO> = emptyList(),
     override var studentIds: List<Long> = emptyList()
 ) : AssessmentFields<MockMicrotaskGradeDTO> {
+    companion object {
+        fun new() = MockAssessmentDTO(
+            id = Long.newId(),
+            instructorId = Long.newId(),
+            rubricId = Long.newId()
+        )
+    }
+
     override fun equals(other: Any?): Boolean = when(other) {
         is Assessment -> {
             listOf(

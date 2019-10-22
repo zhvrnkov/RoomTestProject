@@ -41,4 +41,25 @@ object MockEntityGenerator {
         flags = emptyList(),
         fbid = emptyMap()
     )
+    fun assessment() = Assessment(
+        id = Long.newId(),
+        date = Long.newId(),
+        isAddedToServer = true,
+        isSynced = true,
+        schooldId = Long.newId(),
+        instructorId = Long.newId(),
+        rubricId = Long.newId(),
+        studentIds = (0..10).map { Long.newId() }
+    )
+    fun microtaskGradeMocks(assessmentId: Long) = (0..10).map {
+        MicrotaskGrade(
+            id = Long.newId(),
+            isSynced = true,
+            lastUpdate = Long.newId(),
+            assessmentId = assessmentId,
+            gradeId = Long.newId(),
+            microtaskId = Long.newId(),
+            studentId = Long.newId()
+        )
+    }
 }
