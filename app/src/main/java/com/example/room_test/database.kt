@@ -238,7 +238,7 @@ data class AssessmentWithRelations(
         entityColumn = "assessment_id",
         entity = MicrotaskGrade::class
     )
-    val microtaskGrades: List<Microtask>
+    val microtaskGrades: List<MicrotaskGrade>
 )
 
 @Database(entities = [Rubric::class, Grade::class, SkillSet::class], version = 1)
