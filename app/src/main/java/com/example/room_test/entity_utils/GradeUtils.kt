@@ -30,10 +30,10 @@ abstract class GradeDao : BaseDao<Grade, Grade> {
     abstract fun pGet(ids: List<Long>): List<Grade>
 }
 
-class GradeUtils<GradeDTO : GradeFields>(
-    override val dao: GradeDao,
+open class GradeUtils<GradeDTO : GradeFields>(
+    override val dao: BaseDao<Grade, Grade>,
     private val dtoClass: Class<GradeDTO>
-) : BaseUtils<GradeDTO, Grade, Grade, GradeDao>()
+) : BaseUtils<GradeDTO, Grade, Grade, BaseDao<Grade, Grade>>()
 {
     companion object {
         fun <GradeDTO : GradeFields>

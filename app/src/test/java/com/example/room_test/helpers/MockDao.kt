@@ -128,3 +128,19 @@ class MockMicrotaskGradeDao : MockDao<MicrotaskGrade, MicrotaskGrade>() {
     override val getEntityWithRelation: (entity: MicrotaskGrade) -> MicrotaskGrade
         get() = { entity -> entity }
 }
+
+class MockGradeDao : MockDao<Grade, Grade>() {
+    override val deleteFilterPredicate: (ids: List<Long>, item: Grade) -> Boolean
+        get() = { ids, item -> item.id in ids }
+
+    override val getEntityPredicate:
+                (entity: Grade, entityWithRelation: Grade) -> Boolean
+        get() = { entity, entityWR -> entity.id == entityWR.id }
+
+    override val replaceEntityWithRelations:
+                (entity: Grade, old: Grade) -> Grade
+        get() = { entity, _ -> entity }
+
+    override val getEntityWithRelation: (entity: Grade) -> Grade
+        get() = { entity -> entity }
+}
