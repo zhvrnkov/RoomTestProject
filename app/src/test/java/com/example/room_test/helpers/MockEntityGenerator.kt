@@ -61,4 +61,18 @@ object MockEntityGenerator {
             studentId = Long.newId()
         )
     }
+    fun students(instructorId: Long) = (0..10).map {
+        Student(
+            id = Long.newId(),
+            name = "$it student",
+            email = "@$it.com",
+            level = "$it",
+            logbookPass = "${it * 6}",
+            qualifiedDays = it.toInt(),
+            rank = "$it",
+            instructorId = instructorId,
+            assessmentIds = emptyList(),
+            microtaskGradeIds = emptyList()
+        )
+    }
 }

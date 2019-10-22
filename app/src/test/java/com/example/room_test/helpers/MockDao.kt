@@ -144,3 +144,19 @@ class MockGradeDao : MockDao<Grade, Grade>() {
     override val getEntityWithRelation: (entity: Grade) -> Grade
         get() = { entity -> entity }
 }
+
+class MockStudentDao : MockDao<Student, Student>() {
+    override val deleteFilterPredicate: (ids: List<Long>, item: Student) -> Boolean
+        get() = { ids, item -> item.id in ids }
+
+    override val getEntityPredicate:
+                (entity: Student, entityWithRelation: Student) -> Boolean
+        get() = { entity, entityWR -> entity.id == entityWR.id }
+
+    override val replaceEntityWithRelations:
+                (entity: Student, old: Student) -> Student
+        get() = { entity, _ -> entity }
+
+    override val getEntityWithRelation: (entity: Student) -> Student
+        get() = { entity -> entity }
+}
