@@ -1,5 +1,6 @@
 package com.example.room_test
 
+import com.example.room_test.entities.Instructor
 import com.example.room_test.entity_utils.InstructorUtils
 import com.example.room_test.helpers.GenericMapMethodsTest
 import com.example.room_test.helpers.Mapper

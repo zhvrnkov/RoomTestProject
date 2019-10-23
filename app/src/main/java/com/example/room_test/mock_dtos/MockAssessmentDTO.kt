@@ -1,7 +1,7 @@
 package com.example.room_test.mock_dtos
 
-import com.example.room_test.Assessment
-import com.example.room_test.AssessmentWithRelations
+import com.example.room_test.entities.Assessment
+import com.example.room_test.entities.AssessmentWithRelations
 import com.example.room_test.entity_utils.AssessmentFields
 
 data class MockAssessmentDTO(

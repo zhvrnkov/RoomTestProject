@@ -1,8 +1,8 @@
 package com.example.room_test.mock_dtos
 
-import com.example.room_test.Rubric
-import com.example.room_test.RubricWithRelations
-import com.example.room_test.SkillSet
+import com.example.room_test.entities.Rubric
+import com.example.room_test.entities.RubricWithRelations
+import com.example.room_test.entities.SkillSet
 import com.example.room_test.entity_utils.RubricFields
 
 data class MockRubricDTO(

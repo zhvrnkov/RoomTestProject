@@ -1,6 +1,8 @@
 package com.example.room_test
 
-import com.example.room_test.entity_utils.RubricDao
+import com.example.room_test.entities.Rubric
+import com.example.room_test.entities.RubricWithRelations
+import com.example.room_test.entities.SkillSetWithRelations
 import com.example.room_test.entity_utils.RubricUtils
 import com.example.room_test.helpers.*
 import com.example.room_test.mock_dtos.*

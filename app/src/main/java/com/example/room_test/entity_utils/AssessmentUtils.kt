@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.room_test.Assessment
-import com.example.room_test.AssessmentWithRelations
+import com.example.room_test.entities.Assessment
+import com.example.room_test.entities.AssessmentWithRelations
 
 interface AssessmentFields<MicrotaskGradeDTO : MicrotaskGradeFields> {
     var id: Long

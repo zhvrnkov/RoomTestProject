@@ -1,5 +1,6 @@
 package com.example.room_test
 
+import com.example.room_test.entities.Microtask
 import com.example.room_test.entity_utils.MicrotaskUtils
 import com.example.room_test.helpers.GenericMapMethodsTest
 import com.example.room_test.helpers.Mapper

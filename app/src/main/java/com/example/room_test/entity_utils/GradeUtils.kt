@@ -1,7 +1,7 @@
 package com.example.room_test.entity_utils
 
 import androidx.room.*
-import com.example.room_test.Grade
+import com.example.room_test.entities.Grade
 
 interface GradeFields {
     var id: Long

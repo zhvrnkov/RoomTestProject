@@ -4,8 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.room_test.Microtask
-import com.example.room_test.MicrotaskGrade
+import com.example.room_test.entities.MicrotaskGrade
 
 interface MicrotaskGradeFields {
     var id: Long

@@ -1,6 +1,6 @@
 package com.example.room_test.mock_dtos
 
-import com.example.room_test.Instructor
+import com.example.room_test.entities.Instructor
 import com.example.room_test.entity_utils.InstructorFields
 
 data class MockInstructorDTO(

@@ -1,7 +1,7 @@
 package com.example.room_test.mock_dtos
 
-import com.example.room_test.SkillSet
-import com.example.room_test.SkillSetWithRelations
+import com.example.room_test.entities.SkillSet
+import com.example.room_test.entities.SkillSetWithRelations
 import com.example.room_test.entity_utils.SkillSetFields
 
 data class MockSkillSetDTO(

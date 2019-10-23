@@ -1,6 +1,6 @@
 package com.example.room_test.mock_dtos
 
-import com.example.room_test.Microtask
+import com.example.room_test.entities.Microtask
 import com.example.room_test.entity_utils.MicrotaskFields
 
 data class MockMicrotaskDTO(

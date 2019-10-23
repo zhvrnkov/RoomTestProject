@@ -1,8 +1,9 @@
 package com.example.room_test
 
+import com.example.room_test.entities.Assessment
+import com.example.room_test.entities.AssessmentWithRelations
 import com.example.room_test.entity_utils.AssessmentUtils
 import com.example.room_test.helpers.GenericMapMethodsTest
-import com.example.room_test.helpers.Mapper
 import com.example.room_test.helpers.MockAssessmentDao
 import com.example.room_test.helpers.MockEntityGenerator
 import com.example.room_test.mock_dtos.MockAssessmentDTO

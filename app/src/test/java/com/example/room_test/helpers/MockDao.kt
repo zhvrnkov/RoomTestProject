@@ -1,6 +1,6 @@
 package com.example.room_test.helpers
 
-import com.example.room_test.*
+import com.example.room_test.entities.*
 import com.example.room_test.entity_utils.*
 
 abstract class MockDao<Entity, EntityWithRelations> :

@@ -1,6 +1,6 @@
 package com.example.room_test.mock_dtos
 
-import com.example.room_test.Student
+import com.example.room_test.entities.Student
 import com.example.room_test.entity_utils.StudentFields
 
 data class MockStudentDTO(

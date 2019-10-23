@@ -1,7 +1,7 @@
 package com.example.room_test.entity_utils
 
 import androidx.room.*
-import com.example.room_test.Microtask
+import com.example.room_test.entities.Microtask
 
 interface MicrotaskFields {
     var id: Long

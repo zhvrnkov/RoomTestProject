@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.room_test.Student
+import com.example.room_test.entities.Student
 
 interface StudentFields {
     var id: Long

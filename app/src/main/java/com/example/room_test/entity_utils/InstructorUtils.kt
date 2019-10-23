@@ -2,7 +2,7 @@ package com.example.room_test.entity_utils
 
 import androidx.room.Dao
 import androidx.room.*
-import com.example.room_test.Instructor
+import com.example.room_test.entities.Instructor
 
 interface InstructorFields {
     var id: Long

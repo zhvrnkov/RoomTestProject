@@ -1,10 +1,10 @@
 package com.example.room_test.entity_utils
 
 import androidx.room.*
-import com.example.room_test.Rubric
-import com.example.room_test.RubricWithRelations
-import com.example.room_test.SkillSet
-import com.example.room_test.SkillSetWithRelations
+import com.example.room_test.entities.Rubric
+import com.example.room_test.entities.RubricWithRelations
+import com.example.room_test.entities.SkillSet
+import com.example.room_test.entities.SkillSetWithRelations
 
 interface RubricFields<
         GradeDTO : GradeFields,
