@@ -1,8 +1,6 @@
 package com.example.room_test
 
-import androidx.room.*
-import com.example.room_test.entities.*
-import com.example.room_test.entity_utils.*
+import androidx.room.TypeConverter
 
 class AppTypeConverter {
     @TypeConverter
@@ -36,31 +34,4 @@ class AppTypeConverter {
 
             output
         }.toMap()
-}
-
-@Database(
-    entities = [
-        School::class,
-        Instructor::class,
-        Rubric::class,
-        Grade::class,
-        SkillSet::class,
-        Microtask::class,
-        Assessment::class,
-        MicrotaskGrade::class,
-        Student::class
-    ],
-    version = 1
-)
-@TypeConverters(AppTypeConverter::class)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun schooldDao(): SchoolDao
-    abstract fun instructorDao(): InstructorDao
-    abstract fun rubricDao(): RubricDao
-    abstract fun gradeDao(): GradeDao
-    abstract fun skillSetDao(): SkillSetDao
-    abstract fun microtaskDao(): MicrotaskDao
-    abstract fun assessmentDao(): AssessmentDao
-    abstract fun microtaskGradeDao(): MicrotaskGradeDao
-    abstract fun studentDao(): StudentDao
 }
