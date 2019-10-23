@@ -4,13 +4,13 @@ import androidx.room.*
 
 @Entity(tableName = "schools")
 data class School(
-    val id: Long,
+    @PrimaryKey val id: Long,
     val name: String
 )
 
 @Entity(
     tableName = "instructors",
-    indices = [Index("loginUsername", "id")],
+    indices = [Index("login_username", "id", unique = true)],
     foreignKeys = [ForeignKey(
         entity = School::class,
         parentColumns = ["id"],
@@ -19,7 +19,7 @@ data class School(
     )]
 )
 data class Instructor(
-    val id: Long,
+    @PrimaryKey val id: Long,
     val address: String,
     val address2: String,
     val avatar: String,

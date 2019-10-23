@@ -13,7 +13,7 @@ import androidx.room.*
             onDelete = ForeignKey.CASCADE)]
 )
 data class Student(
-    val id: Long,
+    @PrimaryKey val id: Long,
     val name: String,
     val email: String,
     val level: String,

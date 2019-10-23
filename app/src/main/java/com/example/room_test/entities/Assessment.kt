@@ -12,7 +12,7 @@ import androidx.room.*
     )]
 )
 data class Assessment(
-    val id: Long,
+    @PrimaryKey val id: Long,
     val date: Long,
     val isAddedToServer: Boolean,
     val isSynced: Boolean,
@@ -44,7 +44,7 @@ data class Assessment(
     ]
 )
 data class MicrotaskGrade(
-    val id: Long,
+    @PrimaryKey val id: Long,
     @ColumnInfo(name = "is_synced")
     val isSynced: Boolean,
     @ColumnInfo(name = "last_update")
