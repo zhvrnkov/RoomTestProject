@@ -16,16 +16,19 @@ class MockRubricUtils(dao: MockRubricDao, closure: (List<Long>) -> List<SkillSet
         MockSkillSetDTO::class.java,
         MockMicrotaskDTO::class.java,
         closure
-    ), Mapper<Rubric, RubricWithRelations, MockRubricDTO>
+    )
 
 class RubricMapMethodsTest :
-    GenericMapMethodsTest<Rubric, RubricWithRelations, MockRubricDTO, MockRubricUtils>()
+    GenericMapMethodsTest<Rubric, RubricWithRelations, MockRubricDTO>()
 {
     private val skillSetDao = MockSkillSetDao()
 
-    override val utils: MockRubricUtils by lazy {
+    private val utils: MockRubricUtils by lazy {
         MockRubricUtils(dao = MockRubricDao(), closure = skillSetDao::get)
     }
+    override val mapEntity = utils.realization::mapEntity
+    override val mapFields = utils.realization::mapFields
+
 
     override val newEntityWithRelations: RubricWithRelations
         get() {

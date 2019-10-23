@@ -13,17 +13,17 @@ class MockAssessmentUtils(dao: MockAssessmentDao) :
         AssessmentUtils<MockMicrotaskGradeDTO, MockAssessmentDTO>(
             dao,
             MockAssessmentDTO::class.java,
-            MockMicrotaskGradeDTO::class.java
-), Mapper<Assessment, AssessmentWithRelations, MockAssessmentDTO>
+            MockMicrotaskGradeDTO::class.java)
 
 class AssessmentMapMethodsTest :
         GenericMapMethodsTest<
                 Assessment,
                 AssessmentWithRelations,
-                MockAssessmentDTO,
-                MockAssessmentUtils>()
+                MockAssessmentDTO>()
 {
-    override val utils = MockAssessmentUtils(MockAssessmentDao())
+    private val utils = MockAssessmentUtils(MockAssessmentDao())
+    override val mapEntity = utils.realization::mapEntity
+    override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: AssessmentWithRelations
         get() {
             val assessment = MockEntityGenerator.assessment()
@@ -32,7 +32,5 @@ class AssessmentMapMethodsTest :
             return AssessmentWithRelations(assessment, microtaskGrades)
         }
     override val newDTO: MockAssessmentDTO
-        get() {
-            return MockAssessmentDTO.new()
-        }
+        get() = MockAssessmentDTO.new()
 }

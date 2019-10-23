@@ -12,18 +12,19 @@ class MockSkillSetUtils(dao: MockSkillSetDao) :
         dao,
         MockSkillSetDTO::class.java,
         MockMicrotaskDTO::class.java
-), Mapper<SkillSet, SkillSetWithRelations, MockSkillSetDTO>
+)
 
 class SkillSetMapMethodsTest :
         GenericMapMethodsTest<
                 SkillSet,
                 SkillSetWithRelations,
-                MockSkillSetDTO,
-                MockSkillSetUtils>()
+                MockSkillSetDTO>()
 {
     private val rubricId = Long.newId()
 
-    override val utils: MockSkillSetUtils = MockSkillSetUtils(MockSkillSetDao())
+    private val utils: MockSkillSetUtils = MockSkillSetUtils(MockSkillSetDao())
+    override val mapEntity = utils.realization::mapEntity
+    override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: SkillSetWithRelations
         get() {
             val skillSet = MockEntityGenerator.skillSetMocks(rubricId).random()
