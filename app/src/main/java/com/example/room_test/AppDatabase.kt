@@ -43,3 +43,50 @@ internal abstract class Daos : RoomDatabase() {
     abstract fun microtaskGradeDao(): MicrotaskGradeDao
     abstract fun studentDao(): StudentDao
 }
+
+class AppDatabase<
+        SchoolDTO : SchoolFields,
+        InstructorDTO : InstructorFields,
+        GradeDTO : GradeFields,
+        MicrotaskDTO : MicrotaskFields,
+        SkillSetDTO : SkillSetFields<MicrotaskDTO>,
+        RubricDTO : RubricFields<GradeDTO, MicrotaskDTO, SkillSetDTO>,
+        MicrotaskGradeDTO : MicrotaskGradeFields,
+        AssessmentDTO : AssessmentFields<MicrotaskGradeDTO>,
+        StudentDTO : StudentFields>
+(
+    context: Context,
+    schoolDtoClass: Class<SchoolDTO>,
+    instructorDtoClass: Class<InstructorDTO>,
+    rubricDtoClass: Class<RubricDTO>,
+    gradeDtoClass: Class<GradeDTO>,
+    skillSetDtoClass: Class<SkillSetDTO>,
+    microtaskDtoClass: Class<MicrotaskDTO>,
+    microtaskGradeDtoClass: Class<MicrotaskGradeDTO>,
+    assessmentDtoClass: Class<AssessmentDTO>,
+    studentDtoClass: Class<StudentDTO>
+) {
+    val schools: EntityUtils<SchoolDTO>
+    val instructors: EntityUtils<InstructorDTO>
+    val rubrics: EntityUtils<RubricDTO>
+    val skillSets: EntityUtils<SkillSetDTO>
+    val microtasks: EntityUtils<MicrotaskDTO>
+    val grades: EntityUtils<GradeDTO>
+    val microtaskGrades: EntityUtils<MicrotaskGradeDTO>
+    val assessments: EntityUtils<AssessmentDTO>
+    val students: EntityUtils<StudentDTO>
+
+    init {
+        val daos = Room.databaseBuilder(context, Daos::class.java, "app-database").build()
+        schools = SchoolUtils(daos.schooldDao(), schoolDtoClass)
+        instructors = InstructorUtils(daos.instructorDao(), instructorDtoClass)
+        grades = GradeUtils(daos.gradeDao(), gradeDtoClass)
+        microtasks = MicrotaskUtils(daos.microtaskDao(), microtaskDtoClass)
+        skillSets = SkillSetUtils(daos.skillSetDao(), skillSetDtoClass, microtaskDtoClass)
+        rubrics = RubricUtils(
+            daos.rubricDao(), rubricDtoClass, gradeDtoClass, skillSetDtoClass, microtaskDtoClass, skillSets::get)
+        microtaskGrades = MicrotaskGradeUtils(daos.microtaskGradeDao(), microtaskGradeDtoClass)
+        assessments = AssessmentUtils(daos.assessmentDao(), assessmentDtoClass, microtaskGradeDtoClass)
+        students = StudentUtils(daos.studentDao(), studentDtoClass)
+    }
+}
