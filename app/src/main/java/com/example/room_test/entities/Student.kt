@@ -13,7 +13,7 @@ import com.example.room_test.Tables
             childColumns = ["instructor_id"],
             onDelete = ForeignKey.CASCADE)]
 )
-data class Student(
+internal data class Student(
     @PrimaryKey val id: Long,
     val name: String,
     val email: String,

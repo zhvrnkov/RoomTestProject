@@ -4,7 +4,7 @@ import androidx.room.*
 import com.example.room_test.Tables
 
 @Entity(tableName = Tables.schools)
-data class School(
+internal data class School(
     @PrimaryKey val id: Long,
     val name: String
 )
@@ -19,7 +19,7 @@ data class School(
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class Instructor(
+internal data class Instructor(
     @PrimaryKey val id: Long,
     val address: String,
     val address2: String,

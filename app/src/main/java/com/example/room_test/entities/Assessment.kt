@@ -14,7 +14,7 @@ import com.example.room_test.Tables
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class Assessment(
+internal data class Assessment(
     @PrimaryKey val id: Long,
     val date: Long,
     val isAddedToServer: Boolean,
@@ -46,7 +46,7 @@ data class Assessment(
             onDelete = ForeignKey.CASCADE)
     ]
 )
-data class MicrotaskGrade(
+internal data class MicrotaskGrade(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "is_synced")
     val isSynced: Boolean,
@@ -63,7 +63,7 @@ data class MicrotaskGrade(
     val studentId: Long
 )
 
-data class AssessmentWithRelations(
+internal data class AssessmentWithRelations(
     @Embedded val assessment: Assessment,
     @Relation(
         parentColumn = "id",

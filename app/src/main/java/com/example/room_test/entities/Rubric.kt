@@ -4,7 +4,7 @@ import androidx.room.*
 import com.example.room_test.Tables
 
 @Entity(tableName = "rubrics")
-data class Rubric(
+internal data class Rubric(
     @PrimaryKey val id: Long,
     val title: String
 )
@@ -19,7 +19,7 @@ data class Rubric(
         onDelete = ForeignKey.CASCADE)
     ]
 )
-data class Grade(
+internal data class Grade(
     @PrimaryKey val id: Long,
     val score: Int,
     val title: String,
@@ -36,7 +36,7 @@ data class Grade(
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class SkillSet(
+internal data class SkillSet(
     @PrimaryKey val id: Long,
     val title: String,
     @ColumnInfo(name = "rubric_id") val rubricId: Long
@@ -52,14 +52,14 @@ data class SkillSet(
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class Microtask(
+internal data class Microtask(
     @PrimaryKey val id: Long,
     val title: String,
     val content: String,
     @ColumnInfo(name = "skill_set_id") val skillSetId: Long
 )
 
-data class SkillSetWithRelations(
+internal data class SkillSetWithRelations(
     @Embedded
     val skillSet: SkillSet,
 
@@ -71,7 +71,7 @@ data class SkillSetWithRelations(
     val microtasks: List<Microtask>
 )
 
-data class RubricWithRelations(
+internal data class RubricWithRelations(
     @Embedded
     val rubric: Rubric,
 
