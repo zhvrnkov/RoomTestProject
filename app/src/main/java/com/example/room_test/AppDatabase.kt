@@ -1,5 +1,6 @@
 package com.example.room_test
 
+import android.content.Context
 import androidx.room.*
 import com.example.room_test.entities.*
 import com.example.room_test.entity_utils.*
@@ -31,7 +32,7 @@ internal object Tables {
     version = 1
 )
 @TypeConverters(AppTypeConverter::class)
-abstract class AppDatabase : RoomDatabase() {
+internal abstract class Daos : RoomDatabase() {
     abstract fun schooldDao(): SchoolDao
     abstract fun instructorDao(): InstructorDao
     abstract fun rubricDao(): RubricDao
