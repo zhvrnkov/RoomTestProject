@@ -19,7 +19,7 @@ interface RubricFields<
 }
 
 @Dao
-abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
+internal abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
     override fun get(ids: List<Long>): List<RubricWithRelations> = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: Rubric) = pUpdate(entity)
@@ -38,7 +38,7 @@ abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
     abstract fun pGet(ids: List<Long>): List<RubricWithRelations>
 }
 
-open class RubricUtils<
+internal open class RubricUtils<
         GradeDTO : GradeFields,
         MicrotaskDTO : MicrotaskFields,
         SkillSetDTO : SkillSetFields<MicrotaskDTO>,
@@ -49,8 +49,8 @@ open class RubricUtils<
     private val gradeDtoClass: Class<GradeDTO>,
     private val skillSetDtoClass: Class<SkillSetDTO>,
     private val microtaskDtoClass: Class<MicrotaskDTO>,
-    private val getSkillSetsWithRelations: (
-        (List<Long>) -> List<SkillSetWithRelations>)
+    private val getSkillSets: (
+        (List<Long>) -> List<SkillSetDTO>)
 ) : BaseUtils<
         RubricDTO,
         Rubric,
@@ -72,11 +72,9 @@ open class RubricUtils<
              RubricDTO : RubricFields<GradeDTO, MicrotaskDTO, SkillSetDTO>
         > staticMapEntity(
             entity: RubricWithRelations,
-            skillSetsWithRelations: List<SkillSetWithRelations>,
+            skillSets: List<SkillSetDTO>,
             dtoClass: Class<RubricDTO>,
-            gradeDtoClass: Class<GradeDTO>,
-            skillSetDtoClass: Class<SkillSetDTO>,
-            microtaskDtoClass: Class<MicrotaskDTO>
+            gradeDtoClass: Class<GradeDTO>
         ): RubricDTO {
             val fields = dtoClass.newInstance()
             fields.id = entity.rubric.id
@@ -84,13 +82,7 @@ open class RubricUtils<
             fields.grades = entity.grades.map {
                 GradeUtils.staticMapEntity(it, gradeDtoClass)
             }
-            fields.skillSets = skillSetsWithRelations.map {
-                SkillSetUtils.staticMapEntity(
-                    it,
-                    skillSetDtoClass,
-                    microtaskDtoClass
-                )
-            }
+            fields.skillSets = skillSets
 
             return fields
         }
@@ -105,15 +97,13 @@ open class RubricUtils<
         override val dao = dao
         override fun mapFields(fields: RubricDTO): Rubric = staticMapFields(fields)
         override fun mapEntity(entity: RubricWithRelations): RubricDTO {
-            val skillSets = getSkillSetsWithRelations(
+            val skillSets = getSkillSets(
                 entity.skillSets.map { it.id })
             return staticMapEntity(
                 entity,
                 skillSets,
                 dtoClass,
-                gradeDtoClass,
-                skillSetDtoClass,
-                microtaskDtoClass
+                gradeDtoClass
             )
         }
     }

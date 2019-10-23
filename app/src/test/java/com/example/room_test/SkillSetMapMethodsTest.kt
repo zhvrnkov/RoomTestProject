@@ -7,14 +7,14 @@ import com.example.room_test.helpers.GenericMapMethodsTest
 import com.example.room_test.mock_dtos.*
 import com.example.room_test.helpers.*
 
-class MockSkillSetUtils(dao: MockSkillSetDao) :
+internal class MockSkillSetUtils(dao: MockSkillSetDao) :
     SkillSetUtils<MockMicrotaskDTO, MockSkillSetDTO>(
         dao,
         MockSkillSetDTO::class.java,
         MockMicrotaskDTO::class.java
 )
 
-class SkillSetMapMethodsTest :
+internal class SkillSetMapMethodsTest :
         GenericMapMethodsTest<
                 SkillSet,
                 SkillSetWithRelations,

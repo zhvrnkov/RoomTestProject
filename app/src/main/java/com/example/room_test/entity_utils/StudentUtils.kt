@@ -22,7 +22,7 @@ interface StudentFields {
 }
 
 @Dao
-abstract class StudentDao : BaseDao<Student, Student> {
+internal abstract class StudentDao : BaseDao<Student, Student> {
     override fun get(ids: List<Long>): List<Student> = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: Student) = pUpdate(entity)
@@ -41,7 +41,7 @@ abstract class StudentDao : BaseDao<Student, Student> {
     abstract fun pGet(ids: List<Long>): List<Student>
 }
 
-open class StudentUtils<StudentDTO : StudentFields>(
+internal open class StudentUtils<StudentDTO : StudentFields>(
     dao: BaseDao<Student, Student>,
     private val dtoClass: Class<StudentDTO>
 ) : BaseUtils<StudentDTO, Student, Student, BaseDao<Student, Student>>()

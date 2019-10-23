@@ -8,12 +8,12 @@ import com.example.room_test.helpers.MockMicrotaskDao
 import com.example.room_test.mock_dtos.MockMicrotaskDTO
 import com.example.room_test.mock_dtos.newId
 
-class MockMicrotaskUtils(dao: MockMicrotaskDao) :
+internal class MockMicrotaskUtils(dao: MockMicrotaskDao) :
         MicrotaskUtils<MockMicrotaskDTO>(
             dao,
             MockMicrotaskDTO::class.java)
 
-class MicrotaskMapMethodsTest :
+internal class MicrotaskMapMethodsTest :
     GenericMapMethodsTest<Microtask, Microtask, MockMicrotaskDTO>()
 {
     private val skillSetId = Long.newId()

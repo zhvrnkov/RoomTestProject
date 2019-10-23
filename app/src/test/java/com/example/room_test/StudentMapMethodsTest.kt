@@ -8,10 +8,10 @@ import com.example.room_test.helpers.MockStudentDao
 import com.example.room_test.mock_dtos.MockStudentDTO
 import com.example.room_test.mock_dtos.newId
 
-class MockStudentUtils(dao: MockStudentDao) :
+internal class MockStudentUtils(dao: MockStudentDao) :
         StudentUtils<MockStudentDTO>(dao, MockStudentDTO::class.java)
 
-class StudentMapMethodsTest :
+internal class StudentMapMethodsTest :
         GenericMapMethodsTest<
                 Student,
                 Student,

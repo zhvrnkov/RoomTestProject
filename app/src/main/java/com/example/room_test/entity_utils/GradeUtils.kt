@@ -12,7 +12,7 @@ interface GradeFields {
 }
 
 @Dao
-abstract class GradeDao : BaseDao<Grade, Grade> {
+internal abstract class GradeDao : BaseDao<Grade, Grade> {
     override fun get(ids: List<Long>): List<Grade> = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: Grade) = pUpdate(entity)
@@ -31,7 +31,7 @@ abstract class GradeDao : BaseDao<Grade, Grade> {
     abstract fun pGet(ids: List<Long>): List<Grade>
 }
 
-open class GradeUtils<GradeDTO : GradeFields>(
+internal open class GradeUtils<GradeDTO : GradeFields>(
     dao: BaseDao<Grade, Grade>,
     private val dtoClass: Class<GradeDTO>
 ) : BaseUtils<GradeDTO, Grade, Grade, BaseDao<Grade, Grade>>()

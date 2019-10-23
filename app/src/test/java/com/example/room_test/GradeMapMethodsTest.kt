@@ -9,10 +9,10 @@ import com.example.room_test.helpers.MockGradeDao
 import com.example.room_test.mock_dtos.MockGradeDTO
 import com.example.room_test.mock_dtos.newId
 
-class MockGradeUtils(dao: MockGradeDao) :
+internal class MockGradeUtils(dao: MockGradeDao) :
     GradeUtils<MockGradeDTO>(dao, MockGradeDTO::class.java)
 
-class GradeMapMethodsTest :
+internal class GradeMapMethodsTest :
         GenericMapMethodsTest<Grade, Grade, MockGradeDTO>()
 {
     private val rubricId = Long.newId()

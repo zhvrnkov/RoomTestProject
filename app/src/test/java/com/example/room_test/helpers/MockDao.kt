@@ -36,7 +36,7 @@ abstract class MockDao<Entity, EntityWithRelations> :
     }
 }
 
-class MockRubricDao : MockDao<Rubric, RubricWithRelations>() {
+internal class MockRubricDao : MockDao<Rubric, RubricWithRelations>() {
     override val deleteFilterPredicate: (ids: List<Long>, item: RubricWithRelations) -> Boolean
         get() = { ids, item -> item.rubric.id !in ids }
 
@@ -52,7 +52,7 @@ class MockRubricDao : MockDao<Rubric, RubricWithRelations>() {
         get() = { entity -> RubricWithRelations(entity, emptyList(), emptyList()) }
 }
 
-class MockSkillSetDao : MockDao<SkillSet, SkillSetWithRelations>() {
+internal class MockSkillSetDao : MockDao<SkillSet, SkillSetWithRelations>() {
     override val deleteFilterPredicate: (ids: List<Long>, item: SkillSetWithRelations) -> Boolean
         get() = { ids, item -> item.skillSet.id !in ids }
 
@@ -68,7 +68,7 @@ class MockSkillSetDao : MockDao<SkillSet, SkillSetWithRelations>() {
         get() = { entity -> SkillSetWithRelations(entity, emptyList()) }
 }
 
-class MockMicrotaskDao : MockDao<Microtask, Microtask>() {
+internal class MockMicrotaskDao : MockDao<Microtask, Microtask>() {
     override val deleteFilterPredicate: (ids: List<Long>, item: Microtask) -> Boolean
         get() = { ids, item -> item.id in ids }
 
@@ -82,7 +82,7 @@ class MockMicrotaskDao : MockDao<Microtask, Microtask>() {
         get() = { entity -> entity }
 }
 
-class MockInstructorDao : MockDao<Instructor, Instructor>() {
+internal class MockInstructorDao : MockDao<Instructor, Instructor>() {
     override val deleteFilterPredicate: (ids: List<Long>, item: Instructor) -> Boolean
         get() = { ids, item -> item.id in ids }
 
@@ -97,7 +97,7 @@ class MockInstructorDao : MockDao<Instructor, Instructor>() {
         get() = { entity -> entity }
 }
 
-class MockAssessmentDao : MockDao<Assessment, AssessmentWithRelations>() {
+internal class MockAssessmentDao : MockDao<Assessment, AssessmentWithRelations>() {
     override val deleteFilterPredicate: (ids: List<Long>, item: AssessmentWithRelations) -> Boolean
         get() = { ids, item -> item.assessment.id in ids }
 
@@ -113,7 +113,7 @@ class MockAssessmentDao : MockDao<Assessment, AssessmentWithRelations>() {
         get() = { entity -> AssessmentWithRelations(entity, emptyList()) }
 }
 
-class MockMicrotaskGradeDao : MockDao<MicrotaskGrade, MicrotaskGrade>() {
+internal class MockMicrotaskGradeDao : MockDao<MicrotaskGrade, MicrotaskGrade>() {
     override val deleteFilterPredicate: (ids: List<Long>, item: MicrotaskGrade) -> Boolean
         get() = { ids, item -> item.id in ids }
 
@@ -129,7 +129,7 @@ class MockMicrotaskGradeDao : MockDao<MicrotaskGrade, MicrotaskGrade>() {
         get() = { entity -> entity }
 }
 
-class MockGradeDao : MockDao<Grade, Grade>() {
+internal class MockGradeDao : MockDao<Grade, Grade>() {
     override val deleteFilterPredicate: (ids: List<Long>, item: Grade) -> Boolean
         get() = { ids, item -> item.id in ids }
 
@@ -145,7 +145,7 @@ class MockGradeDao : MockDao<Grade, Grade>() {
         get() = { entity -> entity }
 }
 
-class MockStudentDao : MockDao<Student, Student>() {
+internal class MockStudentDao : MockDao<Student, Student>() {
     override val deleteFilterPredicate: (ids: List<Long>, item: Student) -> Boolean
         get() = { ids, item -> item.id in ids }
 

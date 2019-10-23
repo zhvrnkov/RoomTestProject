@@ -9,13 +9,13 @@ import com.example.room_test.helpers.MockEntityGenerator
 import com.example.room_test.mock_dtos.MockAssessmentDTO
 import com.example.room_test.mock_dtos.MockMicrotaskGradeDTO
 
-class MockAssessmentUtils(dao: MockAssessmentDao) :
+internal class MockAssessmentUtils(dao: MockAssessmentDao) :
         AssessmentUtils<MockMicrotaskGradeDTO, MockAssessmentDTO>(
             dao,
             MockAssessmentDTO::class.java,
             MockMicrotaskGradeDTO::class.java)
 
-class AssessmentMapMethodsTest :
+internal class AssessmentMapMethodsTest :
         GenericMapMethodsTest<
                 Assessment,
                 AssessmentWithRelations,

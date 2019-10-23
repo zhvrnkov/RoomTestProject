@@ -13,7 +13,7 @@ interface SchoolFields {
 }
 
 @Dao
-abstract class SchoolDao : BaseDao<School, School> {
+internal abstract class SchoolDao : BaseDao<School, School> {
     override fun get(ids: List<Long>): List<School> = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: School) = pUpdate(entity)
@@ -32,7 +32,7 @@ abstract class SchoolDao : BaseDao<School, School> {
     abstract fun pGet(ids: List<Long>): List<School>
 }
 
-open class SchoolUtils<SchoolDTO : SchoolFields>(
+internal open class SchoolUtils<SchoolDTO : SchoolFields>(
     dao: BaseDao<School, School>,
     private val dtoClass: Class<SchoolDTO>
 ) : BaseUtils<SchoolDTO, School, School, BaseDao<School, School>>()

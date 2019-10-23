@@ -12,7 +12,7 @@ interface MicrotaskFields {
 }
 
 @Dao
-abstract class MicrotaskDao : BaseDao<Microtask, Microtask> {
+internal abstract class MicrotaskDao : BaseDao<Microtask, Microtask> {
     override fun get(ids: List<Long>): List<Microtask> = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: Microtask) = pUpdate(entity)
@@ -31,7 +31,7 @@ abstract class MicrotaskDao : BaseDao<Microtask, Microtask> {
     abstract fun pGet(ids: List<Long>): List<Microtask>
 }
 
-open class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(
+internal open class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(
     dao: BaseDao<Microtask, Microtask>,
     private val dtoClass: Class<MicrotaskDTO>
 ) : BaseUtils<MicrotaskDTO, Microtask, Microtask, BaseDao<Microtask, Microtask>>()

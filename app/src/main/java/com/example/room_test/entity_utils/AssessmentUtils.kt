@@ -22,7 +22,7 @@ interface AssessmentFields<MicrotaskGradeDTO : MicrotaskGradeFields> {
 }
 
 @Dao
-abstract class AssessmentDao : BaseDao<Assessment, AssessmentWithRelations> {
+internal abstract class AssessmentDao : BaseDao<Assessment, AssessmentWithRelations> {
     override fun get(ids: List<Long>): List<AssessmentWithRelations> = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: Assessment) = pUpdate(entity)
@@ -41,7 +41,7 @@ abstract class AssessmentDao : BaseDao<Assessment, AssessmentWithRelations> {
     abstract fun pGet(ids: List<Long>): List<AssessmentWithRelations>
 }
 
-open class AssessmentUtils
+internal open class AssessmentUtils
 <MicrotaskGradeDTO : MicrotaskGradeFields, AssessmentDTO : AssessmentFields<MicrotaskGradeDTO>>(
     dao: BaseDao<Assessment, AssessmentWithRelations>,
     private val dtoClass: Class<AssessmentDTO>,

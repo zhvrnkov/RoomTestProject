@@ -8,11 +8,11 @@ import com.example.room_test.helpers.MockMicrotaskGradeDao
 import com.example.room_test.mock_dtos.MockMicrotaskGradeDTO
 import com.example.room_test.mock_dtos.newId
 
-class MockMicrotaskGradeUtils(dao: MockMicrotaskGradeDao) :
+internal class MockMicrotaskGradeUtils(dao: MockMicrotaskGradeDao) :
         MicrotaskGradeUtils<MockMicrotaskGradeDTO>(
             dao, MockMicrotaskGradeDTO::class.java)
 
-class MicrotaskGradesMapMethodsTest :
+internal class MicrotaskGradesMapMethodsTest :
         GenericMapMethodsTest<
                 MicrotaskGrade,
                 MicrotaskGrade,

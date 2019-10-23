@@ -8,12 +8,12 @@ import com.example.room_test.helpers.MockInstructorDao
 import com.example.room_test.mock_dtos.MockInstructorDTO
 import com.example.room_test.mock_dtos.newId
 
-class MockInstrctorUtils(dao: MockInstructorDao) :
+internal class MockInstrctorUtils(dao: MockInstructorDao) :
         InstructorUtils<MockInstructorDTO>(
             dao,
             MockInstructorDTO::class.java)
 
-class InstructorMapMethodsTest :
+internal class InstructorMapMethodsTest :
         GenericMapMethodsTest<Instructor, Instructor, MockInstructorDTO>()
 {
     private val utils = MockInstrctorUtils(MockInstructorDao())

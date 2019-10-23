@@ -13,7 +13,7 @@ interface SkillSetFields<MicrotaskDTO : MicrotaskFields> {
 }
 
 @Dao
-abstract class SkillSetDao : BaseDao<SkillSet, SkillSetWithRelations> {
+internal abstract class SkillSetDao : BaseDao<SkillSet, SkillSetWithRelations> {
     override fun get(ids: List<Long>): List<SkillSetWithRelations> = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: SkillSet) = pUpdate(entity)
@@ -32,7 +32,7 @@ abstract class SkillSetDao : BaseDao<SkillSet, SkillSetWithRelations> {
     abstract fun pGet(ids: List<Long>): List<SkillSetWithRelations>
 }
 
-open class SkillSetUtils<
+internal open class SkillSetUtils<
         MicrotaskDTO : MicrotaskFields,
         SkillSetDTO : SkillSetFields<MicrotaskDTO>>(
     dao: BaseDao<SkillSet, SkillSetWithRelations>,

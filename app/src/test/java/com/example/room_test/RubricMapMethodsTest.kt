@@ -8,7 +8,7 @@ import com.example.room_test.helpers.*
 import com.example.room_test.mock_dtos.*
 import org.junit.Before
 
-class MockRubricUtils(dao: MockRubricDao, closure: (List<Long>) -> List<SkillSetWithRelations>) :
+internal class MockRubricUtils(dao: MockRubricDao, closure: (List<Long>) -> List<MockSkillSetDTO>) :
     RubricUtils<MockGradeDTO, MockMicrotaskDTO, MockSkillSetDTO, MockRubricDTO>(
         dao,
         MockRubricDTO::class.java,
@@ -18,13 +18,14 @@ class MockRubricUtils(dao: MockRubricDao, closure: (List<Long>) -> List<SkillSet
         closure
     )
 
-class RubricMapMethodsTest :
+internal class RubricMapMethodsTest :
     GenericMapMethodsTest<Rubric, RubricWithRelations, MockRubricDTO>()
 {
     private val skillSetDao = MockSkillSetDao()
+    private val skillSetUtils = MockSkillSetUtils(skillSetDao)
 
     private val utils: MockRubricUtils by lazy {
-        MockRubricUtils(dao = MockRubricDao(), closure = skillSetDao::get)
+        MockRubricUtils(dao = MockRubricDao(), closure = skillSetUtils::get)
     }
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
