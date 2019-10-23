@@ -1,9 +1,12 @@
 package com.example.room_test.entities
 
 import androidx.room.*
+import com.example.room_test.Tables
 
 @Entity(
-    tableName = "assessments",
+    tableName = Tables.assessments,
+    indices = [Index(
+        "instructor_id", "date", "rubric_id", unique = true)],
     foreignKeys = [ForeignKey(
         entity = Instructor::class,
         parentColumns = ["id"],
@@ -28,7 +31,7 @@ data class Assessment(
 )
 
 @Entity(
-    tableName = "microtask_grades",
+    tableName = Tables.microtaskGrades,
     indices = [Index("assessment_id", "microtask_id", "student_id")],
     foreignKeys = [
         ForeignKey(

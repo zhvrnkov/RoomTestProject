@@ -1,6 +1,7 @@
 package com.example.room_test.entity_utils
 
 import androidx.room.*
+import com.example.room_test.Tables
 import com.example.room_test.entities.Grade
 
 interface GradeFields {
@@ -17,7 +18,7 @@ abstract class GradeDao : BaseDao<Grade, Grade> {
     override fun update(entity: Grade) = pUpdate(entity)
     override fun insert(entity: Grade) = pInsert(entity)
 
-    @Query("delete from grades where id in (:ids)")
+    @Query("delete from ${Tables.grades} where id in (:ids)")
     abstract fun pDelete(ids: List<Long>)
 
     @Update
@@ -26,7 +27,7 @@ abstract class GradeDao : BaseDao<Grade, Grade> {
     @Insert
     abstract fun pInsert(entity: Grade)
 
-    @Query("select * from grades where id in (:ids)")
+    @Query("select * from ${Tables.grades} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<Grade>
 }
 

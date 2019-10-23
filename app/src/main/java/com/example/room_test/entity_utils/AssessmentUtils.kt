@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.example.room_test.Tables
 import com.example.room_test.entities.Assessment
 import com.example.room_test.entities.AssessmentWithRelations
 
@@ -27,7 +28,7 @@ abstract class AssessmentDao : BaseDao<Assessment, AssessmentWithRelations> {
     override fun update(entity: Assessment) = pUpdate(entity)
     override fun insert(entity: Assessment) = pInsert(entity)
 
-    @Query("delete from assessments where id in (:ids)")
+    @Query("delete from ${Tables.assessments} where id in (:ids)")
     abstract fun pDelete(ids: List<Long>)
 
     @Update
@@ -36,7 +37,7 @@ abstract class AssessmentDao : BaseDao<Assessment, AssessmentWithRelations> {
     @Insert
     abstract fun pInsert(entity: Assessment)
 
-    @Query("select * from assessments where id in (:ids)")
+    @Query("select * from ${Tables.assessments} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<AssessmentWithRelations>
 }
 

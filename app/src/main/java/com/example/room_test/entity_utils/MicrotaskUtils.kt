@@ -1,6 +1,7 @@
 package com.example.room_test.entity_utils
 
 import androidx.room.*
+import com.example.room_test.Tables
 import com.example.room_test.entities.Microtask
 
 interface MicrotaskFields {
@@ -17,7 +18,7 @@ abstract class MicrotaskDao : BaseDao<Microtask, Microtask> {
     override fun update(entity: Microtask) = pUpdate(entity)
     override fun insert(entity: Microtask) = pInsert(entity)
 
-    @Query("delete from microtasks where id in (:ids)")
+    @Query("delete from ${Tables.microtasks} where id in (:ids)")
     abstract fun pDelete(ids: List<Long>)
 
     @Update
@@ -26,7 +27,7 @@ abstract class MicrotaskDao : BaseDao<Microtask, Microtask> {
     @Insert
     abstract fun pInsert(entity: Microtask)
 
-    @Query("select * from microtasks where id in (:ids)")
+    @Query("select * from ${Tables.microtasks} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<Microtask>
 }
 

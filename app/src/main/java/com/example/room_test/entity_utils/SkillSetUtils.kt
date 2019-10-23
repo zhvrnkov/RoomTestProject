@@ -1,6 +1,7 @@
 package com.example.room_test.entity_utils
 
 import androidx.room.*
+import com.example.room_test.Tables
 import com.example.room_test.entities.SkillSet
 import com.example.room_test.entities.SkillSetWithRelations
 
@@ -18,7 +19,7 @@ abstract class SkillSetDao : BaseDao<SkillSet, SkillSetWithRelations> {
     override fun update(entity: SkillSet) = pUpdate(entity)
     override fun insert(entity: SkillSet) = pInsert(entity)
 
-    @Query("delete from skill_sets where id in (:ids)")
+    @Query("delete from ${Tables.skillSets} where id in (:ids)")
     abstract fun pDelete(ids: List<Long>)
 
     @Update
@@ -27,7 +28,7 @@ abstract class SkillSetDao : BaseDao<SkillSet, SkillSetWithRelations> {
     @Insert
     abstract fun pInsert(entity: SkillSet)
 
-    @Query("select * from skill_sets where id in (:ids)")
+    @Query("select * from ${Tables.skillSets} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<SkillSetWithRelations>
 }
 

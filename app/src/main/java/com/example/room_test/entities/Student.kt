@@ -1,10 +1,11 @@
 package com.example.room_test.entities
 
 import androidx.room.*
+import com.example.room_test.Tables
 
 @Entity(
-    tableName = "students",
-    indices = [Index("name", "email")],
+    tableName = Tables.students,
+    indices = [Index("name", "email", unique = true)],
     foreignKeys = [
         ForeignKey(
             entity = Instructor::class,

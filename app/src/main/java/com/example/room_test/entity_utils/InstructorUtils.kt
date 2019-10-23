@@ -2,6 +2,7 @@ package com.example.room_test.entity_utils
 
 import androidx.room.Dao
 import androidx.room.*
+import com.example.room_test.Tables
 import com.example.room_test.entities.Instructor
 
 interface InstructorFields {
@@ -40,7 +41,7 @@ abstract class InstructorDao : BaseDao<Instructor, Instructor> {
     override fun update(entity: Instructor) = pUpdate(entity)
     override fun insert(entity: Instructor) = pInsert(entity)
 
-    @Query("delete from instructors where id in (:ids)")
+    @Query("delete from ${Tables.instructors} where id in (:ids)")
     abstract fun pDelete(ids: List<Long>)
 
     @Update
@@ -49,7 +50,7 @@ abstract class InstructorDao : BaseDao<Instructor, Instructor> {
     @Insert
     abstract fun pInsert(entity: Instructor)
 
-    @Query("select * from instructors where id in (:ids)")
+    @Query("select * from ${Tables.instructors} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<Instructor>
 }
 

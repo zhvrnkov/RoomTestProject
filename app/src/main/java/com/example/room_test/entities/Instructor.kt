@@ -1,16 +1,17 @@
 package com.example.room_test.entities
 
 import androidx.room.*
+import com.example.room_test.Tables
 
-@Entity(tableName = "schools")
+@Entity(tableName = Tables.schools)
 data class School(
     @PrimaryKey val id: Long,
     val name: String
 )
 
 @Entity(
-    tableName = "instructors",
-    indices = [Index("login_username", "id", unique = true)],
+    tableName = Tables.instructors,
+    indices = [Index("login_username", unique = true)],
     foreignKeys = [ForeignKey(
         entity = School::class,
         parentColumns = ["id"],

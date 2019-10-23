@@ -1,6 +1,7 @@
 package com.example.room_test.entity_utils
 
 import androidx.room.*
+import com.example.room_test.Tables
 import com.example.room_test.entities.Rubric
 import com.example.room_test.entities.RubricWithRelations
 import com.example.room_test.entities.SkillSet
@@ -24,7 +25,7 @@ abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
     override fun update(entity: Rubric) = pUpdate(entity)
     override fun insert(entity: Rubric) = pInsert(entity)
 
-    @Query("delete from rubrics where id in (:ids)")
+    @Query("delete from ${Tables.rubrics} where id in (:ids)")
     abstract fun pDelete(ids: List<Long>)
 
     @Update
@@ -33,7 +34,7 @@ abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
     @Insert
     abstract fun pInsert(entity: Rubric)
 
-    @Query("select * from rubrics where id in (:ids)")
+    @Query("select * from ${Tables.rubrics} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<RubricWithRelations>
 }
 

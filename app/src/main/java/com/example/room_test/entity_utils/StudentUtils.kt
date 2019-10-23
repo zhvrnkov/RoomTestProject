@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.example.room_test.Tables
 import com.example.room_test.entities.Student
 
 interface StudentFields {
@@ -27,7 +28,7 @@ abstract class StudentDao : BaseDao<Student, Student> {
     override fun update(entity: Student) = pUpdate(entity)
     override fun insert(entity: Student) = pInsert(entity)
 
-    @Query("delete from students where id in (:ids)")
+    @Query("delete from ${Tables.students} where id in (:ids)")
     abstract fun pDelete(ids: List<Long>)
 
     @Update
@@ -36,7 +37,7 @@ abstract class StudentDao : BaseDao<Student, Student> {
     @Insert
     abstract fun pInsert(entity: Student)
 
-    @Query("select * from students where id in (:ids)")
+    @Query("select * from ${Tables.students} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<Student>
 }
 

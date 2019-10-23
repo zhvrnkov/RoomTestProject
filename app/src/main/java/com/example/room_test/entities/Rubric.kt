@@ -1,6 +1,7 @@
 package com.example.room_test.entities
 
 import androidx.room.*
+import com.example.room_test.Tables
 
 @Entity(tableName = "rubrics")
 data class Rubric(
@@ -9,7 +10,7 @@ data class Rubric(
 )
 
 @Entity(
-    tableName = "grades",
+    tableName = Tables.grades,
     indices = [Index("rubric_id", "title", unique = true)],
     foreignKeys = [ForeignKey(
         entity = Rubric::class,
@@ -26,7 +27,7 @@ data class Grade(
 )
 
 @Entity(
-    tableName = "skill_sets",
+    tableName = Tables.skillSets,
     indices = [Index("rubric_id", "title", unique = true)],
     foreignKeys = [ForeignKey(
         entity = Rubric::class,
@@ -42,7 +43,7 @@ data class SkillSet(
 )
 
 @Entity(
-    tableName = "microtasks",
+    tableName = Tables.microtasks,
     indices = [Index("skill_set_id", "title", unique = true)],
     foreignKeys = [ForeignKey(
         entity = SkillSet::class,

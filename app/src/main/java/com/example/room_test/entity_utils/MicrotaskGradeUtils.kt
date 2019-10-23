@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.example.room_test.Tables
 import com.example.room_test.entities.MicrotaskGrade
 
 interface MicrotaskGradeFields {
@@ -24,7 +25,7 @@ abstract class MicrotaskGradeDao : BaseDao<MicrotaskGrade, MicrotaskGrade> {
     override fun update(entity: MicrotaskGrade) = pUpdate(entity)
     override fun insert(entity: MicrotaskGrade) = pInsert(entity)
 
-    @Query("delete from microtask_grades where id in (:ids)")
+    @Query("delete from ${Tables.microtaskGrades} where id in (:ids)")
     abstract fun pDelete(ids: List<Long>)
 
     @Update
@@ -33,7 +34,7 @@ abstract class MicrotaskGradeDao : BaseDao<MicrotaskGrade, MicrotaskGrade> {
     @Insert
     abstract fun pInsert(entity: MicrotaskGrade)
 
-    @Query("select * from microtask_grades where id in (:ids)")
+    @Query("select * from ${Tables.microtaskGrades} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<MicrotaskGrade>
 }
 
