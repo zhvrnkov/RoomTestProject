@@ -43,15 +43,20 @@ open class RubricUtils<
         SkillSetDTO : SkillSetFields<MicrotaskDTO>,
         RubricDTO : RubricFields<GradeDTO, MicrotaskDTO, SkillSetDTO>>
 (
-    override val dao: BaseDao<Rubric, RubricWithRelations>,
+    dao: BaseDao<Rubric, RubricWithRelations>,
     private val dtoClass: Class<RubricDTO>,
     private val gradeDtoClass: Class<GradeDTO>,
     private val skillSetDtoClass: Class<SkillSetDTO>,
     private val microtaskDtoClass: Class<MicrotaskDTO>,
-    private val getSkillSetsWithRelations: ((List<Long>) -> List<SkillSetWithRelations>)
-) : BaseUtils<RubricDTO, Rubric, RubricWithRelations, BaseDao<Rubric, RubricWithRelations>>()
+    private val getSkillSetsWithRelations: (
+        (List<Long>) -> List<SkillSetWithRelations>)
+) : BaseUtils<
+        RubricDTO,
+        Rubric,
+        RubricWithRelations,
+        BaseDao<Rubric, RubricWithRelations>>()
 {
-    companion object {
+    internal companion object {
         fun <GradeDTO : GradeFields,
              MicrotaskDTO : MicrotaskFields,
              SkillSetDTO : SkillSetFields<MicrotaskDTO>,
@@ -75,20 +80,41 @@ open class RubricUtils<
             val fields = dtoClass.newInstance()
             fields.id = entity.rubric.id
             fields.title = entity.rubric.title
-            fields.grades = entity.grades.map { GradeUtils.staticMapEntity(it, gradeDtoClass) }
+            fields.grades = entity.grades.map {
+                GradeUtils.staticMapEntity(it, gradeDtoClass)
+            }
             fields.skillSets = skillSetsWithRelations.map {
-                SkillSetUtils.staticMapEntity(it, skillSetDtoClass, microtaskDtoClass)
+                SkillSetUtils.staticMapEntity(
+                    it,
+                    skillSetDtoClass,
+                    microtaskDtoClass
+                )
             }
 
             return fields
         }
     }
 
-    override fun mapFields(fields: RubricDTO): Rubric = staticMapFields(fields)
-    override fun mapEntity(entity: RubricWithRelations): RubricDTO {
-        val skillSets = getSkillSetsWithRelations(entity.skillSets.map { it.id })
-        return staticMapEntity(
-            entity, skillSets, dtoClass, gradeDtoClass, skillSetDtoClass, microtaskDtoClass
-        )
+    override val realization = object: EntityUtilsRealization<
+            Rubric,
+            RubricWithRelations,
+            RubricDTO,
+            BaseDao<Rubric, RubricWithRelations>>
+    {
+        override val dao = dao
+        override fun mapFields(fields: RubricDTO): Rubric = staticMapFields(fields)
+        override fun mapEntity(entity: RubricWithRelations): RubricDTO {
+            val skillSets = getSkillSetsWithRelations(
+                entity.skillSets.map { it.id })
+            return staticMapEntity(
+                entity,
+                skillSets,
+                dtoClass,
+                gradeDtoClass,
+                skillSetDtoClass,
+                microtaskDtoClass
+            )
+        }
     }
+
 }

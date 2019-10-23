@@ -31,11 +31,11 @@ abstract class MicrotaskDao : BaseDao<Microtask, Microtask> {
 }
 
 open class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(
-    override val dao: BaseDao<Microtask, Microtask>,
+    dao: BaseDao<Microtask, Microtask>,
     private val dtoClass: Class<MicrotaskDTO>
 ) : BaseUtils<MicrotaskDTO, Microtask, Microtask, BaseDao<Microtask, Microtask>>()
 {
-    companion object {
+    internal companion object {
         fun <MicrotaskDTO : MicrotaskFields> staticMapFields(fields: MicrotaskDTO): Microtask {
             return Microtask(fields.id, fields.title, fields.content, fields.skillSetId)
         }
@@ -51,6 +51,15 @@ open class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(
         }
     }
 
-    override fun mapFields(fields: MicrotaskDTO): Microtask = staticMapFields(fields)
-    override fun mapEntity(entity: Microtask): MicrotaskDTO = staticMapEntity(entity, dtoClass)
+    override val realization = object: EntityUtilsRealization<
+            Microtask,
+            Microtask,
+            MicrotaskDTO,
+            BaseDao<Microtask, Microtask>>
+    {
+        override val dao = dao
+        override fun mapFields(fields: MicrotaskDTO) = staticMapFields(fields)
+        override fun mapEntity(entity: Microtask) = staticMapEntity(
+            entity, dtoClass)
+    }
 }

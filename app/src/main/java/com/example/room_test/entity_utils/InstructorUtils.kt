@@ -54,12 +54,17 @@ abstract class InstructorDao : BaseDao<Instructor, Instructor> {
 }
 
 open class InstructorUtils<InstructorDTO : InstructorFields>(
-    override val dao: BaseDao<Instructor, Instructor>,
+    dao: BaseDao<Instructor, Instructor>,
     private val dtoClass: Class<InstructorDTO>
-) : BaseUtils<InstructorDTO, Instructor, Instructor, BaseDao<Instructor, Instructor>>()
+) : BaseUtils<
+        InstructorDTO,
+        Instructor,
+        Instructor,
+        BaseDao<Instructor, Instructor>>()
 {
-    companion object {
-        fun <InstructorDTO : InstructorFields> staticMapFields(fields: InstructorDTO): Instructor {
+    internal companion object {
+        fun <InstructorDTO : InstructorFields> staticMapFields(
+            fields: InstructorDTO): Instructor {
             return Instructor(
                 id = fields.id,
                 address = fields.address,
@@ -122,6 +127,16 @@ open class InstructorUtils<InstructorDTO : InstructorFields>(
         }
     }
 
-    override fun mapFields(fields: InstructorDTO): Instructor = staticMapFields(fields)
-    override fun mapEntity(entity: Instructor): InstructorDTO = staticMapEntity(entity, dtoClass)
+    override val realization = object : EntityUtilsRealization<
+            Instructor,
+            Instructor,
+            InstructorDTO,
+            BaseDao<Instructor, Instructor>>
+    {
+        override val dao = dao
+        override fun mapEntity(entity: Instructor) = staticMapEntity(
+            entity, dtoClass)
+
+        override fun mapFields(fields: InstructorDTO) = staticMapFields(fields)
+    }
 }

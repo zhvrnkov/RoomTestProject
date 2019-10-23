@@ -31,11 +31,11 @@ abstract class GradeDao : BaseDao<Grade, Grade> {
 }
 
 open class GradeUtils<GradeDTO : GradeFields>(
-    override val dao: BaseDao<Grade, Grade>,
+    dao: BaseDao<Grade, Grade>,
     private val dtoClass: Class<GradeDTO>
 ) : BaseUtils<GradeDTO, Grade, Grade, BaseDao<Grade, Grade>>()
 {
-    companion object {
+    internal companion object {
         fun <GradeDTO : GradeFields>
                 staticMapFields(fields: GradeDTO): Grade {
             return Grade(fields.id, fields.score, fields.title, fields.rubricId)
@@ -53,11 +53,15 @@ open class GradeUtils<GradeDTO : GradeFields>(
         }
     }
 
-    override fun mapFields(fields: GradeDTO): Grade {
-        return staticMapFields(fields)
-    }
-
-    override fun mapEntity(entity: Grade): GradeDTO {
-        return staticMapEntity(entity, dtoClass)
+    final override val realization = object: EntityUtilsRealization<
+            Grade,
+            Grade,
+            GradeDTO,
+            BaseDao<Grade, Grade>>
+    {
+        override val dao: BaseDao<Grade, Grade> = dao
+        override fun mapEntity(entity: Grade) = staticMapEntity(
+            entity, dtoClass)
+        override fun mapFields(fields: GradeDTO) = staticMapFields(fields)
     }
 }

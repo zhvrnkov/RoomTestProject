@@ -14,7 +14,7 @@ interface EntityUtils<EntityFields> {
     fun insert(item: EntityFields)
 }
 
-interface EntityUtilsRealization<
+internal interface EntityUtilsRealization<
         Entity, EntityWithRelations, EntityFields, Dao: BaseDao<Entity, EntityWithRelations>>
 {
     val dao: Dao
@@ -43,11 +43,11 @@ abstract class BaseUtils<
         DTO,
         Entity, EntityWithRelations,
         DAO : BaseDao<Entity, EntityWithRelations>> :
-    EntityUtils<DTO>,
-    EntityUtilsRealization<Entity, EntityWithRelations, DTO, DAO>
+    EntityUtils<DTO>
 {
-    override fun get(ids: List<Long>): List<DTO> = pGet(ids)
-    override fun delete(ids: List<Long>) = pDelete(ids)
-    override fun update(item: DTO) = pUpdate(item)
-    override fun insert(item: DTO) = pInsert(item)
+    internal abstract val realization: EntityUtilsRealization<Entity, EntityWithRelations, DTO, DAO>
+    override fun get(ids: List<Long>): List<DTO> = realization.pGet(ids)
+    override fun delete(ids: List<Long>) = realization.pDelete(ids)
+    override fun update(item: DTO) = realization.pUpdate(item)
+    override fun insert(item: DTO) = realization.pInsert(item)
 }
