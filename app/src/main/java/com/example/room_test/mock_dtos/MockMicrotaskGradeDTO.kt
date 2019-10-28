@@ -4,13 +4,13 @@ import com.example.room_test.entities.MicrotaskGrade
 import com.example.room_test.entity_utils.MicrotaskGradeFields
 
 data class MockMicrotaskGradeDTO(
-    override var id: Long = -1,
-    override var isSynced: Boolean = false,
-    override var lastUpdate: Long = -1,
-    override var assessmentId: Long = -1,
-    override var gradeId: Long = -1,
-    override var microtaskId: Long = -1,
-    override var studentId: Long = -1
+    override val id: Long,
+    override val isSynced: Boolean = false,
+    override val lastUpdate: Long = -1,
+    override val assessmentId: Long = -1,
+    override val gradeId: Long = -1,
+    override val microtaskId: Long = -1,
+    override val studentId: Long = -1
 ) : MicrotaskGradeFields {
     companion object {
         fun new(assessmentId: Long) = MockMicrotaskGradeDTO(

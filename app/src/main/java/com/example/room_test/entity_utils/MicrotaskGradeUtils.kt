@@ -8,14 +8,13 @@ import com.example.room_test.Tables
 import com.example.room_test.entities.MicrotaskGrade
 
 interface MicrotaskGradeFields {
-    var id: Long
-    var isSynced: Boolean
-    var lastUpdate: Long
-
-    var assessmentId: Long
-    var gradeId: Long
-    var microtaskId: Long
-    var studentId: Long
+    val id: Long
+    val isSynced: Boolean
+    val lastUpdate: Long
+    val assessmentId: Long
+    val gradeId: Long
+    val microtaskId: Long
+    val studentId: Long
 }
 
 @Dao
@@ -67,16 +66,15 @@ internal open class MicrotaskGradeUtils<MicrotaskGradeDTO : MicrotaskGradeFields
             entity: MicrotaskGrade,
             dtoClass: Class<MicrotaskGradeDTO>
         ): MicrotaskGradeDTO {
-            val dto = dtoClass.newInstance()
-            dto.id = entity.id
-            dto.isSynced = entity.isSynced
-            dto.lastUpdate = entity.lastUpdate
-            dto.assessmentId = entity.assessmentId
-            dto.gradeId = entity.gradeId
-            dto.microtaskId = entity.microtaskId
-            dto.studentId = entity.studentId
-
-            return dto
+            return dtoClass.constructors.first().newInstance(
+                entity.id,
+                entity.isSynced,
+                entity.lastUpdate,
+                entity.assessmentId,
+                entity.gradeId,
+                entity.microtaskId,
+                entity.studentId
+            ) as MicrotaskGradeDTO
         }
     }
 
