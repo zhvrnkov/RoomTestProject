@@ -5,10 +5,10 @@ import com.example.room_test.Tables
 import com.example.room_test.entities.Grade
 
 interface GradeFields {
-    var id: Long
-    var title: String
-    var rubricId: Long
-    var score: Int
+    val id: Long
+    val title: String
+    val rubricId: Long
+    val score: Int
 }
 
 @Dao
@@ -44,13 +44,12 @@ internal open class GradeUtils<GradeDTO : GradeFields>(
 
         fun <GradeDTO : GradeFields>
                 staticMapEntity(entity: Grade, dtoClass: Class<GradeDTO>): GradeDTO {
-            val fields = dtoClass.newInstance()
-            fields.id = entity.id
-            fields.title = entity.title
-            fields.rubricId = entity.rubricId
-            fields.score = entity.score
-
-            return fields
+            return dtoClass.constructors.first().newInstance(
+                entity.id,
+                entity.title,
+                entity.rubricId,
+                entity.score
+            ) as GradeDTO
         }
     }
 

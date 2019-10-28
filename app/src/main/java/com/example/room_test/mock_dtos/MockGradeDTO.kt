@@ -4,14 +4,15 @@ import com.example.room_test.entities.Grade
 import com.example.room_test.entity_utils.GradeFields
 
 data class MockGradeDTO(
-    override var id: Long = -1,
-    override var title: String = "Bad title",
-    override var rubricId: Long = -1,
-    override var score: Int = 0
+    override val id: Long,
+    override val title: String,
+    override val rubricId: Long,
+    override val score: Int
 ) : GradeFields {
     companion object {
         fun new(rubricId: Long): MockGradeDTO = MockGradeDTO(
-            id = Long.newId(), rubricId = rubricId
+            id = Long.newId(), rubricId = rubricId,
+            title = "Foo", score = 13
         )
     }
 
