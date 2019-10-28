@@ -6,14 +6,14 @@ import com.example.room_test.entities.SkillSet
 import com.example.room_test.entity_utils.RubricFields
 
 data class MockRubricDTO(
-    override var id: Long = -1,
-    override var title: String = "",
-    override var grades: List<MockGradeDTO> = emptyList(),
-    override var skillSets: List<MockSkillSetDTO> = emptyList()
+    override val id: Long,
+    override val title: String = "",
+    override val grades: List<MockGradeDTO> = emptyList(),
+    override val skillSets: List<MockSkillSetDTO> = emptyList()
 ) : RubricFields<MockGradeDTO, MockMicrotaskDTO, MockSkillSetDTO> {
     companion object {
-        fun new(): MockRubricDTO {
-            return MockRubricDTO(Long.newId(), "Lorem")
+        fun new(id: Long, grades: List<MockGradeDTO>): MockRubricDTO {
+            return MockRubricDTO(id = id, title = "Lorem", grades = grades)
         }
     }
 

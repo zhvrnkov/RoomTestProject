@@ -42,8 +42,9 @@ internal class RubricMapMethodsTest :
 
     override val newDTO: MockRubricDTO
         get() {
-            val rubric = MockRubricDTO.new()
-            rubric.grades = (0..10).map { MockGradeDTO.new(rubric.id) }
-            return rubric
+            val id = Long.newId()
+            return MockRubricDTO.new(
+                id = id,
+                grades = (0..10).map { MockGradeDTO.new(id) })
         }
 }

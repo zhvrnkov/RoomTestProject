@@ -12,10 +12,10 @@ interface RubricFields<
         MicrotaskDTO : MicrotaskFields,
         SkillSetDTO : SkillSetFields<MicrotaskDTO>>
 {
-    var id: Long
-    var title: String
-    var grades: List<GradeDTO>
-    var skillSets: List<SkillSetDTO>
+    val id: Long
+    val title: String
+    val grades: List<GradeDTO>
+    val skillSets: List<SkillSetDTO>
 }
 
 @Dao
@@ -76,15 +76,14 @@ internal open class RubricUtils<
             dtoClass: Class<RubricDTO>,
             gradeDtoClass: Class<GradeDTO>
         ): RubricDTO {
-            val fields = dtoClass.newInstance()
-            fields.id = entity.rubric.id
-            fields.title = entity.rubric.title
-            fields.grades = entity.grades.map {
-                GradeUtils.staticMapEntity(it, gradeDtoClass)
-            }
-            fields.skillSets = skillSets
-
-            return fields
+            return dtoClass.constructors.first().newInstance(
+                entity.rubric.id,
+                entity.rubric.title,
+                entity.grades.map {
+                    GradeUtils.staticMapEntity(it, gradeDtoClass)
+                },
+                skillSets
+            ) as RubricDTO
         }
     }
 
