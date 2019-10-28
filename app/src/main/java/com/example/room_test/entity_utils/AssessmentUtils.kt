@@ -9,16 +9,15 @@ import com.example.room_test.entities.Assessment
 import com.example.room_test.entities.AssessmentWithRelations
 
 interface AssessmentFields<MicrotaskGradeDTO : MicrotaskGradeFields> {
-    var id: Long
-    var date: Long
-    var isAddedToServer: Boolean
-    var isSynced: Boolean
-
-    var schooldId: Long
-    var instructorId: Long
-    var rubricId: Long
-    var microtaskGrades: List<MicrotaskGradeDTO>
-    var studentIds: List<Long>
+    val id: Long
+    val date: Long
+    val isAddedToServer: Boolean
+    val isSynced: Boolean
+    val schooldId: Long
+    val instructorId: Long
+    val rubricId: Long
+    val microtaskGrades: List<MicrotaskGradeDTO>
+    val studentIds: List<Long>
 }
 
 @Dao
@@ -76,20 +75,19 @@ internal open class AssessmentUtils
             dtoClass: Class<AssessmentDTO>,
             microtaskGradeDtoClass: Class<MicrotaskGradeDTO>
         ): AssessmentDTO {
-            val dto = dtoClass.newInstance()
-            dto.id = entity.assessment.id
-            dto.date = entity.assessment.date
-            dto.isAddedToServer = entity.assessment.isAddedToServer
-            dto.isSynced = entity.assessment.isSynced
-            dto.schooldId = entity.assessment.schooldId
-            dto.instructorId = entity.assessment.instructorId
-            dto.rubricId = entity.assessment.rubricId
-            dto.studentIds = entity.assessment.studentIds
-            dto.microtaskGrades = entity.microtaskGrades.map {
-                MicrotaskGradeUtils.staticMapEntity(it, microtaskGradeDtoClass)
-            }
-
-            return dto
+            return dtoClass.constructors.first().newInstance(
+                entity.assessment.id,
+                entity.assessment.date,
+                entity.assessment.isAddedToServer,
+                entity.assessment.isSynced,
+                entity.assessment.schooldId,
+                entity.assessment.instructorId,
+                entity.assessment.rubricId,
+                entity.microtaskGrades.map {
+                    MicrotaskGradeUtils.staticMapEntity(it, microtaskGradeDtoClass)
+                },
+                entity.assessment.studentIds
+            ) as AssessmentDTO
         }
     }
 

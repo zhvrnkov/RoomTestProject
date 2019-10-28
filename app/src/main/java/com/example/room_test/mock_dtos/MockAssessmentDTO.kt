@@ -5,21 +5,27 @@ import com.example.room_test.entities.AssessmentWithRelations
 import com.example.room_test.entity_utils.AssessmentFields
 
 data class MockAssessmentDTO(
-    override var id: Long = -1,
-    override var date: Long = -1,
-    override var isAddedToServer: Boolean = false,
-    override var isSynced: Boolean = false,
-    override var schooldId: Long = -1,
-    override var instructorId: Long = -1,
-    override var rubricId: Long = -1,
-    override var microtaskGrades: List<MockMicrotaskGradeDTO> = emptyList(),
-    override var studentIds: List<Long> = emptyList()
+    override val id: Long,
+    override val date: Long ,
+    override val isAddedToServer: Boolean,
+    override val isSynced: Boolean,
+    override val schooldId: Long,
+    override val instructorId: Long,
+    override val rubricId: Long,
+    override val microtaskGrades: List<MockMicrotaskGradeDTO>,
+    override val studentIds: List<Long>
 ) : AssessmentFields<MockMicrotaskGradeDTO> {
     companion object {
         fun new() = MockAssessmentDTO(
             id = Long.newId(),
+            date = Long.newId(),
+            isAddedToServer = true,
+            isSynced = true,
+            schooldId = Long.newId(),
             instructorId = Long.newId(),
-            rubricId = Long.newId()
+            rubricId = Long.newId(),
+            microtaskGrades = emptyList(),
+            studentIds = listOf(Long.newId())
         )
     }
 
