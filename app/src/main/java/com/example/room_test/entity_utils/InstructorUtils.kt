@@ -6,32 +6,30 @@ import com.example.room_test.Tables
 import com.example.room_test.entities.Instructor
 
 interface InstructorFields {
-    var id: Long
-    var address: String
-    var address2: String
-    var avatar: String
-    var city: String
-    var country: String
-    var credentials: String
-    var depiction: String
-    var email: String
-    var firstName: String
-    var lang: String
-    var lastName: String
-    var loginUsername: String
-    var nauticedStatus: String
-    var phone: String
-    var phoneStudent: String
-    var state: String
-    var zip: String
-
-    var schoolId: Long
-    var assessmentIds: List<Long>
-    var studentIds: List<Long>
-
-    var gradeColors: List<String>
-    var flags: List<String>
-    var fbid: Map<Int, Int>
+    val id: Long
+    val address: String
+    val address2: String
+    val avatar: String
+    val city: String
+    val country: String
+    val credentials: String
+    val depiction: String
+    val email: String
+    val firstName: String
+    val lang: String
+    val lastName: String
+    val loginUsername: String
+    val nauticedStatus: String
+    val phone: String
+    val phoneStudent: String
+    val state: String
+    val zip: String
+    val schoolId: Long
+    val assessmentIds: List<Long>
+    val studentIds: List<Long>
+    val gradeColors: List<String>
+    val flags: List<String>
+    val fbid: Map<Int, Int>
 }
 
 @Dao
@@ -98,33 +96,32 @@ internal open class InstructorUtils<InstructorDTO : InstructorFields>(
             entity: Instructor,
             dtoClass: Class<InstructorDTO>
         ): InstructorDTO {
-            val dto = dtoClass.newInstance()
-            dto.id = entity.id
-            dto.address = entity.address
-            dto.address2 = entity.address2
-            dto.avatar = entity.avatar
-            dto.city = entity.city
-            dto.country = entity.country
-            dto.credentials = entity.credentials
-            dto.depiction = entity.depiction
-            dto.email = entity.email
-            dto.firstName = entity.firstName
-            dto.lang = entity.lang
-            dto.lastName = entity.lastName
-            dto.loginUsername = entity.loginUsername
-            dto.nauticedStatus = entity.nauticedStatus
-            dto.phone = entity.phone
-            dto.phoneStudent = entity.phoneStudent
-            dto.state = entity.state
-            dto.zip = entity.zip
-            dto.schoolId = entity.schoolId
-            dto.assessmentIds = entity.assessmentIds
-            dto.studentIds = entity.studentIds
-            dto.gradeColors = entity.gradeColors
-            dto.flags = entity.flags
-            dto.fbid = entity.fbid
-
-            return dto
+            return dtoClass.constructors.first().newInstance(
+                entity.id,
+                entity.address,
+                entity.address2,
+                entity.avatar,
+                entity.city,
+                entity.country,
+                entity.credentials,
+                entity.depiction,
+                entity.email,
+                entity.firstName,
+                entity.lang,
+                entity.lastName,
+                entity.loginUsername,
+                entity.nauticedStatus,
+                entity.phone,
+                entity.phoneStudent,
+                entity.state,
+                entity.zip,
+                entity.schoolId,
+                entity.assessmentIds,
+                entity.studentIds,
+                entity.gradeColors,
+                entity.flags,
+                entity.fbid
+            ) as InstructorDTO
         }
     }
 

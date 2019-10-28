@@ -22,5 +22,5 @@ internal class InstructorMapMethodsTest :
     override val newEntityWithRelations: Instructor
         get() = MockEntityGenerator.instructor()
     override val newDTO: MockInstructorDTO
-        get() = MockInstructorDTO(id = Long.newId())
+        get() = MockInstructorDTO.new(Long.newId())
 }
