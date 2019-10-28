@@ -34,14 +34,17 @@ internal class SkillSetMapMethodsTest :
 
     override val newDTO: MockSkillSetDTO
         get() {
-            val skillSet = MockSkillSetDTO.new(rubricId)
-            skillSet.microtasks = (0..10).map {
-                MockMicrotaskDTO(
-                    Long.newId(),
-                    "$it",
-                    "lorem #$it",
-                    skillSet.id)
-            }
-            return skillSet
+            val id = Long.newId()
+            return MockSkillSetDTO.new(
+                id,
+                rubricId,
+                (0..10).map {
+                    MockMicrotaskDTO(
+                        Long.newId(),
+                        "$it",
+                        "lorem #$it",
+                        id)
+                }
+            )
         }
 }

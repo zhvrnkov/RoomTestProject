@@ -6,10 +6,10 @@ import com.example.room_test.entities.SkillSet
 import com.example.room_test.entities.SkillSetWithRelations
 
 interface SkillSetFields<MicrotaskDTO : MicrotaskFields> {
-    var id: Long
-    var title: String
-    var rubricId: Long
-    var microtasks: List<MicrotaskDTO>
+    val id: Long
+    val title: String
+    val rubricId: Long
+    val microtasks: List<MicrotaskDTO>
 }
 
 @Dao
@@ -58,15 +58,14 @@ internal open class SkillSetUtils<
             dtoClass: Class<SkillSetDTO>,
             microtaskDtoClass: Class<MicrotaskDTO>
         ): SkillSetDTO {
-            val fields = dtoClass.newInstance()
-            fields.id = entity.skillSet.id
-            fields.title = entity.skillSet.title
-            fields.rubricId = entity.skillSet.rubricId
-            fields.microtasks = entity.microtasks.map {
-                MicrotaskUtils.staticMapEntity(it, microtaskDtoClass)
-            }
-
-            return fields
+            return dtoClass.constructors.first().newInstance(
+                entity.skillSet.id,
+                entity.skillSet.title,
+                entity.skillSet.rubricId,
+                entity.microtasks.map {
+                    MicrotaskUtils.staticMapEntity(it, microtaskDtoClass)
+                }
+            ) as SkillSetDTO
         }
     }
 

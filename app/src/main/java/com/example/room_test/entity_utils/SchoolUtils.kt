@@ -8,8 +8,8 @@ import com.example.room_test.Tables
 import com.example.room_test.entities.School
 
 interface SchoolFields {
-    var id: Long
-    var name: String
+    val id: Long
+    val name: String
 }
 
 @Dao
@@ -50,11 +50,10 @@ internal open class SchoolUtils<SchoolDTO : SchoolFields>(
             entity: School,
             dtoClass: Class<SchoolDTO>
         ): SchoolDTO {
-            val fields = dtoClass.newInstance()
-            fields.id = entity.id
-            fields.name = entity.name
-
-            return fields
+            return dtoClass.constructors.first().newInstance(
+                entity.id,
+                entity.name
+            ) as SchoolDTO
         }
     }
 

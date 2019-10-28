@@ -5,18 +5,18 @@ import com.example.room_test.entities.SkillSetWithRelations
 import com.example.room_test.entity_utils.SkillSetFields
 
 data class MockSkillSetDTO(
-    override var id: Long = -1,
-    override var title: String = "",
-    override var rubricId: Long = -1,
-    override var microtasks: List<MockMicrotaskDTO> = emptyList()
+    override val id: Long,
+    override val title: String = "",
+    override val rubricId: Long = -1,
+    override val microtasks: List<MockMicrotaskDTO> = emptyList()
 ) : SkillSetFields<MockMicrotaskDTO> {
     companion object {
-        fun new(rubricId: Long): MockSkillSetDTO {
+        fun new(id: Long, rubricId: Long, microtasks: List<MockMicrotaskDTO>): MockSkillSetDTO {
             return MockSkillSetDTO(
                 Long.newId(),
                 "lorem",
                 rubricId,
-                emptyList()
+                microtasks
             )
         }
     }
