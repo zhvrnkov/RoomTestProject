@@ -4,10 +4,10 @@ import com.example.room_test.entities.Microtask
 import com.example.room_test.entity_utils.MicrotaskFields
 
 data class MockMicrotaskDTO(
-    override var id: Long = -1,
-    override var title: String = "",
-    override var content: String = "",
-    override var skillSetId: Long = -1
+    override val id: Long,
+    override val title: String = "",
+    override val content: String = "",
+    override val skillSetId: Long = -1
 ) : MicrotaskFields {
     companion object {
         fun new(skillSetId: Long): MockMicrotaskDTO {

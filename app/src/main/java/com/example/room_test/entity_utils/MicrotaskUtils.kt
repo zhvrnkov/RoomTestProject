@@ -5,10 +5,10 @@ import com.example.room_test.Tables
 import com.example.room_test.entities.Microtask
 
 interface MicrotaskFields {
-    var id: Long
-    var title: String
-    var content: String
-    var skillSetId: Long
+    val id: Long
+    val title: String
+    val content: String
+    val skillSetId: Long
 }
 
 @Dao
@@ -41,14 +41,15 @@ internal open class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(
             return Microtask(fields.id, fields.title, fields.content, fields.skillSetId)
         }
 
-        fun <MicrotaskDTO : MicrotaskFields> staticMapEntity(entity: Microtask, dtoClass: Class<MicrotaskDTO>): MicrotaskDTO {
-            val fields = dtoClass.newInstance()
-            fields.id = entity.id
-            fields.title = entity.title
-            fields.content = entity.content
-            fields.skillSetId = entity.skillSetId
-
-            return fields
+        fun <MicrotaskDTO : MicrotaskFields> staticMapEntity(
+            entity: Microtask, dtoClass: Class<MicrotaskDTO>
+        ): MicrotaskDTO {
+            return dtoClass.constructors.first().newInstance(
+                entity.id,
+                entity.title,
+                entity.content,
+                entity.skillSetId
+            ) as MicrotaskDTO
         }
     }
 
