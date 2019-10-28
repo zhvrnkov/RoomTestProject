@@ -8,17 +8,16 @@ import com.example.room_test.Tables
 import com.example.room_test.entities.Student
 
 interface StudentFields {
-    var id: Long
-    var name: String
-    var email: String
-    var level: String
-    var logbookPass: String
-    var qualifiedDays: Int
-    var rank: String
-
-    var instructorId: Long
-    var assessmentIds: List<Long>
-    var microtaskGradeIds: List<Long>
+    val id: Long
+    val name: String
+    val email: String
+    val level: String
+    val logbookPass: String
+    val qualifiedDays: Int
+    val rank: String
+    val instructorId: Long
+    val assessmentIds: List<Long>
+    val microtaskGradeIds: List<Long>
 }
 
 @Dao
@@ -66,19 +65,18 @@ internal open class StudentUtils<StudentDTO : StudentFields>(
         fun <StudentDTO : StudentFields> staticMapEntity(
             entity: Student, dtoClass: Class<StudentDTO>
         ): StudentDTO {
-            val dto = dtoClass.newInstance()
-            dto.id = entity.id
-            dto.name = entity.name
-            dto.email = entity.email
-            dto.level = entity.level
-            dto.logbookPass = entity.logbookPass
-            dto.qualifiedDays = entity.qualifiedDays
-            dto.rank = entity.rank
-            dto.instructorId = entity.instructorId
-            dto.assessmentIds = entity.assessmentIds
-            dto.microtaskGradeIds = entity.microtaskGradeIds
-
-            return dto
+            return dtoClass.constructors.first().newInstance(
+                entity.id,
+                entity.name,
+                entity.email,
+                entity.level,
+                entity.logbookPass,
+                entity.qualifiedDays,
+                entity.rank,
+                entity.instructorId,
+                entity.assessmentIds,
+                entity.microtaskGradeIds
+            ) as StudentDTO
         }
     }
 

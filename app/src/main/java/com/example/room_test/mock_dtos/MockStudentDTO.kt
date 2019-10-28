@@ -4,16 +4,16 @@ import com.example.room_test.entities.Student
 import com.example.room_test.entity_utils.StudentFields
 
 data class MockStudentDTO(
-    override var id: Long = -1,
-    override var name: String = "",
-    override var email: String = "",
-    override var level: String = "",
-    override var logbookPass: String = "",
-    override var qualifiedDays: Int = -1,
-    override var rank: String = "",
-    override var instructorId: Long = -1,
-    override var assessmentIds: List<Long> = emptyList(),
-    override var microtaskGradeIds: List<Long> = emptyList()
+    override val id: Long,
+    override val name: String = "",
+    override val email: String = "",
+    override val level: String = "",
+    override val logbookPass: String = "",
+    override val qualifiedDays: Int = -1,
+    override val rank: String = "",
+    override val instructorId: Long = -1,
+    override val assessmentIds: List<Long> = emptyList(),
+    override val microtaskGradeIds: List<Long> = emptyList()
 ) : StudentFields {
     companion object {
         fun new() = MockStudentDTO(
