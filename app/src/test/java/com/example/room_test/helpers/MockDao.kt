@@ -4,14 +4,14 @@ import com.example.room_test.entities.*
 import com.example.room_test.entity_utils.*
 
 abstract class MockDao<Entity, EntityWithRelations> :
-    BaseDao<Entity, EntityWithRelations>
-{
+    BaseDao<Entity, EntityWithRelations> {
     private val storage = mutableListOf<EntityWithRelations>()
     abstract val deleteFilterPredicate: (ids: List<Long>, item: EntityWithRelations) -> Boolean
     abstract val getEntityPredicate:
                 (entity: Entity, entityWithRelation: EntityWithRelations) -> Boolean
     abstract val replaceEntityWithRelations: (
-        entity: Entity, old: EntityWithRelations) -> EntityWithRelations
+        entity: Entity, old: EntityWithRelations
+    ) -> EntityWithRelations
     abstract val getEntityWithRelation: (entity: Entity) -> EntityWithRelations
 
     override fun delete(ids: List<Long>) {
@@ -33,6 +33,10 @@ abstract class MockDao<Entity, EntityWithRelations> :
 
     override fun get(ids: List<Long>): List<EntityWithRelations> {
         return storage.filter { !deleteFilterPredicate(ids, it) }
+    }
+
+    override fun getAll(): List<EntityWithRelations> {
+        return storage
     }
 }
 

@@ -13,26 +13,20 @@ interface GradeFields {
 
 @Dao
 internal abstract class GradeDao : BaseDao<Grade, Grade> {
-    override fun getAll(): List<Grade> = pGet()
-    override fun get(ids: List<Long>): List<Grade> = pGet(ids)
-    override fun delete(ids: List<Long>) = pDelete(ids)
-    override fun update(entity: Grade) = pUpdate(entity)
-    override fun insert(entity: Grade) = pInsert(entity)
-
-    @Query("delete from ${Tables.grades} where id in (:ids)")
-    abstract fun pDelete(ids: List<Long>)
-
-    @Update
-    abstract fun pUpdate(entity: Grade)
-
-    @Insert
-    abstract fun pInsert(entity: Grade)
+    @Query("select * from ${Tables.grades}")
+    abstract override fun getAll(): List<Grade>
 
     @Query("select * from ${Tables.grades} where id in (:ids)")
-    abstract fun pGet(ids: List<Long>): List<Grade>
+    abstract override fun get(ids: List<Long>): List<Grade>
 
-    @Query("select * from ${Tables.grades}")
-    abstract fun pGet(): List<Grade>
+    @Query("delete from ${Tables.grades} where id in (:ids)")
+    abstract override fun delete(ids: List<Long>)
+
+    @Update
+    abstract override fun update(entity: Grade)
+
+    @Insert
+    abstract override fun insert(entity: Grade)
 }
 
 internal open class GradeUtils<GradeDTO : GradeFields>(

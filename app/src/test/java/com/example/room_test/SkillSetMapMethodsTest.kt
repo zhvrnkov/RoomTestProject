@@ -5,7 +5,8 @@ import com.example.room_test.entities.SkillSetWithRelations
 import com.example.room_test.entity_utils.SkillSetUtils
 import com.example.room_test.helpers.GenericMapMethodsTest
 import com.example.room_test.mock_dtos.*
-import com.example.room_test.helpers.*
+import com.example.room_test.helpers.MockSkillSetDao
+import com.example.room_test.helpers.MockEntityGenerator
 
 internal class MockSkillSetUtils :
     SkillSetUtils<MockMicrotaskDTO, MockSkillSetDTO>(

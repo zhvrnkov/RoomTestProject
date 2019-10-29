@@ -13,26 +13,20 @@ interface MicrotaskFields {
 
 @Dao
 internal abstract class MicrotaskDao : BaseDao<Microtask, Microtask> {
-    override fun getAll() = pGet()
-    override fun get(ids: List<Long>) = pGet(ids)
-    override fun delete(ids: List<Long>) = pDelete(ids)
-    override fun update(entity: Microtask) = pUpdate(entity)
-    override fun insert(entity: Microtask) = pInsert(entity)
-
-    @Query("delete from ${Tables.microtasks} where id in (:ids)")
-    abstract fun pDelete(ids: List<Long>)
-
-    @Update
-    abstract fun pUpdate(entity: Microtask)
-
-    @Insert
-    abstract fun pInsert(entity: Microtask)
+    @Query("select * from ${Tables.microtasks}")
+    abstract override fun getAll(): List<Microtask>
 
     @Query("select * from ${Tables.microtasks} where id in (:ids)")
-    abstract fun pGet(ids: List<Long>): List<Microtask>
+    abstract override fun get(ids: List<Long>): List<Microtask>
 
-    @Query("select * from ${Tables.microtasks}")
-    abstract fun pGet(): List<Microtask>
+    @Query("delete from ${Tables.microtasks} where id in (:ids)")
+    abstract override fun delete(ids: List<Long>)
+
+    @Update
+    abstract override fun update(entity: Microtask)
+
+    @Insert
+    abstract override fun insert(entity: Microtask)
 }
 
 internal open class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(

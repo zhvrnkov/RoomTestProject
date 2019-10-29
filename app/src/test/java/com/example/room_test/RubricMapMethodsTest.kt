@@ -4,7 +4,9 @@ import com.example.room_test.entities.Rubric
 import com.example.room_test.entities.RubricWithRelations
 import com.example.room_test.entity_utils.RubricUtils
 import com.example.room_test.entity_utils.SkillSetUtils
-import com.example.room_test.helpers.*
+import com.example.room_test.helpers.GenericMapMethodsTest
+import com.example.room_test.helpers.MockRubricDao
+import com.example.room_test.helpers.MockEntityGenerator
 import com.example.room_test.mock_dtos.*
 
 internal class MockRubricUtils(closure: (List<Long>) -> List<MockSkillSetDTO>) :

@@ -19,26 +19,20 @@ interface MicrotaskGradeFields {
 
 @Dao
 internal abstract class MicrotaskGradeDao : BaseDao<MicrotaskGrade, MicrotaskGrade> {
-    override fun getAll() = pGet()
-    override fun get(ids: List<Long>)= pGet(ids)
-    override fun delete(ids: List<Long>) = pDelete(ids)
-    override fun update(entity: MicrotaskGrade) = pUpdate(entity)
-    override fun insert(entity: MicrotaskGrade) = pInsert(entity)
-
-    @Query("delete from ${Tables.microtaskGrades} where id in (:ids)")
-    abstract fun pDelete(ids: List<Long>)
-
-    @Update
-    abstract fun pUpdate(entity: MicrotaskGrade)
-
-    @Insert
-    abstract fun pInsert(entity: MicrotaskGrade)
+    @Query("select * from ${Tables.microtaskGrades}")
+    abstract override fun getAll(): List<MicrotaskGrade>
 
     @Query("select * from ${Tables.microtaskGrades} where id in (:ids)")
-    abstract fun pGet(ids: List<Long>): List<MicrotaskGrade>
+    abstract override fun get(ids: List<Long>): List<MicrotaskGrade>
 
-    @Query("select * from ${Tables.microtaskGrades}")
-    abstract fun pGet(): List<MicrotaskGrade>
+    @Query("delete from ${Tables.microtaskGrades} where id in (:ids)")
+    abstract override fun delete(ids: List<Long>)
+
+    @Update
+    abstract override fun update(entity: MicrotaskGrade)
+
+    @Insert
+    abstract override fun insert(entity: MicrotaskGrade)
 }
 
 internal open class MicrotaskGradeUtils<MicrotaskGradeDTO : MicrotaskGradeFields>(

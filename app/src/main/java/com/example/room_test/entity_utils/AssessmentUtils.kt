@@ -22,22 +22,20 @@ interface AssessmentFields<MicrotaskGradeDTO : MicrotaskGradeFields> {
 
 @Dao
 internal abstract class AssessmentDao : BaseDao<Assessment, AssessmentWithRelations> {
-    override fun get(ids: List<Long>): List<AssessmentWithRelations> = pGet(ids)
-    override fun delete(ids: List<Long>) = pDelete(ids)
-    override fun update(entity: Assessment) = pUpdate(entity)
-    override fun insert(entity: Assessment) = pInsert(entity)
-
-    @Query("delete from ${Tables.assessments} where id in (:ids)")
-    abstract fun pDelete(ids: List<Long>)
-
-    @Update
-    abstract fun pUpdate(entity: Assessment)
-
-    @Insert
-    abstract fun pInsert(entity: Assessment)
+    @Query("select * from ${Tables.assessments}")
+    abstract override fun getAll(): List<AssessmentWithRelations>
 
     @Query("select * from ${Tables.assessments} where id in (:ids)")
-    abstract fun pGet(ids: List<Long>): List<AssessmentWithRelations>
+    abstract override fun get(ids: List<Long>): List<AssessmentWithRelations>
+
+    @Query("delete from ${Tables.assessments} where id in (:ids)")
+    abstract override fun delete(ids: List<Long>)
+
+    @Update
+    abstract override fun update(entity: Assessment)
+
+    @Insert
+    abstract override fun insert(entity: Assessment)
 }
 
 internal open class AssessmentUtils

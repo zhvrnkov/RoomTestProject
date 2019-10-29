@@ -14,26 +14,20 @@ interface SkillSetFields<MicrotaskDTO : MicrotaskFields> {
 
 @Dao
 internal abstract class SkillSetDao : BaseDao<SkillSet, SkillSetWithRelations> {
-    override fun getAll() = pGet()
-    override fun get(ids: List<Long>) = pGet(ids)
-    override fun delete(ids: List<Long>) = pDelete(ids)
-    override fun update(entity: SkillSet) = pUpdate(entity)
-    override fun insert(entity: SkillSet) = pInsert(entity)
-
-    @Query("delete from ${Tables.skillSets} where id in (:ids)")
-    abstract fun pDelete(ids: List<Long>)
-
-    @Update
-    abstract fun pUpdate(entity: SkillSet)
-
-    @Insert
-    abstract fun pInsert(entity: SkillSet)
+    @Query("select * from ${Tables.skillSets}")
+    abstract override fun getAll(): List<SkillSetWithRelations>
 
     @Query("select * from ${Tables.skillSets} where id in (:ids)")
-    abstract fun pGet(ids: List<Long>): List<SkillSetWithRelations>
+    abstract override fun get(ids: List<Long>): List<SkillSetWithRelations>
 
-    @Query("select * from ${Tables.skillSets}")
-    abstract fun pGet(): List<SkillSetWithRelations>
+    @Query("delete from ${Tables.skillSets} where id in (:ids)")
+    abstract override fun delete(ids: List<Long>)
+
+    @Update
+    abstract override fun update(entity: SkillSet)
+
+    @Insert
+    abstract override fun insert(entity: SkillSet)
 }
 
 internal open class SkillSetUtils<
