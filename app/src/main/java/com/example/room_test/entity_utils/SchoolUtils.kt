@@ -14,7 +14,8 @@ interface SchoolFields {
 
 @Dao
 internal abstract class SchoolDao : BaseDao<School, School> {
-    override fun get(ids: List<Long>): List<School> = pGet(ids)
+    override fun getAll() = pGet()
+    override fun get(ids: List<Long>) = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: School) = pUpdate(entity)
     override fun insert(entity: School) = pInsert(entity)
@@ -30,6 +31,9 @@ internal abstract class SchoolDao : BaseDao<School, School> {
 
     @Query("select * from ${Tables.schools} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<School>
+
+    @Query("select * from ${Tables.schools}")
+    abstract fun pGet(): List<School>
 }
 
 internal open class SchoolUtils<SchoolDTO : SchoolFields>(

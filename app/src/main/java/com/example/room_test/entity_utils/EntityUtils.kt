@@ -1,6 +1,7 @@
 package com.example.room_test.entity_utils
 
 interface BaseDao<Entity, EntityWithRelations> {
+    fun getAll(): List<EntityWithRelations>
     fun get(ids: List<Long>): List<EntityWithRelations>
     fun delete(ids: List<Long>)
     fun update(entity: Entity)
@@ -23,7 +24,7 @@ internal interface EntityUtilsRealization<
     fun mapFields(fields: EntityFields): Entity
 
     fun pGet(ids: List<Long>): List<EntityFields> {
-        return dao.get(ids).map { mapEntity(it) }
+        return (if (ids.isEmpty()) dao.getAll() else dao.get(ids)).map { mapEntity(it) }
     }
 
     fun pDelete(ids: List<Long>) {

@@ -20,7 +20,8 @@ interface RubricFields<
 
 @Dao
 internal abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
-    override fun get(ids: List<Long>): List<RubricWithRelations> = pGet(ids)
+    override fun getAll() = pGet()
+    override fun get(ids: List<Long>) = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: Rubric) = pUpdate(entity)
     override fun insert(entity: Rubric) = pInsert(entity)
@@ -36,6 +37,9 @@ internal abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
 
     @Query("select * from ${Tables.rubrics} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<RubricWithRelations>
+
+    @Query("select * from ${Tables.rubrics}")
+    abstract fun pGet(): List<RubricWithRelations>
 }
 
 internal open class RubricUtils<

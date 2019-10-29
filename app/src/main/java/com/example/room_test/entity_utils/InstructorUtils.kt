@@ -34,6 +34,7 @@ interface InstructorFields {
 
 @Dao
 internal abstract class InstructorDao : BaseDao<Instructor, Instructor> {
+    override fun getAll(): List<Instructor> = pGet()
     override fun get(ids: List<Long>): List<Instructor> = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: Instructor) = pUpdate(entity)
@@ -50,6 +51,9 @@ internal abstract class InstructorDao : BaseDao<Instructor, Instructor> {
 
     @Query("select * from ${Tables.instructors} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<Instructor>
+
+    @Query("select * from ${Tables.instructors}")
+    abstract fun pGet(): List<Instructor>
 }
 
 internal open class InstructorUtils<InstructorDTO : InstructorFields>(

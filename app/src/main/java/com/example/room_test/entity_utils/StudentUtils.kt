@@ -22,7 +22,8 @@ interface StudentFields {
 
 @Dao
 internal abstract class StudentDao : BaseDao<Student, Student> {
-    override fun get(ids: List<Long>): List<Student> = pGet(ids)
+    override fun getAll() = pGet()
+    override fun get(ids: List<Long>) = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: Student) = pUpdate(entity)
     override fun insert(entity: Student) = pInsert(entity)
@@ -38,6 +39,9 @@ internal abstract class StudentDao : BaseDao<Student, Student> {
 
     @Query("select * from ${Tables.students} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<Student>
+
+    @Query("select * from ${Tables.students}")
+    abstract fun pGet(): List<Student>
 }
 
 internal open class StudentUtils<StudentDTO : StudentFields>(

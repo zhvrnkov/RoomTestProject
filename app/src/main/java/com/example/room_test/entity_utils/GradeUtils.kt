@@ -13,6 +13,7 @@ interface GradeFields {
 
 @Dao
 internal abstract class GradeDao : BaseDao<Grade, Grade> {
+    override fun getAll(): List<Grade> = pGet()
     override fun get(ids: List<Long>): List<Grade> = pGet(ids)
     override fun delete(ids: List<Long>) = pDelete(ids)
     override fun update(entity: Grade) = pUpdate(entity)
@@ -29,6 +30,9 @@ internal abstract class GradeDao : BaseDao<Grade, Grade> {
 
     @Query("select * from ${Tables.grades} where id in (:ids)")
     abstract fun pGet(ids: List<Long>): List<Grade>
+
+    @Query("select * from ${Tables.grades}")
+    abstract fun pGet(): List<Grade>
 }
 
 internal open class GradeUtils<GradeDTO : GradeFields>(
