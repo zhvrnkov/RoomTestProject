@@ -47,8 +47,7 @@ internal open class RubricUtils<
     private val gradeDtoClass: Class<GradeDTO>,
     private val skillSetDtoClass: Class<SkillSetDTO>,
     private val microtaskDtoClass: Class<MicrotaskDTO>,
-    private val getSkillSets: (
-        (List<Long>) -> List<SkillSetDTO>)
+    private val getSkillSets: ((TypeOfGet) -> List<SkillSetDTO>)
 ) : BaseUtils<
         RubricDTO,
         Rubric,
@@ -95,7 +94,7 @@ internal open class RubricUtils<
         override fun mapFields(fields: RubricDTO): Rubric = staticMapFields(fields)
         override fun mapEntity(entity: RubricWithRelations): RubricDTO {
             val skillSets = getSkillSets(
-                entity.skillSets.map { it.id })
+                TypeOfGet.Certain(entity.skillSets.map { it.id }))
             return staticMapEntity(
                 entity,
                 skillSets,
