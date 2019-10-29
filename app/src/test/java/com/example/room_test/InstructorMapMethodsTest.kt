@@ -8,15 +8,15 @@ import com.example.room_test.helpers.MockInstructorDao
 import com.example.room_test.mock_dtos.MockInstructorDTO
 import com.example.room_test.mock_dtos.newId
 
-internal class MockInstrctorUtils(dao: MockInstructorDao) :
+internal class MockInstrctorUtils :
         InstructorUtils<MockInstructorDTO>(
-            dao,
+            MockInstructorDao(),
             MockInstructorDTO::class.java)
 
 internal class InstructorMapMethodsTest :
         GenericMapMethodsTest<Instructor, Instructor, MockInstructorDTO>()
 {
-    private val utils = MockInstrctorUtils(MockInstructorDao())
+    private val utils = MockInstrctorUtils()
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: Instructor

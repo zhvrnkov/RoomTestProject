@@ -8,8 +8,8 @@ import com.example.room_test.helpers.MockStudentDao
 import com.example.room_test.mock_dtos.MockStudentDTO
 import com.example.room_test.mock_dtos.newId
 
-internal class MockStudentUtils(dao: MockStudentDao) :
-        StudentUtils<MockStudentDTO>(dao, MockStudentDTO::class.java)
+internal class MockStudentUtils :
+        StudentUtils<MockStudentDTO>(MockStudentDao(), MockStudentDTO::class.java)
 
 internal class StudentMapMethodsTest :
         GenericMapMethodsTest<
@@ -19,7 +19,7 @@ internal class StudentMapMethodsTest :
 {
     private val instructorId = Long.newId()
 
-    private val utils = MockStudentUtils(MockStudentDao())
+    private val utils = MockStudentUtils()
     override val mapEntity: (Student) -> MockStudentDTO = utils.realization::mapEntity
     override val mapFields: (MockStudentDTO) -> Student = utils.realization::mapFields
     override val newEntityWithRelations: Student

@@ -9,14 +9,14 @@ import com.example.room_test.helpers.MockGradeDao
 import com.example.room_test.mock_dtos.MockGradeDTO
 import com.example.room_test.mock_dtos.newId
 
-internal class MockGradeUtils(dao: MockGradeDao) :
-    GradeUtils<MockGradeDTO>(dao, MockGradeDTO::class.java)
+internal class MockGradeUtils :
+    GradeUtils<MockGradeDTO>(MockGradeDao(), MockGradeDTO::class.java)
 
 internal class GradeMapMethodsTest :
         GenericMapMethodsTest<Grade, Grade, MockGradeDTO>()
 {
     private val rubricId = Long.newId()
-    private val utils = MockGradeUtils(MockGradeDao())
+    private val utils = MockGradeUtils()
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: Grade

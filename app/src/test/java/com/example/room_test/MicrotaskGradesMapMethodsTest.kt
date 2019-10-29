@@ -8,9 +8,9 @@ import com.example.room_test.helpers.MockMicrotaskGradeDao
 import com.example.room_test.mock_dtos.MockMicrotaskGradeDTO
 import com.example.room_test.mock_dtos.newId
 
-internal class MockMicrotaskGradeUtils(dao: MockMicrotaskGradeDao) :
+internal class MockMicrotaskGradeUtils :
         MicrotaskGradeUtils<MockMicrotaskGradeDTO>(
-            dao, MockMicrotaskGradeDTO::class.java)
+            MockMicrotaskGradeDao(), MockMicrotaskGradeDTO::class.java)
 
 internal class MicrotaskGradesMapMethodsTest :
         GenericMapMethodsTest<
@@ -19,7 +19,7 @@ internal class MicrotaskGradesMapMethodsTest :
                 MockMicrotaskGradeDTO>()
 {
     private val assessmentId = Long.newId()
-    private val utils = MockMicrotaskGradeUtils(MockMicrotaskGradeDao())
+    private val utils = MockMicrotaskGradeUtils()
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: MicrotaskGrade

@@ -7,9 +7,9 @@ import com.example.room_test.helpers.GenericMapMethodsTest
 import com.example.room_test.mock_dtos.*
 import com.example.room_test.helpers.*
 
-internal class MockSkillSetUtils(dao: MockSkillSetDao) :
+internal class MockSkillSetUtils :
     SkillSetUtils<MockMicrotaskDTO, MockSkillSetDTO>(
-        dao,
+        MockSkillSetDao(),
         MockSkillSetDTO::class.java,
         MockMicrotaskDTO::class.java
 )
@@ -22,7 +22,7 @@ internal class SkillSetMapMethodsTest :
 {
     private val rubricId = Long.newId()
 
-    private val utils: MockSkillSetUtils = MockSkillSetUtils(MockSkillSetDao())
+    private val utils: MockSkillSetUtils = MockSkillSetUtils()
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: SkillSetWithRelations

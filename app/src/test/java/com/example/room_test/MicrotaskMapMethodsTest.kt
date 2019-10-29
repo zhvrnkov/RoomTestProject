@@ -8,9 +8,9 @@ import com.example.room_test.helpers.MockMicrotaskDao
 import com.example.room_test.mock_dtos.MockMicrotaskDTO
 import com.example.room_test.mock_dtos.newId
 
-internal class MockMicrotaskUtils(dao: MockMicrotaskDao) :
+internal class MockMicrotaskUtils() :
         MicrotaskUtils<MockMicrotaskDTO>(
-            dao,
+            MockMicrotaskDao(),
             MockMicrotaskDTO::class.java)
 
 internal class MicrotaskMapMethodsTest :
@@ -18,7 +18,7 @@ internal class MicrotaskMapMethodsTest :
 {
     private val skillSetId = Long.newId()
 
-    private val utils = MockMicrotaskUtils(MockMicrotaskDao())
+    private val utils = MockMicrotaskUtils()
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
 

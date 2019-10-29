@@ -9,9 +9,9 @@ import com.example.room_test.helpers.MockEntityGenerator
 import com.example.room_test.mock_dtos.MockAssessmentDTO
 import com.example.room_test.mock_dtos.MockMicrotaskGradeDTO
 
-internal class MockAssessmentUtils(dao: MockAssessmentDao) :
+internal class MockAssessmentUtils :
         AssessmentUtils<MockMicrotaskGradeDTO, MockAssessmentDTO>(
-            dao,
+            MockAssessmentDao(),
             MockAssessmentDTO::class.java,
             MockMicrotaskGradeDTO::class.java)
 
@@ -21,7 +21,7 @@ internal class AssessmentMapMethodsTest :
                 AssessmentWithRelations,
                 MockAssessmentDTO>()
 {
-    private val utils = MockAssessmentUtils(MockAssessmentDao())
+    private val utils = MockAssessmentUtils()
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: AssessmentWithRelations
