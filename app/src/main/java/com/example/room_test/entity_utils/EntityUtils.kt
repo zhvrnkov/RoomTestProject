@@ -9,7 +9,7 @@ interface BaseDao<Entity, EntityWithRelations> {
 }
 
 interface EntityUtils<EntityFields> {
-    fun get(ids: List<Long>): List<EntityFields>
+    fun get(type: TypeOfGet): List<EntityFields>
     fun delete(ids: List<Long>)
     fun update(item: EntityFields)
     fun insert(item: EntityFields)
@@ -23,9 +23,10 @@ internal interface EntityUtilsRealization<
     fun mapEntity(entity: EntityWithRelations): EntityFields
     fun mapFields(fields: EntityFields): Entity
 
-    fun pGet(ids: List<Long>): List<EntityFields> {
-        return (if (ids.isEmpty()) dao.getAll() else dao.get(ids)).map { mapEntity(it) }
-    }
+    fun pGet(type: TypeOfGet) = when(type) {
+        is TypeOfGet.All -> dao.getAll()
+        is TypeOfGet.Certain -> dao.get(type.ids)
+    }.map { mapEntity(it) }
 
     fun pDelete(ids: List<Long>) {
         dao.delete(ids)
@@ -47,8 +48,13 @@ abstract class BaseUtils<
     EntityUtils<DTO>
 {
     internal abstract val realization: EntityUtilsRealization<Entity, EntityWithRelations, DTO, DAO>
-    override fun get(ids: List<Long>): List<DTO> = realization.pGet(ids)
+    override fun get(type: TypeOfGet): List<DTO> = realization.pGet(type)
     override fun delete(ids: List<Long>) = realization.pDelete(ids)
     override fun update(item: DTO) = realization.pUpdate(item)
     override fun insert(item: DTO) = realization.pInsert(item)
+}
+
+sealed class TypeOfGet {
+    object All: TypeOfGet()
+    data class Certain(val ids: List<Long>): TypeOfGet()
 }
