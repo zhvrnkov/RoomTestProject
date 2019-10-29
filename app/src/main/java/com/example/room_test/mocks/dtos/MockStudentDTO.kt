@@ -1,7 +1,8 @@
-package com.example.room_test.mock_dtos
+package com.example.room_test.mocks.dtos
 
 import com.example.room_test.entities.Student
 import com.example.room_test.entity_utils.StudentFields
+import com.example.room_test.newId
 
 data class MockStudentDTO(
     override val id: Long,

@@ -1,12 +1,13 @@
-package com.example.room_test.mock_dtos
+package com.example.room_test.mocks.dtos
 
 import com.example.room_test.entities.Assessment
 import com.example.room_test.entities.AssessmentWithRelations
 import com.example.room_test.entity_utils.AssessmentFields
+import com.example.room_test.newId
 
 data class MockAssessmentDTO(
     override val id: Long,
-    override val date: Long ,
+    override val date: Long,
     override val isAddedToServer: Boolean,
     override val isSynced: Boolean,
     override val schooldId: Long,

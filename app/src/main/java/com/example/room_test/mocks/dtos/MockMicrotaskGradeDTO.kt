@@ -1,7 +1,8 @@
-package com.example.room_test.mock_dtos
+package com.example.room_test.mocks.dtos
 
 import com.example.room_test.entities.MicrotaskGrade
 import com.example.room_test.entity_utils.MicrotaskGradeFields
+import com.example.room_test.newId
 
 data class MockMicrotaskGradeDTO(
     override val id: Long,

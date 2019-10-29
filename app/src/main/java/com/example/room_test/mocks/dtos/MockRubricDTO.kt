@@ -1,8 +1,7 @@
-package com.example.room_test.mock_dtos
+package com.example.room_test.mocks.dtos
 
 import com.example.room_test.entities.Rubric
 import com.example.room_test.entities.RubricWithRelations
-import com.example.room_test.entities.SkillSet
 import com.example.room_test.entity_utils.RubricFields
 
 data class MockRubricDTO(
@@ -13,7 +12,11 @@ data class MockRubricDTO(
 ) : RubricFields<MockGradeDTO, MockMicrotaskDTO, MockSkillSetDTO> {
     companion object {
         fun new(id: Long, grades: List<MockGradeDTO>): MockRubricDTO {
-            return MockRubricDTO(id = id, title = "Lorem", grades = grades)
+            return MockRubricDTO(
+                id = id,
+                title = "Lorem",
+                grades = grades
+            )
         }
     }
 

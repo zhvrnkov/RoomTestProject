@@ -1,7 +1,8 @@
-package com.example.room_test.mock_dtos
+package com.example.room_test.mocks.dtos
 
 import com.example.room_test.entities.Grade
 import com.example.room_test.entity_utils.GradeFields
+import com.example.room_test.newId
 
 data class MockGradeDTO(
     override val id: Long,
@@ -10,10 +11,11 @@ data class MockGradeDTO(
     override val score: Int
 ) : GradeFields {
     companion object {
-        fun new(rubricId: Long): MockGradeDTO = MockGradeDTO(
-            id = Long.newId(), rubricId = rubricId,
-            title = "Foo", score = 13
-        )
+        fun new(rubricId: Long): MockGradeDTO =
+            MockGradeDTO(
+                id = Long.newId(), rubricId = rubricId,
+                title = "Foo", score = 13
+            )
     }
 
     override fun equals(other: Any?): Boolean {

@@ -3,17 +3,12 @@ package com.example.room_test
 import com.example.room_test.entities.SkillSet
 import com.example.room_test.entities.SkillSetWithRelations
 import com.example.room_test.entity_utils.SkillSetUtils
-import com.example.room_test.helpers.GenericMapMethodsTest
-import com.example.room_test.mock_dtos.*
-import com.example.room_test.helpers.MockSkillSetDao
-import com.example.room_test.helpers.MockEntityGenerator
-
-internal class MockSkillSetUtils :
-    SkillSetUtils<MockMicrotaskDTO, MockSkillSetDTO>(
-        MockSkillSetDao(),
-        MockSkillSetDTO::class.java,
-        MockMicrotaskDTO::class.java
-)
+import com.example.room_test.utils.GenericMapMethodsTest
+import com.example.room_test.mocks.dtos.MockMicrotaskDTO
+import com.example.room_test.mocks.dtos.MockSkillSetDTO
+import com.example.room_test.mocks.daos.MockSkillSetDao
+import com.example.room_test.mocks.entity_generator.MockEntityGenerator
+import com.example.room_test.mocks.utils.MockSkillSetUtils
 
 internal class SkillSetMapMethodsTest :
         GenericMapMethodsTest<
@@ -44,7 +39,8 @@ internal class SkillSetMapMethodsTest :
                         Long.newId(),
                         "$it",
                         "lorem #$it",
-                        id)
+                        id
+                    )
                 }
             )
         }

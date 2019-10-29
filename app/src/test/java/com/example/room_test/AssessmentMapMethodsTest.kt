@@ -3,17 +3,13 @@ package com.example.room_test
 import com.example.room_test.entities.Assessment
 import com.example.room_test.entities.AssessmentWithRelations
 import com.example.room_test.entity_utils.AssessmentUtils
-import com.example.room_test.helpers.GenericMapMethodsTest
-import com.example.room_test.helpers.MockAssessmentDao
-import com.example.room_test.helpers.MockEntityGenerator
-import com.example.room_test.mock_dtos.MockAssessmentDTO
-import com.example.room_test.mock_dtos.MockMicrotaskGradeDTO
+import com.example.room_test.utils.GenericMapMethodsTest
+import com.example.room_test.mocks.daos.MockAssessmentDao
+import com.example.room_test.mocks.entity_generator.MockEntityGenerator
+import com.example.room_test.mocks.dtos.MockAssessmentDTO
+import com.example.room_test.mocks.dtos.MockMicrotaskGradeDTO
+import com.example.room_test.mocks.utils.MockAssessmentUtils
 
-internal class MockAssessmentUtils :
-        AssessmentUtils<MockMicrotaskGradeDTO, MockAssessmentDTO>(
-            MockAssessmentDao(),
-            MockAssessmentDTO::class.java,
-            MockMicrotaskGradeDTO::class.java)
 
 internal class AssessmentMapMethodsTest :
         GenericMapMethodsTest<

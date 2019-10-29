@@ -2,16 +2,12 @@ package com.example.room_test
 
 import com.example.room_test.entities.Microtask
 import com.example.room_test.entity_utils.MicrotaskUtils
-import com.example.room_test.helpers.GenericMapMethodsTest
-import com.example.room_test.helpers.MockEntityGenerator
-import com.example.room_test.helpers.MockMicrotaskDao
-import com.example.room_test.mock_dtos.MockMicrotaskDTO
-import com.example.room_test.mock_dtos.newId
+import com.example.room_test.utils.GenericMapMethodsTest
+import com.example.room_test.mocks.entity_generator.MockEntityGenerator
+import com.example.room_test.mocks.daos.MockMicrotaskDao
+import com.example.room_test.mocks.dtos.MockMicrotaskDTO
+import com.example.room_test.mocks.utils.MockMicrotaskUtils
 
-internal class MockMicrotaskUtils() :
-        MicrotaskUtils<MockMicrotaskDTO>(
-            MockMicrotaskDao(),
-            MockMicrotaskDTO::class.java)
 
 internal class MicrotaskMapMethodsTest :
     GenericMapMethodsTest<Microtask, Microtask, MockMicrotaskDTO>()

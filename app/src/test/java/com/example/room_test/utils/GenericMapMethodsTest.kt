@@ -1,7 +1,5 @@
-package com.example.room_test.helpers
+package com.example.room_test.utils
 
-import com.example.room_test.entity_utils.EntityUtils
-import com.example.room_test.entity_utils.EntityUtilsRealization
 import org.junit.Assert.*
 
 import org.junit.Test

@@ -2,14 +2,11 @@ package com.example.room_test
 
 import com.example.room_test.entities.Student
 import com.example.room_test.entity_utils.StudentUtils
-import com.example.room_test.helpers.GenericMapMethodsTest
-import com.example.room_test.helpers.MockEntityGenerator
-import com.example.room_test.helpers.MockStudentDao
-import com.example.room_test.mock_dtos.MockStudentDTO
-import com.example.room_test.mock_dtos.newId
-
-internal class MockStudentUtils :
-        StudentUtils<MockStudentDTO>(MockStudentDao(), MockStudentDTO::class.java)
+import com.example.room_test.utils.GenericMapMethodsTest
+import com.example.room_test.mocks.entity_generator.MockEntityGenerator
+import com.example.room_test.mocks.daos.MockStudentDao
+import com.example.room_test.mocks.dtos.MockStudentDTO
+import com.example.room_test.mocks.utils.MockStudentUtils
 
 internal class StudentMapMethodsTest :
         GenericMapMethodsTest<

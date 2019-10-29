@@ -1,4 +1,4 @@
-package com.example.room_test.mock_dtos
+package com.example.room_test.mocks.dtos
 
 import com.example.room_test.entities.Instructor
 import com.example.room_test.entity_utils.InstructorFields

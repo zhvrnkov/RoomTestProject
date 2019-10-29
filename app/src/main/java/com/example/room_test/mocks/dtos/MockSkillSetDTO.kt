@@ -1,8 +1,9 @@
-package com.example.room_test.mock_dtos
+package com.example.room_test.mocks.dtos
 
 import com.example.room_test.entities.SkillSet
 import com.example.room_test.entities.SkillSetWithRelations
 import com.example.room_test.entity_utils.SkillSetFields
+import com.example.room_test.newId
 
 data class MockSkillSetDTO(
     override val id: Long,

@@ -1,4 +1,4 @@
-package com.example.room_test.mock_dtos
+package com.example.room_test
 
 import java.util.*
 

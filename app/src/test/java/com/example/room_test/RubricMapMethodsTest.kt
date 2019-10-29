@@ -4,20 +4,17 @@ import com.example.room_test.entities.Rubric
 import com.example.room_test.entities.RubricWithRelations
 import com.example.room_test.entity_utils.RubricUtils
 import com.example.room_test.entity_utils.SkillSetUtils
-import com.example.room_test.helpers.GenericMapMethodsTest
-import com.example.room_test.helpers.MockRubricDao
-import com.example.room_test.helpers.MockEntityGenerator
-import com.example.room_test.mock_dtos.*
+import com.example.room_test.entity_utils.TypeOfGet
+import com.example.room_test.utils.GenericMapMethodsTest
+import com.example.room_test.mocks.daos.MockRubricDao
+import com.example.room_test.mocks.entity_generator.MockEntityGenerator
+import com.example.room_test.mocks.dtos.MockGradeDTO
+import com.example.room_test.mocks.dtos.MockMicrotaskDTO
+import com.example.room_test.mocks.dtos.MockRubricDTO
+import com.example.room_test.mocks.dtos.MockSkillSetDTO
+import com.example.room_test.mocks.utils.MockRubricUtils
+import com.example.room_test.mocks.utils.MockSkillSetUtils
 
-internal class MockRubricUtils(closure: (List<Long>) -> List<MockSkillSetDTO>) :
-    RubricUtils<MockGradeDTO, MockMicrotaskDTO, MockSkillSetDTO, MockRubricDTO>(
-        MockRubricDao(),
-        MockRubricDTO::class.java,
-        MockGradeDTO::class.java,
-        MockSkillSetDTO::class.java,
-        MockMicrotaskDTO::class.java,
-        closure
-    )
 
 internal class RubricMapMethodsTest :
     GenericMapMethodsTest<Rubric, RubricWithRelations, MockRubricDTO>()

@@ -1,16 +1,12 @@
 package com.example.room_test
 
 import com.example.room_test.entities.Grade
-import com.example.room_test.entity_utils.BaseDao
 import com.example.room_test.entity_utils.GradeUtils
-import com.example.room_test.helpers.GenericMapMethodsTest
-import com.example.room_test.helpers.MockEntityGenerator
-import com.example.room_test.helpers.MockGradeDao
-import com.example.room_test.mock_dtos.MockGradeDTO
-import com.example.room_test.mock_dtos.newId
-
-internal class MockGradeUtils :
-    GradeUtils<MockGradeDTO>(MockGradeDao(), MockGradeDTO::class.java)
+import com.example.room_test.utils.GenericMapMethodsTest
+import com.example.room_test.mocks.entity_generator.MockEntityGenerator
+import com.example.room_test.mocks.daos.MockGradeDao
+import com.example.room_test.mocks.dtos.MockGradeDTO
+import com.example.room_test.mocks.utils.MockGradeUtils
 
 internal class GradeMapMethodsTest :
         GenericMapMethodsTest<Grade, Grade, MockGradeDTO>()

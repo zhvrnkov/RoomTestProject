@@ -1,4 +1,4 @@
-package com.example.room_test.utils
+package com.example.room_test.mocks.daos
 
 import com.example.room_test.entities.*
 import com.example.room_test.entity_utils.*
