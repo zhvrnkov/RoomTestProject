@@ -1,4 +1,4 @@
-package com.example.room_test.helpers
+package com.example.room_test.utils
 
 import com.example.room_test.entities.*
 import com.example.room_test.entity_utils.*

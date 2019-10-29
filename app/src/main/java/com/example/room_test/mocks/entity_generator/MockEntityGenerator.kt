@@ -1,7 +1,7 @@
-package com.example.room_test.helpers
+package com.example.room_test.utils
 
 import com.example.room_test.entities.*
-import com.example.room_test.mock_dtos.newId
+import com.example.room_test.newId
 
 internal object MockEntityGenerator {
     fun rubricMock() = Rubric(Long.newId(), "Lorem")
