@@ -14,7 +14,7 @@ internal class MicrotaskMapMethodsTest :
 {
     private val skillSetId = Long.newId()
 
-    private val utils = MockMicrotaskUtils()
+    private val utils = MockMicrotaskUtils(MockMicrotaskDTO::class.java)
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
 

@@ -12,7 +12,7 @@ internal class GradeMapMethodsTest :
         GenericMapMethodsTest<Grade, Grade, MockGradeDTO>()
 {
     private val rubricId = Long.newId()
-    private val utils = MockGradeUtils()
+    private val utils = MockGradeUtils(MockGradeDTO::class.java)
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: Grade

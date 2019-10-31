@@ -18,7 +18,8 @@ internal class SkillSetMapMethodsTest :
 {
     private val rubricId = Long.newId()
 
-    private val utils: MockSkillSetUtils = MockSkillSetUtils()
+    private val utils = MockSkillSetUtils(
+        MockMicrotaskDTO::class.java, MockSkillSetDTO::class.java)
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: SkillSetWithRelations

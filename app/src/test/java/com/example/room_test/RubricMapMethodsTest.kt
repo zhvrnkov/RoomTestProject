@@ -19,11 +19,11 @@ import com.example.room_test.mocks.utils.MockSkillSetUtils
 internal class RubricMapMethodsTest :
     GenericMapMethodsTest<Rubric, RubricWithRelations, MockRubricDTO>()
 {
-    private val skillSetUtils = MockSkillSetUtils()
+    private val skillSetUtils = MockSkillSetUtils(
+        MockMicrotaskDTO::class.java, MockSkillSetDTO::class.java)
 
-    private val utils: MockRubricUtils by lazy {
-        MockRubricUtils(skillSetUtils::get)
-    }
+    private val utils = MockRubricUtils(
+        skillSetUtils::get, MockGradeDTO::class.java, MockMicrotaskDTO::class.java, MockSkillSetDTO::class.java, MockRubricDTO::class.java)
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
 

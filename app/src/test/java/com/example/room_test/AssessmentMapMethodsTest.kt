@@ -7,6 +7,7 @@ import com.example.room_test.utils.GenericMapMethodsTest
 import com.example.room_test.mocks.daos.MockAssessmentDao
 import com.example.room_test.mocks.entity_generator.MockEntityGenerator
 import com.example.room_test.mocks.dtos.MockAssessmentDTO
+import com.example.room_test.mocks.dtos.MockGradeDTO
 import com.example.room_test.mocks.dtos.MockMicrotaskGradeDTO
 import com.example.room_test.mocks.utils.MockAssessmentUtils
 
@@ -17,7 +18,8 @@ internal class AssessmentMapMethodsTest :
                 AssessmentWithRelations,
                 MockAssessmentDTO>()
 {
-    private val utils = MockAssessmentUtils()
+    private val utils = MockAssessmentUtils(
+        MockMicrotaskGradeDTO::class.java, MockAssessmentDTO::class.java)
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: AssessmentWithRelations

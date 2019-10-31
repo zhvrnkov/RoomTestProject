@@ -16,7 +16,7 @@ internal class StudentMapMethodsTest :
 {
     private val instructorId = Long.newId()
 
-    private val utils = MockStudentUtils()
+    private val utils = MockStudentUtils(MockStudentDTO::class.java)
     override val mapEntity: (Student) -> MockStudentDTO = utils.realization::mapEntity
     override val mapFields: (MockStudentDTO) -> Student = utils.realization::mapFields
     override val newEntityWithRelations: Student

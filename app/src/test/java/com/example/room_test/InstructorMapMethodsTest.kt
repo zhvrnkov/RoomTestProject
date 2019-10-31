@@ -11,7 +11,7 @@ import com.example.room_test.mocks.utils.MockInstrctorUtils
 internal class InstructorMapMethodsTest :
         GenericMapMethodsTest<Instructor, Instructor, MockInstructorDTO>()
 {
-    private val utils = MockInstrctorUtils()
+    private val utils = MockInstrctorUtils(MockInstructorDTO::class.java)
     override val mapEntity = utils.realization::mapEntity
     override val mapFields = utils.realization::mapFields
     override val newEntityWithRelations: Instructor
