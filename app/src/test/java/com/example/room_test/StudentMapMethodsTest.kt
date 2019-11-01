@@ -1,6 +1,7 @@
 package com.example.room_test
 
 import com.example.room_test.entities.Student
+import com.example.room_test.entity_utils.StudentDao
 import com.example.room_test.entity_utils.StudentUtils
 import com.example.room_test.utils.GenericMapMethodsTest
 import com.example.room_test.mocks.entity_generator.MockEntityGenerator
@@ -17,8 +18,10 @@ internal class StudentMapMethodsTest :
     private val instructorId = Long.newId()
 
     private val utils = MockStudentUtils(MockStudentDTO::class.java)
-    override val mapEntity: (Student) -> MockStudentDTO = utils.realization::mapEntity
-    override val mapFields: (MockStudentDTO) -> Student = utils.realization::mapFields
+    override val mapEntity: (Student) -> MockStudentDTO
+        get() = { utils.realization.mapEntities(listOf(it)).first() }
+    override val mapFields: (MockStudentDTO) -> Student
+        get() = { utils.realization.mapFields(it).first() }
     override val newEntityWithRelations: Student
         get() {
             return MockEntityGenerator.students(instructorId).random()

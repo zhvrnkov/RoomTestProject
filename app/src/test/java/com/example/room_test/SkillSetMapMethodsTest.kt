@@ -20,8 +20,10 @@ internal class SkillSetMapMethodsTest :
 
     private val utils = MockSkillSetUtils(
         MockMicrotaskDTO::class.java, MockSkillSetDTO::class.java)
-    override val mapEntity = utils.realization::mapEntity
-    override val mapFields = utils.realization::mapFields
+    override val mapEntity: (SkillSetWithRelations) -> MockSkillSetDTO
+        get() = { utils.realization.mapEntities(listOf(it)).first() }
+    override val mapFields: (MockSkillSetDTO) -> SkillSet
+        get() = { utils.realization.mapFields(it).first() }
     override val newEntityWithRelations: SkillSetWithRelations
         get() {
             val skillSet = MockEntityGenerator.skillSetMocks(rubricId).random()

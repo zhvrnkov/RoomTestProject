@@ -32,10 +32,10 @@ internal abstract class AssessmentDao : BaseDao<Assessment, AssessmentWithRelati
     abstract override fun delete(ids: List<Long>)
 
     @Update
-    abstract override fun update(entity: Assessment)
+    abstract override fun update(vararg entity: Assessment)
 
     @Insert
-    abstract override fun insert(entity: Assessment)
+    abstract override fun insert(vararg entity: Assessment)
 }
 
 internal open class AssessmentUtils
@@ -69,36 +69,34 @@ internal open class AssessmentUtils
 
         fun <MicrotaskGradeDTO : MicrotaskGradeFields,
                 AssessmentDTO : AssessmentFields<MicrotaskGradeDTO>> staticMapEntity(
-            entity: AssessmentWithRelations,
             dtoClass: Class<AssessmentDTO>,
             microtaskGradeDtoClass: Class<MicrotaskGradeDTO>
-        ): AssessmentDTO {
-            return dtoClass.constructors.first().newInstance(
-                entity.assessment.id,
-                entity.assessment.date,
-                entity.assessment.isAddedToServer,
-                entity.assessment.isSynced,
-                entity.assessment.schooldId,
-                entity.assessment.instructorId,
-                entity.assessment.rubricId,
-                entity.microtaskGrades.map {
-                    MicrotaskGradeUtils.staticMapEntity(it, microtaskGradeDtoClass)
-                },
-                entity.assessment.studentIds
+        ): (AssessmentWithRelations) -> AssessmentDTO = {
+            dtoClass.constructors.first().newInstance(
+                it.assessment.id,
+                it.assessment.date,
+                it.assessment.isAddedToServer,
+                it.assessment.isSynced,
+                it.assessment.schooldId,
+                it.assessment.instructorId,
+                it.assessment.rubricId,
+                it.microtaskGrades.map(MicrotaskGradeUtils.staticMapEntity(microtaskGradeDtoClass)),
+                it.assessment.studentIds
             ) as AssessmentDTO
         }
     }
 
-    final override val realization = object : EntityUtilsRealization<
-        Assessment,
-        AssessmentWithRelations,
-        AssessmentDTO,
-        BaseDao<Assessment, AssessmentWithRelations>>
-    {
+    final override val realization =
+        object : EntityUtilsRealization<
+                Assessment,
+                AssessmentWithRelations,
+                AssessmentDTO,
+                BaseDao<Assessment, AssessmentWithRelations>>
+        {
             override val dao = dao
-            override fun mapEntity(entity: AssessmentWithRelations) = staticMapEntity(
-                entity, dtoClass, microtaskGradeDtoClass)
+            override fun mapEntities(entities: List<AssessmentWithRelations>) = entities.map(
+                staticMapEntity(dtoClass, microtaskGradeDtoClass))
 
-            override fun mapFields(fields: AssessmentDTO) = staticMapFields(fields)
-    }
+            override fun mapFields(vararg fields: AssessmentDTO) = fields.map(::staticMapFields).toTypedArray()
+        }
 }
