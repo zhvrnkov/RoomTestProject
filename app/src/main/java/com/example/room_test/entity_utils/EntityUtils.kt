@@ -1,18 +1,18 @@
 package com.example.room_test.entity_utils
 
-interface BaseDao<Entity, EntityWithRelations> {
+interface BaseDao<in Entity, out EntityWithRelations> {
     fun getAll(): List<EntityWithRelations>
     fun get(ids: List<Long>): List<EntityWithRelations>
     fun delete(ids: List<Long>)
-    fun update(entity: Entity)
-    fun insert(entity: Entity)
+    fun update(vararg entity: Entity)
+    fun insert(vararg entity: Entity)
 }
 
 interface EntityUtils<EntityFields> {
     fun get(type: TypeOfGet): List<EntityFields>
     fun delete(ids: List<Long>)
-    fun update(item: EntityFields)
-    fun insert(item: EntityFields)
+    fun update(vararg item: EntityFields)
+    fun insert(vararg item: EntityFields)
 }
 
 internal interface EntityUtilsRealization
@@ -20,24 +20,26 @@ internal interface EntityUtilsRealization
 {
     val dao: Dao
 
-    fun mapEntity(entity: EntityWithRelations): EntityFields
-    fun mapFields(fields: EntityFields): Entity
+    fun mapEntities(entities: List<EntityWithRelations>): List<EntityFields>
+    fun mapFields(vararg fields: EntityFields): Array<Entity>
 
-    fun pGet(type: TypeOfGet) = when(type) {
-        is TypeOfGet.All -> dao.getAll()
-        is TypeOfGet.Certain -> dao.get(type.ids)
-    }.map { mapEntity(it) }
+    fun pGet(type: TypeOfGet) = mapEntities(
+        when(type) {
+            is TypeOfGet.All -> dao.getAll()
+            is TypeOfGet.Certain -> dao.get(type.ids)
+        }
+    )
 
     fun pDelete(ids: List<Long>) {
         dao.delete(ids)
     }
 
-    fun pUpdate(item: EntityFields) {
-        dao.update(mapFields(item))
+    fun pUpdate(vararg item: EntityFields) {
+        dao.update(*mapFields(*item))
     }
 
-    fun pInsert(item: EntityFields) {
-        dao.insert(mapFields(item))
+    fun pInsert(vararg item: EntityFields) {
+        dao.insert(*mapFields(*item))
     }
 }
 
@@ -50,8 +52,8 @@ abstract class BaseUtils<
     internal abstract val realization: EntityUtilsRealization<Entity, EntityWithRelations, DTO, DAO>
     override fun get(type: TypeOfGet): List<DTO> = realization.pGet(type)
     override fun delete(ids: List<Long>) = realization.pDelete(ids)
-    override fun update(item: DTO) = realization.pUpdate(item)
-    override fun insert(item: DTO) = realization.pInsert(item)
+    override fun update(vararg item: DTO) = realization.pUpdate(*item)
+    override fun insert(vararg item: DTO) = realization.pInsert(*item)
 }
 
 sealed class TypeOfGet {
