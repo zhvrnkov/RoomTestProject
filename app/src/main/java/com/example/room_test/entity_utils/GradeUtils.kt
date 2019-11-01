@@ -23,10 +23,10 @@ internal abstract class GradeDao : BaseDao<Grade, Grade> {
     abstract override fun delete(ids: List<Long>)
 
     @Update
-    abstract override fun update(entity: Grade)
+    abstract override fun update(vararg entity: Grade)
 
     @Insert
-    abstract override fun insert(entity: Grade)
+    abstract override fun insert(vararg entity: Grade)
 }
 
 internal open class GradeUtils<GradeDTO : GradeFields>(
@@ -41,12 +41,13 @@ internal open class GradeUtils<GradeDTO : GradeFields>(
         }
 
         fun <GradeDTO : GradeFields>
-                staticMapEntity(entity: Grade, dtoClass: Class<GradeDTO>): GradeDTO {
-            return dtoClass.constructors.first().newInstance(
-                entity.id,
-                entity.title,
-                entity.rubricId,
-                entity.score
+                staticMapEntity(dtoClass: Class<GradeDTO>
+        ): (Grade) -> GradeDTO = {
+            dtoClass.constructors.first().newInstance(
+                it.id,
+                it.title,
+                it.rubricId,
+                it.score
             ) as GradeDTO
         }
     }
@@ -58,8 +59,7 @@ internal open class GradeUtils<GradeDTO : GradeFields>(
             BaseDao<Grade, Grade>>
     {
         override val dao: BaseDao<Grade, Grade> = dao
-        override fun mapEntity(entity: Grade) = staticMapEntity(
-            entity, dtoClass)
-        override fun mapFields(fields: GradeDTO) = staticMapFields(fields)
+        override fun mapEntities(entities: List<Grade>) = entities.map(staticMapEntity(dtoClass))
+        override fun mapFields(vararg fields: GradeDTO) = fields.map(::staticMapFields).toTypedArray()
     }
 }

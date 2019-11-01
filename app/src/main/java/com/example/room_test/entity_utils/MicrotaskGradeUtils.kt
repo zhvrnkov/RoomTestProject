@@ -29,10 +29,10 @@ internal abstract class MicrotaskGradeDao : BaseDao<MicrotaskGrade, MicrotaskGra
     abstract override fun delete(ids: List<Long>)
 
     @Update
-    abstract override fun update(entity: MicrotaskGrade)
+    abstract override fun update(vararg entity: MicrotaskGrade)
 
     @Insert
-    abstract override fun insert(entity: MicrotaskGrade)
+    abstract override fun insert(vararg entity: MicrotaskGrade)
 }
 
 internal open class MicrotaskGradeUtils<MicrotaskGradeDTO : MicrotaskGradeFields>(
@@ -61,17 +61,16 @@ internal open class MicrotaskGradeUtils<MicrotaskGradeDTO : MicrotaskGradeFields
         }
 
         fun <MicrotaskGradeDTO : MicrotaskGradeFields> staticMapEntity(
-            entity: MicrotaskGrade,
             dtoClass: Class<MicrotaskGradeDTO>
-        ): MicrotaskGradeDTO {
-            return dtoClass.constructors.first().newInstance(
-                entity.id,
-                entity.isSynced,
-                entity.lastUpdate,
-                entity.assessmentId,
-                entity.gradeId,
-                entity.microtaskId,
-                entity.studentId
+        ): (MicrotaskGrade) -> MicrotaskGradeDTO = {
+            dtoClass.constructors.first().newInstance(
+                it.id,
+                it.isSynced,
+                it.lastUpdate,
+                it.assessmentId,
+                it.gradeId,
+                it.microtaskId,
+                it.studentId
             ) as MicrotaskGradeDTO
         }
     }
@@ -83,8 +82,7 @@ internal open class MicrotaskGradeUtils<MicrotaskGradeDTO : MicrotaskGradeFields
             BaseDao<MicrotaskGrade, MicrotaskGrade>>
     {
         override val dao = dao
-        override fun mapEntity(entity: MicrotaskGrade) = staticMapEntity(
-            entity, dtoClass)
-        override fun mapFields(fields: MicrotaskGradeDTO) = staticMapFields(fields)
+        override fun mapEntities(entities: List<MicrotaskGrade>) = entities.map(staticMapEntity(dtoClass))
+        override fun mapFields(vararg fields: MicrotaskGradeDTO) = fields.map(::staticMapFields).toTypedArray()
     }
 }

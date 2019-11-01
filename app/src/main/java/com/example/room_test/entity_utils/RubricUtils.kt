@@ -2,10 +2,10 @@ package com.example.room_test.entity_utils
 
 import androidx.room.*
 import com.example.room_test.Tables
+import com.example.room_test.entities.*
+import com.example.room_test.entities.Grade
 import com.example.room_test.entities.Rubric
 import com.example.room_test.entities.RubricWithRelations
-import com.example.room_test.entities.SkillSet
-import com.example.room_test.entities.SkillSetWithRelations
 
 interface RubricFields<
         GradeDTO : GradeFields,
@@ -30,10 +30,10 @@ internal abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
     abstract override fun delete(ids: List<Long>)
 
     @Update
-    abstract override fun update(entity: Rubric)
+    abstract override fun update(vararg entity: Rubric)
 
     @Insert
-    abstract override fun insert(entity: Rubric)
+    abstract override fun insert(vararg entity: Rubric)
 }
 
 internal open class RubricUtils<
@@ -76,9 +76,7 @@ internal open class RubricUtils<
             return dtoClass.constructors.first().newInstance(
                 entity.rubric.id,
                 entity.rubric.title,
-                entity.grades.map {
-                    GradeUtils.staticMapEntity(it, gradeDtoClass)
-                },
+                entity.grades.map(GradeUtils.staticMapEntity(gradeDtoClass)),
                 skillSets
             ) as RubricDTO
         }
@@ -91,16 +89,11 @@ internal open class RubricUtils<
             BaseDao<Rubric, RubricWithRelations>>
     {
         override val dao = dao
-        override fun mapFields(fields: RubricDTO): Rubric = staticMapFields(fields)
-        override fun mapEntity(entity: RubricWithRelations): RubricDTO {
+        override fun mapFields(vararg fields: RubricDTO) = fields.map(::staticMapFields).toTypedArray()
+        override fun mapEntities(entities: List<RubricWithRelations>) = entities.map {
             val skillSets = getSkillSets(
-                TypeOfGet.Certain(entity.skillSets.map { it.id }))
-            return staticMapEntity(
-                entity,
-                skillSets,
-                dtoClass,
-                gradeDtoClass
-            )
+                TypeOfGet.Certain(it.skillSets.map { s -> s.id }))
+            staticMapEntity(it, skillSets, dtoClass, gradeDtoClass)
         }
     }
 

@@ -24,10 +24,10 @@ internal abstract class SkillSetDao : BaseDao<SkillSet, SkillSetWithRelations> {
     abstract override fun delete(ids: List<Long>)
 
     @Update
-    abstract override fun update(entity: SkillSet)
+    abstract override fun update(vararg entity: SkillSet)
 
     @Insert
-    abstract override fun insert(entity: SkillSet)
+    abstract override fun insert(vararg entity: SkillSet)
 }
 
 internal open class SkillSetUtils<
@@ -52,31 +52,29 @@ internal open class SkillSetUtils<
 
         fun <MicrotaskDTO : MicrotaskFields,
                 SkillSetDTO : SkillSetFields<MicrotaskDTO>> staticMapEntity(
-            entity: SkillSetWithRelations,
             dtoClass: Class<SkillSetDTO>,
             microtaskDtoClass: Class<MicrotaskDTO>
-        ): SkillSetDTO {
-            return dtoClass.constructors.first().newInstance(
-                entity.skillSet.id,
-                entity.skillSet.title,
-                entity.skillSet.rubricId,
-                entity.microtasks.map {
-                    MicrotaskUtils.staticMapEntity(it, microtaskDtoClass)
-                }
+        ): (SkillSetWithRelations) -> SkillSetDTO = {
+            dtoClass.constructors.first().newInstance(
+                it.skillSet.id,
+                it.skillSet.title,
+                it.skillSet.rubricId,
+                it.microtasks.map(MicrotaskUtils.staticMapEntity(microtaskDtoClass))
             ) as SkillSetDTO
         }
     }
 
-    final override val realization = object: EntityUtilsRealization<
-        SkillSet,
-        SkillSetWithRelations,
-        SkillSetDTO,
-        BaseDao<SkillSet, SkillSetWithRelations>>
-    {
-        override val dao: BaseDao<SkillSet, SkillSetWithRelations> = dao
-        override fun mapEntity(entity: SkillSetWithRelations) = staticMapEntity(
-            entity, dtoClass, microtaskDtoClass)
+    final override val realization =
+        object: EntityUtilsRealization<
+            SkillSet,
+            SkillSetWithRelations,
+            SkillSetDTO,
+            BaseDao<SkillSet, SkillSetWithRelations>>
+        {
+            override val dao: BaseDao<SkillSet, SkillSetWithRelations> = dao
+            override fun mapEntities(entities: List<SkillSetWithRelations>) = entities.map(
+                staticMapEntity(dtoClass, microtaskDtoClass))
 
-        override fun mapFields(fields: SkillSetDTO) = staticMapFields(fields)
-    }
+            override fun mapFields(vararg fields: SkillSetDTO) = fields.map(::staticMapFields).toTypedArray()
+        }
 }

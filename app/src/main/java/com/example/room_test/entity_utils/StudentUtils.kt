@@ -32,10 +32,10 @@ internal abstract class StudentDao : BaseDao<Student, Student> {
     abstract override fun delete(ids: List<Long>)
 
     @Update
-    abstract override fun update(entity: Student)
+    abstract override fun update(vararg entity: Student)
 
     @Insert
-    abstract override fun insert(entity: Student)
+    abstract override fun insert(vararg entity: Student)
 }
 
 internal open class StudentUtils<StudentDTO : StudentFields>(
@@ -61,33 +61,34 @@ internal open class StudentUtils<StudentDTO : StudentFields>(
         }
 
         fun <StudentDTO : StudentFields> staticMapEntity(
-            entity: Student, dtoClass: Class<StudentDTO>
-        ): StudentDTO {
-            return dtoClass.constructors.first().newInstance(
-                entity.id,
-                entity.name,
-                entity.email,
-                entity.level,
-                entity.logbookPass,
-                entity.qualifiedDays,
-                entity.rank,
-                entity.instructorId,
-                entity.assessmentIds,
-                entity.microtaskGradeIds
+            dtoClass: Class<StudentDTO>
+        ): (Student) -> StudentDTO = {
+            dtoClass.constructors.first().newInstance(
+                it.id,
+                it.name,
+                it.email,
+                it.level,
+                it.logbookPass,
+                it.qualifiedDays,
+                it.rank,
+                it.instructorId,
+                it.assessmentIds,
+                it.microtaskGradeIds
             ) as StudentDTO
         }
     }
 
-    override val realization = object: EntityUtilsRealization<
+    override val realization =
+        object: EntityUtilsRealization<
             Student,
             Student,
             StudentDTO,
             BaseDao<Student, Student>>
-    {
-        override val dao = dao
-        override fun mapFields(fields: StudentDTO) = staticMapFields(fields)
-        override fun mapEntity(entity: Student) = staticMapEntity(
-            entity, dtoClass)
-    }
+        {
+            override val dao = dao
+            override fun mapFields(vararg fields: StudentDTO) =
+                fields.map(::staticMapFields).toTypedArray()
 
+            override fun mapEntities(entities: List<Student>) = entities.map(staticMapEntity(dtoClass))
+        }
 }

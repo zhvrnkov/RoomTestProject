@@ -44,10 +44,10 @@ internal abstract class InstructorDao : BaseDao<Instructor, Instructor> {
     abstract override fun delete(ids: List<Long>)
 
     @Update
-    abstract override fun update(entity: Instructor)
+    abstract override fun update(vararg entity: Instructor)
 
     @Insert
-    abstract override fun insert(entity: Instructor)
+    abstract override fun insert(vararg entity: Instructor)
 }
 
 internal open class InstructorUtils<InstructorDTO : InstructorFields>(
@@ -91,48 +91,46 @@ internal open class InstructorUtils<InstructorDTO : InstructorFields>(
         }
 
         fun <InstructorDTO : InstructorFields> staticMapEntity(
-            entity: Instructor,
             dtoClass: Class<InstructorDTO>
-        ): InstructorDTO {
-            return dtoClass.constructors.first().newInstance(
-                entity.id,
-                entity.address,
-                entity.address2,
-                entity.avatar,
-                entity.city,
-                entity.country,
-                entity.credentials,
-                entity.depiction,
-                entity.email,
-                entity.firstName,
-                entity.lang,
-                entity.lastName,
-                entity.loginUsername,
-                entity.nauticedStatus,
-                entity.phone,
-                entity.phoneStudent,
-                entity.state,
-                entity.zip,
-                entity.schoolId,
-                entity.assessmentIds,
-                entity.studentIds,
-                entity.gradeColors,
-                entity.flags,
-                entity.fbid
+        ): (Instructor) -> InstructorDTO = {
+            dtoClass.constructors.first().newInstance(
+                it.id,
+                it.address,
+                it.address2,
+                it.avatar,
+                it.city,
+                it.country,
+                it.credentials,
+                it.depiction,
+                it.email,
+                it.firstName,
+                it.lang,
+                it.lastName,
+                it.loginUsername,
+                it.nauticedStatus,
+                it.phone,
+                it.phoneStudent,
+                it.state,
+                it.zip,
+                it.schoolId,
+                it.assessmentIds,
+                it.studentIds,
+                it.gradeColors,
+                it.flags,
+                it.fbid
             ) as InstructorDTO
         }
     }
 
-    override val realization = object : EntityUtilsRealization<
-            Instructor,
-            Instructor,
-            InstructorDTO,
-            BaseDao<Instructor, Instructor>>
-    {
-        override val dao = dao
-        override fun mapEntity(entity: Instructor) = staticMapEntity(
-            entity, dtoClass)
-
-        override fun mapFields(fields: InstructorDTO) = staticMapFields(fields)
-    }
+    override val realization =
+        object : EntityUtilsRealization<
+                Instructor,
+                Instructor,
+                InstructorDTO,
+                BaseDao<Instructor, Instructor>>
+        {
+            override val dao = dao
+            override fun mapEntities(entities: List<Instructor>) = entities.map(staticMapEntity(dtoClass))
+            override fun mapFields(vararg fields: InstructorDTO) = fields.map(::staticMapFields).toTypedArray()
+        }
 }
