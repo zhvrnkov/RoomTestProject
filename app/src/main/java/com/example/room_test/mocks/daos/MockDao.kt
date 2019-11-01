@@ -20,15 +20,15 @@ abstract class MockDao<Entity, EntityWithRelations> :
         storage.addAll(newItems)
     }
 
-    override fun update(entity: Entity) {
-        val index = storage.indexOfFirst { getEntityPredicate(entity, it) }
+    override fun update(vararg entity: Entity) = entity.forEach { item ->
+        val index = storage.indexOfFirst { getEntityPredicate(item, it) }
         val storedItem = storage[index]
-        val newItem = replaceEntityWithRelations(entity, storedItem)
+        val newItem = replaceEntityWithRelations(item, storedItem)
         storage[index] = newItem
     }
 
-    override fun insert(entity: Entity) {
-        storage.add(getEntityWithRelation(entity))
+    override fun insert(vararg entity: Entity) = entity.forEach {
+        storage.add(getEntityWithRelation(it))
     }
 
     override fun get(ids: List<Long>): List<EntityWithRelations> {

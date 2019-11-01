@@ -24,8 +24,10 @@ internal class RubricMapMethodsTest :
 
     private val utils = MockRubricUtils(
         skillSetUtils::get, MockGradeDTO::class.java, MockMicrotaskDTO::class.java, MockSkillSetDTO::class.java, MockRubricDTO::class.java)
-    override val mapEntity = utils.realization::mapEntity
-    override val mapFields = utils.realization::mapFields
+    override val mapEntity: (RubricWithRelations) -> MockRubricDTO
+        get() = { utils.realization.mapEntities(listOf(it)).first() }
+    override val mapFields: (MockRubricDTO) -> Rubric
+        get() = { utils.realization.mapFields(it).first() }
 
 
     override val newEntityWithRelations: RubricWithRelations
@@ -33,7 +35,7 @@ internal class RubricMapMethodsTest :
             val rubric = MockEntityGenerator.rubricMock()
             val grades = MockEntityGenerator.gradeMocks(rubric.id)
             val skillSetDtos = (0..9).map { MockSkillSetDTO.new(Long.newId(), rubric.id, emptyList()) }
-            skillSetDtos.forEach(skillSetUtils::insert)
+            skillSetUtils.insert(*skillSetDtos.toTypedArray())
             val skillSets = skillSetDtos.map { SkillSetUtils.staticMapFields(it) }
             return RubricWithRelations(rubric, grades, skillSets)
         }

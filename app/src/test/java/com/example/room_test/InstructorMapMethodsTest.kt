@@ -12,8 +12,10 @@ internal class InstructorMapMethodsTest :
         GenericMapMethodsTest<Instructor, Instructor, MockInstructorDTO>()
 {
     private val utils = MockInstrctorUtils(MockInstructorDTO::class.java)
-    override val mapEntity = utils.realization::mapEntity
-    override val mapFields = utils.realization::mapFields
+    override val mapEntity: (Instructor) -> MockInstructorDTO
+        get() = { utils.realization.mapEntities(listOf(it)).first() }
+    override val mapFields: (MockInstructorDTO) -> Instructor
+        get() = { utils.realization.mapFields(it).first() }
     override val newEntityWithRelations: Instructor
         get() = MockEntityGenerator.instructor()
     override val newDTO: MockInstructorDTO

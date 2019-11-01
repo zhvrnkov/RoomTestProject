@@ -12,11 +12,12 @@ internal data class Rubric(
 @Entity(
     tableName = Tables.grades,
     indices = [Index("rubric_id", "title", unique = true)],
-    foreignKeys = [ForeignKey(
-        entity = Rubric::class,
-        parentColumns = ["id"],
-        childColumns = ["rubric_id"],
-        onDelete = ForeignKey.CASCADE)
+    foreignKeys = [
+        ForeignKey(
+            entity = Rubric::class,
+            parentColumns = ["id"],
+            childColumns = ["rubric_id"],
+            onDelete = ForeignKey.CASCADE)
     ]
 )
 internal data class Grade(

@@ -16,8 +16,10 @@ internal class MicrotaskGradesMapMethodsTest :
 {
     private val assessmentId = Long.newId()
     private val utils = MockMicrotaskGradeUtils(MockMicrotaskGradeDTO::class.java)
-    override val mapEntity = utils.realization::mapEntity
-    override val mapFields = utils.realization::mapFields
+    override val mapEntity: (MicrotaskGrade) -> MockMicrotaskGradeDTO
+        get() = { utils.realization.mapEntities(listOf(it)).first() }
+    override val mapFields: (MockMicrotaskGradeDTO) -> MicrotaskGrade
+        get() = { utils.realization.mapFields(it).first() }
     override val newEntityWithRelations: MicrotaskGrade
         get() {
             return MockEntityGenerator

@@ -24,10 +24,10 @@ internal abstract class SchoolDao : BaseDao<School, School> {
     abstract override fun delete(ids: List<Long>)
 
     @Update
-    abstract override fun update(entity: School)
+    abstract override fun update(vararg entity: School)
 
     @Insert
-    abstract override fun insert(entity: School)
+    abstract override fun insert(vararg entitiy: School)
 }
 
 internal open class SchoolUtils<SchoolDTO : SchoolFields>(
@@ -45,26 +45,25 @@ internal open class SchoolUtils<SchoolDTO : SchoolFields>(
         }
 
         fun <SchoolDTO : SchoolFields> staticMapEntity(
-            entity: School,
             dtoClass: Class<SchoolDTO>
-        ): SchoolDTO {
-            return dtoClass.constructors.first().newInstance(
-                entity.id,
-                entity.name
+        ): (School) -> SchoolDTO = {
+            dtoClass.constructors.first().newInstance(
+                it.id,
+                it.name
             ) as SchoolDTO
         }
     }
 
-    final override val realization = object: EntityUtilsRealization<
-            School,
-            School,
-            SchoolDTO,
-            BaseDao<School, School>>
-    {
-        override val dao = dao
-        override fun mapFields(fields: SchoolDTO) = staticMapFields(fields)
-        override fun mapEntity(entity: School) = staticMapEntity(
-            entity, dtoClass)
-    }
+    final override val realization =
+        object: EntityUtilsRealization<
+                School,
+                School,
+                SchoolDTO,
+                BaseDao<School, School>>
+        {
+            override val dao = dao
+            override fun mapFields(vararg fields: SchoolDTO) = fields.map(::staticMapFields).toTypedArray()
+            override fun mapEntities(entities: List<School>) = entities.map(staticMapEntity(dtoClass))
+        }
 
 }

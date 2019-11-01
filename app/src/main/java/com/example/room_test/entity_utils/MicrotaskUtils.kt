@@ -23,10 +23,10 @@ internal abstract class MicrotaskDao : BaseDao<Microtask, Microtask> {
     abstract override fun delete(ids: List<Long>)
 
     @Update
-    abstract override fun update(entity: Microtask)
+    abstract override fun update(vararg entity: Microtask)
 
     @Insert
-    abstract override fun insert(entity: Microtask)
+    abstract override fun insert(vararg entity: Microtask)
 }
 
 internal open class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(
@@ -40,13 +40,13 @@ internal open class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(
         }
 
         fun <MicrotaskDTO : MicrotaskFields> staticMapEntity(
-            entity: Microtask, dtoClass: Class<MicrotaskDTO>
-        ): MicrotaskDTO {
-            return dtoClass.constructors.first().newInstance(
-                entity.id,
-                entity.title,
-                entity.content,
-                entity.skillSetId
+            dtoClass: Class<MicrotaskDTO>
+        ): (Microtask) -> MicrotaskDTO = {
+            dtoClass.constructors.first().newInstance(
+                it.id,
+                it.title,
+                it.content,
+                it.skillSetId
             ) as MicrotaskDTO
         }
     }
@@ -58,8 +58,8 @@ internal open class MicrotaskUtils<MicrotaskDTO : MicrotaskFields>(
             BaseDao<Microtask, Microtask>>
     {
         override val dao = dao
-        override fun mapFields(fields: MicrotaskDTO) = staticMapFields(fields)
-        override fun mapEntity(entity: Microtask) = staticMapEntity(
-            entity, dtoClass)
+
+        override fun mapFields(vararg fields: MicrotaskDTO) = fields.map(::staticMapFields).toTypedArray()
+        override fun mapEntities(entities: List<Microtask>) = entities.map(staticMapEntity(dtoClass))
     }
 }

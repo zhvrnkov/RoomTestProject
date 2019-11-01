@@ -20,8 +20,10 @@ internal class AssessmentMapMethodsTest :
 {
     private val utils = MockAssessmentUtils(
         MockMicrotaskGradeDTO::class.java, MockAssessmentDTO::class.java)
-    override val mapEntity = utils.realization::mapEntity
-    override val mapFields = utils.realization::mapFields
+    override val mapEntity: (AssessmentWithRelations) -> MockAssessmentDTO
+        get() = { utils.realization.mapEntities(listOf(it)).first() }
+    override val mapFields: (MockAssessmentDTO) -> Assessment
+        get() = { utils.realization.mapFields(it).first() }
     override val newEntityWithRelations: AssessmentWithRelations
         get() {
             val assessment = MockEntityGenerator.assessment()
