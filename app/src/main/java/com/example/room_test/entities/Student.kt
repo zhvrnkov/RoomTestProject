@@ -25,9 +25,15 @@ internal data class Student(
     val rank: String,
 
     @ColumnInfo(name = "instructor_id")
-    val instructorId: Long,
-    @ColumnInfo(name = "assessment_ids")
-    val assessmentIds: List<Long>,
-    @ColumnInfo(name = "microtask_grade_ids")
-    val microtaskGradeIds: List<Long>
+    val instructorId: Long
+)
+
+internal data class StudentWithRelations(
+    @Embedded val student: Student,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "student_id",
+        entity = MicrotaskGrade::class,
+        projection = ["id"]
+    ) val microtaskGradeIds: List<Long>
 )

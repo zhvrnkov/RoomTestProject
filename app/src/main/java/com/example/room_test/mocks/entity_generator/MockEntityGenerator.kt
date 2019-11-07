@@ -50,7 +50,7 @@ internal object MockEntityGenerator {
         rubricId = Long.newId(),
         studentIds = (0..10).map { Long.newId() }
     )
-    fun microtaskGradeMocks(assessmentId: Long) = (0..10).map {
+    fun microtaskGradeMocks(assessmentId: Long, studentId: Long) = (0..10).map {
         MicrotaskGrade(
             id = Long.newId(),
             isSynced = true,
@@ -70,9 +70,7 @@ internal object MockEntityGenerator {
             logbookPass = "${it * 6}",
             qualifiedDays = it.toInt(),
             rank = "$it",
-            instructorId = instructorId,
-            assessmentIds = emptyList(),
-            microtaskGradeIds = emptyList()
+            instructorId = instructorId
         )
     }
 }

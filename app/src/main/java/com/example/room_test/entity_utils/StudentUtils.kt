@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.room_test.Tables
 import com.example.room_test.entities.Student
+import com.example.room_test.entities.StudentWithRelations
 
 interface StudentFields {
     val id: Long
@@ -16,17 +17,16 @@ interface StudentFields {
     val qualifiedDays: Int
     val rank: String
     val instructorId: Long
-    val assessmentIds: List<Long>
     val microtaskGradeIds: List<Long>
 }
 
 @Dao
-internal abstract class StudentDao : BaseDao<Student, Student> {
+internal abstract class StudentDao : BaseDao<Student, StudentWithRelations> {
     @Query("select * from ${Tables.students}")
-    abstract override fun getAll(): List<Student>
+    abstract override fun getAll(): List<StudentWithRelations>
 
     @Query("select * from ${Tables.students} where id in (:ids)")
-    abstract override fun get(ids: List<Long>): List<Student>
+    abstract override fun get(ids: List<Long>): List<StudentWithRelations>
 
     @Query("delete from ${Tables.students} where id in (:ids)")
     abstract override fun delete(ids: List<Long>)
@@ -39,9 +39,9 @@ internal abstract class StudentDao : BaseDao<Student, Student> {
 }
 
 internal open class StudentUtils<StudentDTO : StudentFields>(
-    dao: BaseDao<Student, Student>,
+    dao: BaseDao<Student, StudentWithRelations>,
     private val dtoClass: Class<StudentDTO>
-) : BaseUtils<StudentDTO, Student, Student, BaseDao<Student, Student>>()
+) : BaseUtils<StudentDTO, Student, StudentWithRelations, BaseDao<Student, StudentWithRelations>>()
 {
     internal companion object {
         fun <StudentDTO : StudentFields> staticMapFields(
@@ -55,24 +55,21 @@ internal open class StudentUtils<StudentDTO : StudentFields>(
                 fields.logbookPass,
                 fields.qualifiedDays,
                 fields.rank,
-                fields.instructorId,
-                fields.assessmentIds,
-                fields.microtaskGradeIds)
+                fields.instructorId)
         }
 
         fun <StudentDTO : StudentFields> staticMapEntity(
             dtoClass: Class<StudentDTO>
-        ): (Student) -> StudentDTO = {
+        ): (StudentWithRelations) -> StudentDTO = {
             dtoClass.constructors.first().newInstance(
-                it.id,
-                it.name,
-                it.email,
-                it.level,
-                it.logbookPass,
-                it.qualifiedDays,
-                it.rank,
-                it.instructorId,
-                it.assessmentIds,
+                it.student.id,
+                it.student.name,
+                it.student.email,
+                it.student.level,
+                it.student.logbookPass,
+                it.student.qualifiedDays,
+                it.student.rank,
+                it.student.instructorId,
                 it.microtaskGradeIds
             ) as StudentDTO
         }
@@ -81,14 +78,14 @@ internal open class StudentUtils<StudentDTO : StudentFields>(
     override val realization =
         object: EntityUtilsRealization<
             Student,
-            Student,
+            StudentWithRelations,
             StudentDTO,
-            BaseDao<Student, Student>>
+            BaseDao<Student, StudentWithRelations>>
         {
             override val dao = dao
             override fun mapFields(vararg fields: StudentDTO) =
                 fields.map(::staticMapFields).toTypedArray()
 
-            override fun mapEntities(entities: List<Student>) = entities.map(staticMapEntity(dtoClass))
+            override fun mapEntities(entities: List<StudentWithRelations>) = entities.map(staticMapEntity(dtoClass))
         }
 }

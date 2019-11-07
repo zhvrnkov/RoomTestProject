@@ -23,7 +23,7 @@ internal class MicrotaskGradesMapMethodsTest :
     override val newEntityWithRelations: MicrotaskGrade
         get() {
             return MockEntityGenerator
-                .microtaskGradeMocks(assessmentId).random()
+                .microtaskGradeMocks(assessmentId, Long.newId()).random()
         }
     override val newDTO: MockMicrotaskGradeDTO
         get() {

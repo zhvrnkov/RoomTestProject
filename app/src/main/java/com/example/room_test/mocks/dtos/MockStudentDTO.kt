@@ -1,6 +1,7 @@
 package com.example.room_test.mocks.dtos
 
 import com.example.room_test.entities.Student
+import com.example.room_test.entities.StudentWithRelations
 import com.example.room_test.entity_utils.StudentFields
 import com.example.room_test.newId
 
@@ -13,7 +14,6 @@ data class MockStudentDTO(
     override val qualifiedDays: Int = -1,
     override val rank: String = "",
     override val instructorId: Long = -1,
-    override val assessmentIds: List<Long> = emptyList(),
     override val microtaskGradeIds: List<Long> = emptyList()
 ) : StudentFields {
     companion object {
@@ -33,8 +33,12 @@ data class MockStudentDTO(
                 logbookPass == other.logbookPass,
                 qualifiedDays == other.qualifiedDays,
                 rank == other.rank,
-                instructorId == other.instructorId,
-                assessmentIds == other.assessmentIds,
+                instructorId == other.instructorId
+            ).all { it }
+        }
+        is StudentWithRelations -> {
+            listOf(
+                this.equals(other.student),
                 microtaskGradeIds == other.microtaskGradeIds
             ).all { it }
         }

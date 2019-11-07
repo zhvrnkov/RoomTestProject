@@ -28,7 +28,7 @@ internal class AssessmentMapMethodsTest :
         get() {
             val assessment = MockEntityGenerator.assessment()
             val microtaskGrades = MockEntityGenerator
-                .microtaskGradeMocks(assessment.id)
+                .microtaskGradeMocks(assessment.id, Long.newId())
             return AssessmentWithRelations(assessment, microtaskGrades)
         }
     override val newDTO: MockAssessmentDTO
