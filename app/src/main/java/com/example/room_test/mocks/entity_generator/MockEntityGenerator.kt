@@ -4,7 +4,7 @@ import com.example.room_test.entities.*
 import com.example.room_test.newId
 
 internal object MockEntityGenerator {
-    fun rubricMock() = Rubric(Long.newId(), "Lorem")
+    fun rubricMock() = Rubric(Long.newId(), "Lorem", 0, 0, true)
     fun gradeMocks(rubricId: Long) = (0..10).map {
         Grade(Long.newId(), score = it, title = "$it", rubricId = rubricId)
     }

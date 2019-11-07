@@ -14,6 +14,9 @@ interface RubricFields<
 {
     val id: Long
     val title: String
+    val updated: Long
+    val weight: Long
+    val active: Boolean
     val grades: List<GradeDTO>
     val skillSets: List<SkillSetDTO>
 }
@@ -60,7 +63,13 @@ internal open class RubricUtils<
              SkillSetDTO : SkillSetFields<MicrotaskDTO>,
              RubricDTO : RubricFields<GradeDTO, MicrotaskDTO, SkillSetDTO>
         > staticMapFields(fields: RubricDTO): Rubric {
-            return Rubric(fields.id, fields.title)
+            return Rubric(
+                fields.id,
+                fields.title,
+                fields.updated,
+                fields.weight,
+                fields.active
+            )
         }
 
         fun <GradeDTO : GradeFields,
@@ -76,6 +85,9 @@ internal open class RubricUtils<
             return dtoClass.constructors.first().newInstance(
                 entity.rubric.id,
                 entity.rubric.title,
+                entity.rubric.updated,
+                entity.rubric.weight,
+                entity.rubric.active,
                 entity.grades.map(GradeUtils.staticMapEntity(gradeDtoClass)),
                 skillSets
             ) as RubricDTO

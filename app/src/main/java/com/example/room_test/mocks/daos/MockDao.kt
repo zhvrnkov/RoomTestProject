@@ -22,9 +22,11 @@ abstract class MockDao<Entity, EntityWithRelations> :
 
     override fun update(vararg entity: Entity) = entity.forEach { item ->
         val index = storage.indexOfFirst { getEntityPredicate(item, it) }
-        val storedItem = storage[index]
-        val newItem = replaceEntityWithRelations(item, storedItem)
-        storage[index] = newItem
+        val storedItem = storage.getOrNull(index)
+        storedItem?.apply {
+            val newItem = replaceEntityWithRelations(item, this)
+            storage[index] = newItem
+        }
     }
 
     override fun insert(vararg entity: Entity) = entity.forEach {

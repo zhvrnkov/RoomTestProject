@@ -7,6 +7,9 @@ import com.example.room_test.entity_utils.RubricFields
 data class MockRubricDTO(
     override val id: Long,
     override val title: String = "",
+    override val updated: Long,
+    override val weight: Long,
+    override val active: Boolean,
     override val grades: List<MockGradeDTO> = emptyList(),
     override val skillSets: List<MockSkillSetDTO> = emptyList()
 ) : RubricFields<MockGradeDTO, MockMicrotaskDTO, MockSkillSetDTO> {
@@ -15,6 +18,9 @@ data class MockRubricDTO(
             return MockRubricDTO(
                 id = id,
                 title = "Lorem",
+                updated = 0,
+                weight = 1,
+                active = true,
                 grades = grades
             )
         }

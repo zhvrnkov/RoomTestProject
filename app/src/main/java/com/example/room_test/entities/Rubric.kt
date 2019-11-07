@@ -6,7 +6,10 @@ import com.example.room_test.Tables
 @Entity(tableName = "rubrics")
 internal data class Rubric(
     @PrimaryKey val id: Long,
-    val title: String
+    val title: String,
+    val updated: Long,
+    val weight: Long,
+    val active: Boolean
 )
 
 @Entity(
