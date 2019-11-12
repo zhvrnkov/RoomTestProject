@@ -11,7 +11,8 @@ import com.example.room_test.Tables
             entity = Instructor::class,
             parentColumns = ["id"],
             childColumns = ["instructor_id"],
-            onDelete = ForeignKey.CASCADE)]
+            onDelete = ForeignKey.CASCADE)
+    ]
 )
 internal data class Student(
     @PrimaryKey val id: Long,

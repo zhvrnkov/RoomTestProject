@@ -2,6 +2,7 @@ package com.example.room_test.entity_utils
 
 import androidx.room.Dao
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.room_test.Tables
 import com.example.room_test.entities.Instructor
 
@@ -34,6 +35,9 @@ interface InstructorFields {
 
 @Dao
 internal abstract class InstructorDao : BaseDao<Instructor, Instructor> {
+    override val tableName: String
+        get() = Tables.instructors
+
     @Query("select * from ${Tables.instructors}")
     abstract override fun getAll(): List<Instructor>
 
@@ -48,6 +52,9 @@ internal abstract class InstructorDao : BaseDao<Instructor, Instructor> {
 
     @Insert
     abstract override fun insert(vararg entity: Instructor)
+
+    @RawQuery
+    abstract override fun pget(query: SupportSQLiteQuery): List<Instructor>
 }
 
 internal open class InstructorUtils<InstructorDTO : InstructorFields>(

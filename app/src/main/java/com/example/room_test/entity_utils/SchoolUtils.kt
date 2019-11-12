@@ -1,9 +1,7 @@
 package com.example.room_test.entity_utils
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.room_test.Tables
 import com.example.room_test.entities.School
 
@@ -14,6 +12,9 @@ interface SchoolFields {
 
 @Dao
 internal abstract class SchoolDao : BaseDao<School, School> {
+    override val tableName: String
+        get() = Tables.schools
+
     @Query("select * from ${Tables.schools}")
     abstract override fun getAll(): List<School>
 
@@ -28,6 +29,9 @@ internal abstract class SchoolDao : BaseDao<School, School> {
 
     @Insert
     abstract override fun insert(vararg entitiy: School)
+
+    @RawQuery
+    abstract override fun pget(query: SupportSQLiteQuery): List<School>
 }
 
 internal open class SchoolUtils<SchoolDTO : SchoolFields>(

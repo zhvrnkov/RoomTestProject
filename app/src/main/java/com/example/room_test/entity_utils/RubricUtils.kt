@@ -1,6 +1,7 @@
 package com.example.room_test.entity_utils
 
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.room_test.Tables
 import com.example.room_test.entities.*
 import com.example.room_test.entities.Grade
@@ -23,6 +24,9 @@ interface RubricFields<
 
 @Dao
 internal abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
+    override val tableName: String
+        get() = Tables.rubrics
+
     @Query("select * from ${Tables.rubrics}")
     abstract override fun getAll(): List<RubricWithRelations>
 
@@ -37,6 +41,9 @@ internal abstract class RubricDao : BaseDao<Rubric, RubricWithRelations> {
 
     @Insert
     abstract override fun insert(vararg entity: Rubric)
+
+    @RawQuery
+    abstract override fun pget(query: SupportSQLiteQuery): List<RubricWithRelations>
 }
 
 internal open class RubricUtils<

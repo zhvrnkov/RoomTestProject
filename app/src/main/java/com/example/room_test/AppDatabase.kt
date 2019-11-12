@@ -29,7 +29,7 @@ internal object Tables {
         MicrotaskGrade::class,
         Student::class
     ],
-    version = 1
+    version = 4
 )
 @TypeConverters(AppTypeConverter::class)
 internal abstract class Daos : RoomDatabase() {

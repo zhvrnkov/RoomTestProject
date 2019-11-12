@@ -1,9 +1,7 @@
 package com.example.room_test.entity_utils
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.room_test.Tables
 import com.example.room_test.entities.MicrotaskGrade
 
@@ -19,6 +17,9 @@ interface MicrotaskGradeFields {
 
 @Dao
 internal abstract class MicrotaskGradeDao : BaseDao<MicrotaskGrade, MicrotaskGrade> {
+    override val tableName: String
+        get() = Tables.microtaskGrades
+
     @Query("select * from ${Tables.microtaskGrades}")
     abstract override fun getAll(): List<MicrotaskGrade>
 
@@ -33,6 +34,9 @@ internal abstract class MicrotaskGradeDao : BaseDao<MicrotaskGrade, MicrotaskGra
 
     @Insert
     abstract override fun insert(vararg entity: MicrotaskGrade)
+
+    @RawQuery
+    abstract override fun pget(query: SupportSQLiteQuery): List<MicrotaskGrade>
 }
 
 internal open class MicrotaskGradeUtils<MicrotaskGradeDTO : MicrotaskGradeFields>(

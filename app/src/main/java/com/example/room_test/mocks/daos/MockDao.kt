@@ -1,5 +1,7 @@
 package com.example.room_test.mocks.daos
 
+import androidx.sqlite.db.SupportSQLiteQuery
+import com.example.room_test.Tables
 import com.example.room_test.entities.*
 import com.example.room_test.entity_utils.*
 
@@ -40,9 +42,16 @@ abstract class MockDao<Entity, EntityWithRelations> :
     override fun getAll(): List<EntityWithRelations> {
         return storage
     }
+
+    override fun pget(query: SupportSQLiteQuery): List<EntityWithRelations> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
 
 internal class MockRubricDao : MockDao<Rubric, RubricWithRelations>() {
+    override val tableName: String
+        get() = Tables.rubrics
+
     override val deleteFilterPredicate: (ids: List<Long>, item: RubricWithRelations) -> Boolean
         get() = { ids, item -> item.rubric.id !in ids }
 
@@ -59,6 +68,9 @@ internal class MockRubricDao : MockDao<Rubric, RubricWithRelations>() {
 }
 
 internal class MockSkillSetDao : MockDao<SkillSet, SkillSetWithRelations>() {
+    override val tableName: String
+        get() = Tables.skillSets
+
     override val deleteFilterPredicate: (ids: List<Long>, item: SkillSetWithRelations) -> Boolean
         get() = { ids, item -> item.skillSet.id !in ids }
 
@@ -75,6 +87,9 @@ internal class MockSkillSetDao : MockDao<SkillSet, SkillSetWithRelations>() {
 }
 
 internal class MockMicrotaskDao : MockDao<Microtask, Microtask>() {
+    override val tableName: String
+        get() = Tables.microtasks
+
     override val deleteFilterPredicate: (ids: List<Long>, item: Microtask) -> Boolean
         get() = { ids, item -> item.id in ids }
 
@@ -89,6 +104,9 @@ internal class MockMicrotaskDao : MockDao<Microtask, Microtask>() {
 }
 
 internal class MockInstructorDao : MockDao<Instructor, Instructor>() {
+    override val tableName: String
+        get() = Tables.instructors
+
     override val deleteFilterPredicate: (ids: List<Long>, item: Instructor) -> Boolean
         get() = { ids, item -> item.id in ids }
 
@@ -104,6 +122,9 @@ internal class MockInstructorDao : MockDao<Instructor, Instructor>() {
 }
 
 internal class MockAssessmentDao : MockDao<Assessment, AssessmentWithRelations>() {
+    override val tableName: String
+        get() = Tables.assessments
+
     override val deleteFilterPredicate: (ids: List<Long>, item: AssessmentWithRelations) -> Boolean
         get() = { ids, item -> item.assessment.id in ids }
 
@@ -120,6 +141,9 @@ internal class MockAssessmentDao : MockDao<Assessment, AssessmentWithRelations>(
 }
 
 internal class MockMicrotaskGradeDao : MockDao<MicrotaskGrade, MicrotaskGrade>() {
+    override val tableName: String
+        get() = Tables.microtaskGrades
+
     override val deleteFilterPredicate: (ids: List<Long>, item: MicrotaskGrade) -> Boolean
         get() = { ids, item -> item.id in ids }
 
@@ -136,6 +160,9 @@ internal class MockMicrotaskGradeDao : MockDao<MicrotaskGrade, MicrotaskGrade>()
 }
 
 internal class MockGradeDao : MockDao<Grade, Grade>() {
+    override val tableName: String
+        get() = Tables.grades
+
     override val deleteFilterPredicate: (ids: List<Long>, item: Grade) -> Boolean
         get() = { ids, item -> item.id in ids }
 
@@ -152,6 +179,9 @@ internal class MockGradeDao : MockDao<Grade, Grade>() {
 }
 
 internal class MockStudentDao : MockDao<Student, StudentWithRelations>() {
+    override val tableName: String
+        get() = Tables.students
+
     override val deleteFilterPredicate: (ids: List<Long>, item: StudentWithRelations) -> Boolean
         get() = { ids, item -> item.student.id in ids }
 

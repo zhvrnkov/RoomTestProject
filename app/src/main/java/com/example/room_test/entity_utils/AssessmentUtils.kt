@@ -1,9 +1,8 @@
 package com.example.room_test.entity_utils
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.room_test.Tables
 import com.example.room_test.entities.Assessment
 import com.example.room_test.entities.AssessmentWithRelations
@@ -22,6 +21,9 @@ interface AssessmentFields<MicrotaskGradeDTO : MicrotaskGradeFields> {
 
 @Dao
 internal abstract class AssessmentDao : BaseDao<Assessment, AssessmentWithRelations> {
+    override val tableName: String
+        get() = Tables.assessments
+
     @Query("select * from ${Tables.assessments}")
     abstract override fun getAll(): List<AssessmentWithRelations>
 
@@ -36,6 +38,9 @@ internal abstract class AssessmentDao : BaseDao<Assessment, AssessmentWithRelati
 
     @Insert
     abstract override fun insert(vararg entity: Assessment)
+
+    @RawQuery
+    abstract override fun pget(query: SupportSQLiteQuery): List<AssessmentWithRelations>
 }
 
 internal open class AssessmentUtils

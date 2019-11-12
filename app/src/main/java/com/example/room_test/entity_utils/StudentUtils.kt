@@ -1,9 +1,7 @@
 package com.example.room_test.entity_utils
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.room_test.Tables
 import com.example.room_test.entities.Student
 import com.example.room_test.entities.StudentWithRelations
@@ -22,6 +20,9 @@ interface StudentFields {
 
 @Dao
 internal abstract class StudentDao : BaseDao<Student, StudentWithRelations> {
+    override val tableName: String
+        get() = Tables.students
+
     @Query("select * from ${Tables.students}")
     abstract override fun getAll(): List<StudentWithRelations>
 
@@ -36,6 +37,9 @@ internal abstract class StudentDao : BaseDao<Student, StudentWithRelations> {
 
     @Insert
     abstract override fun insert(vararg entity: Student)
+
+    @RawQuery
+    abstract override fun pget(query: SupportSQLiteQuery): List<StudentWithRelations>
 }
 
 internal open class StudentUtils<StudentDTO : StudentFields>(

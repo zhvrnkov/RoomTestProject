@@ -1,6 +1,7 @@
 package com.example.room_test.entity_utils
 
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.room_test.Tables
 import com.example.room_test.entities.SkillSet
 import com.example.room_test.entities.SkillSetWithRelations
@@ -14,6 +15,9 @@ interface SkillSetFields<MicrotaskDTO : MicrotaskFields> {
 
 @Dao
 internal abstract class SkillSetDao : BaseDao<SkillSet, SkillSetWithRelations> {
+    override val tableName: String
+        get() = Tables.skillSets
+
     @Query("select * from ${Tables.skillSets}")
     abstract override fun getAll(): List<SkillSetWithRelations>
 
@@ -28,6 +32,9 @@ internal abstract class SkillSetDao : BaseDao<SkillSet, SkillSetWithRelations> {
 
     @Insert
     abstract override fun insert(vararg entity: SkillSet)
+
+    @RawQuery
+    abstract override fun pget(query: SupportSQLiteQuery): List<SkillSetWithRelations>
 }
 
 internal open class SkillSetUtils<

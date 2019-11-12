@@ -1,6 +1,7 @@
 package com.example.room_test.entity_utils
 
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.room_test.Tables
 import com.example.room_test.entities.Grade
 
@@ -13,6 +14,9 @@ interface GradeFields {
 
 @Dao
 internal abstract class GradeDao : BaseDao<Grade, Grade> {
+    override val tableName: String
+        get() = Tables.grades
+
     @Query("select * from ${Tables.grades}")
     abstract override fun getAll(): List<Grade>
 
@@ -27,6 +31,9 @@ internal abstract class GradeDao : BaseDao<Grade, Grade> {
 
     @Insert
     abstract override fun insert(vararg entity: Grade)
+
+    @RawQuery
+    abstract override fun pget(query: SupportSQLiteQuery): List<Grade>
 }
 
 internal open class GradeUtils<GradeDTO : GradeFields>(
